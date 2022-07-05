@@ -28,6 +28,9 @@ global:
     # Misc
     DEFAULT_TIME_ZONE: Europe/Zagreb
 
+    # Database
+    DB_FILE: 'Real Estate Agent Backlog - Database.csv'
+
   secrets:
     SENTRY_DSN: '{{ env.SENTRY_DSN }}'
 
@@ -82,3 +85,11 @@ services:
     resources:
       cpu: 81m
       memory: 130Mi
+
+  db-adapter:
+    type: python
+    db:
+      mongo: true
+    resources:
+      cpu: 100m
+      memory: 100Mi
