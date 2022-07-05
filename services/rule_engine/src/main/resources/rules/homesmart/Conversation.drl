@@ -1,23 +1,15 @@
 package rules.homesmart;
-import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
-import agents.Homesmart;
-import com.mindsmiths.ruleEngine.model.Initialize;
-import com.mindsmiths.ruleEngine.model.Heartbeat;
+
 import java.util.Date;
 
+import com.mindsmiths.ruleEngine.util.Log;
+import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
+import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.ruleEngine.model.Heartbeat;
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
 
-rule "Re-engage user"
-    when
-        Heartbeat(ts: timestamp) from entry-point "signals"
-        agent: Homesmart(
-            lastInteractionTime before[10s] ts
-        )
-    then
-        modify(agent) {
-            setLastInteractionTime(new Date())
-        };
-        agent.sendMessage("Are you interested in a purchase of Real Estate?");
-end
+import agents.Homesmart;
+
 
 rule "First contact"
     salience 100
@@ -26,6 +18,28 @@ rule "First contact"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Homesmart()
     then
-        agent.sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!\nAre you interested in a purchase of Real Estate?");
+        agent.sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!");
+        agent.sendInterestQuestionare();
         delete(message);
+end
+
+rule "Re-engage costumer"
+    when
+        Heartbeat(ts: timestamp) from entry-point "signals"
+        agent: Homesmart(
+            lastInteractionTime before[30s] ts
+        )
+    then
+        modify(agent) {
+            setLastInteractionTime(new Date())
+        };
+        agent.sendInterestQuestionare();
+end
+
+rule "Process customer answer"
+    when
+        answer: TelegramKeyboardAnswered() from entry-point "signals"
+        agent: Homesmart()
+    then
+        Log.info("Customers answer: " + answer + " [" + agent.lastInteractionTime + "]"); 
 end

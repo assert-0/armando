@@ -1,9 +1,15 @@
 package agents;
 
+import java.util.Date;
+import java.util.Arrays;
+
+import lombok.*;
+
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
-import java.util.Date;
-import lombok.*;
+import com.mindsmiths.telegramAdapter.KeyboardData;
+import com.mindsmiths.telegramAdapter.KeyboardOption;
+
 
 @Getter
 @Setter
@@ -24,4 +30,18 @@ public class Homesmart extends Agent {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
-}
+
+    public void sendInterestQuestionare() {
+        TelegramAdapterAPI.sendMessage(
+            connections.get("telegram"),
+            "Are you interested in a purchase of Real Estate?\n",
+            new KeyboardData(
+                "5982093762831",
+                Arrays.asList(
+                    new KeyboardOption("YES", "YES"),
+                    new KeyboardOption("NO", "NO")
+                )
+            )
+        );
+    }
+} 
