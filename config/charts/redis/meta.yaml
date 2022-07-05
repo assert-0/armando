@@ -1,0 +1,4 @@
+REPO_URL: https://charts.bitnami.com/bitnami
+REPO_NAME: bitnami
+CHART_NAME: redis
+CHART_VERSION: 10.7.11

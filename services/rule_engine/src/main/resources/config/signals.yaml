@@ -1,0 +1,5 @@
+com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
+  - !GetOrCreateAgentByConnection
+    connectionName: telegram
+    connectionField: chatId
+    agentType: agents.Homesmart
