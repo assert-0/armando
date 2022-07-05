@@ -71,3 +71,13 @@ services:
     resources:
       cpu: 84m
       memory: 94Mi
+  telegram-adapter:
+    type: python
+    version: 4.0.0a9
+    db:
+      mongo: true
+    env:
+      TELEGRAM_BOT_TOKEN: "{{env.TELEGRAM_BOT_TOKEN}}"
+    resources:
+      cpu: 81m
+      memory: 130Mi

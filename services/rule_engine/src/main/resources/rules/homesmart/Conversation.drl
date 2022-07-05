@@ -2,15 +2,21 @@ package rules.homesmart;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import agents.Homesmart;
 import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.ruleEngine.model.Heartbeat;
+import java.util.Date;
 
 
-rule "Handle message"
+rule "Re-engage user"
     when
-        message: TelegramReceivedMessage() from entry-point "signals"
-        agent: Homesmart()
+        Heartbeat(ts: timestamp) from entry-point "signals"
+        agent: Homesmart(
+            lastInteractionTime before[10s] ts
+        )
     then
-        agent.sendMessage(message.getText());
-        delete(message);
+        modify(agent) {
+            setLastInteractionTime(new Date())
+        };
+        agent.sendMessage("Are you interested in a purchase of Real Estate?");
 end
 
 rule "First contact"
@@ -20,6 +26,6 @@ rule "First contact"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Homesmart()
     then
-        agent.sendMessage("Initial message");
+        agent.sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!\nAre you interested in a purchase of Real Estate?");
         delete(message);
 end
