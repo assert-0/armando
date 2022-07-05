@@ -18,7 +18,7 @@ public class Db_AdapterAPI {
     }
 
     public static void fetch_user() {
-        BaseMessage message = new BaseMessage("fetch_users");
+        BaseMessage message = new BaseMessage("fetch_users", new EmptyPayload());
         message.send(topic);
         new CallbackResult(message.getConfiguration().getMessageId(), FetchResult.class).save();
     }
