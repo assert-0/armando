@@ -1,0 +1,25 @@
+package rules.homesmart;
+import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
+import agents.Homesmart;
+import com.mindsmiths.ruleEngine.model.Initialize;
+
+
+rule "Handle message"
+    when
+        message: TelegramReceivedMessage() from entry-point "signals"
+        agent: Homesmart()
+    then
+        agent.sendMessage(message.getText());
+        delete(message);
+end
+
+rule "First contact"
+    salience 100
+    when
+        initialize: Initialize() from entry-point "agent-created"
+        message: TelegramReceivedMessage() from entry-point "signals"
+        agent: Homesmart()
+    then
+        agent.sendMessage("Initial message");
+        delete(message);
+end
