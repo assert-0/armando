@@ -1,0 +1,73 @@
+global:
+  dependencies:
+    python:
+      - forge-sdk==4.0.0a9
+      - forge-cli==4.0.0a8
+      - cecs==4.0.0a1
+      - services/*.py
+  env:
+    PROJECT_SLUG: "demo"
+
+    ENVIRONMENT_NAME: {{ env.CI_COMMIT_REF_SLUG }}
+    MODULE: '{{ env.MODULE | default("local", True) }}'
+    LOG_LEVEL: INFO
+
+    # Messaging
+    PULSAR_URL: pulsar://pulsar-proxy.pulsar.svc.cluster.local:6650
+
+    # Databases
+    MONGO_CLIENT_HOST: mongodb:27017
+    MONGO_CLIENT_USERNAME: root
+
+    POSTGRES_CLIENT_HOST: postgresql
+    POSTGRES_CLIENT_PORT: '5432'
+    POSTGRES_CLIENT_USERNAME: postgres
+
+    REDIS_URL: redis-master:6379
+
+    # Misc
+    DEFAULT_TIME_ZONE: Europe/Zagreb
+
+  secrets:
+    SENTRY_DSN: '{{ env.SENTRY_DSN }}'
+
+    MONGO_CLIENT_PASSWORD: admin
+    POSTGRES_CLIENT_PASSWORD: admin
+
+  cecs:
+    params: -e venv
+
+  repository: nexus.vingd.net
+
+services:
+  rule-engine:
+    type: java
+    resources:
+      cpu: 500m
+      memory: 650Mi
+
+  heartbeat-scheduler:
+    package: heartbeat
+    type: python
+    version: 4.0.0a4
+    env:
+      HEARTBEAT_CYCLE: 5
+    db:
+      mongo: true
+    dependencies:
+      - rule-engine-api==4.0.0a20
+    resources:
+      cpu: 69m
+      memory: 65Mi
+
+  heartbeat-sender:
+    package: heartbeat
+    type: python
+    version: 4.0.0a4
+    db:
+      mongo: true
+    dependencies:
+      - rule-engine-api==4.0.0a20
+    resources:
+      cpu: 84m
+      memory: 94Mi
