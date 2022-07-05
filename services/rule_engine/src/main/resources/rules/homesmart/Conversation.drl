@@ -6,7 +6,7 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
-import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 
 import agents.Homesmart;
 
@@ -41,5 +41,5 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Homesmart()
     then
-        Log.info("Customers answer: " + answer + " [" + agent.lastInteractionTime + "]"); 
+        Log.info("Customers answer: " + answer + " [" + agent.getLastInteractionTime() + "]"); 
 end
