@@ -71,6 +71,7 @@ services:
     resources:
       cpu: 84m
       memory: 94Mi
+
   telegram-adapter:
     type: python
     version: 4.0.0a9
