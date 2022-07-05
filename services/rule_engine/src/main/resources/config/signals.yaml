@@ -8,4 +8,4 @@ com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered:
   - !GetOrCreateAgentByConnection
     connectionName: telegram
     connectionField: chatId
-    agentType: agents.Nola
+    agentType: agents.Homesmart

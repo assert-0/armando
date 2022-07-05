@@ -41,5 +41,5 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Homesmart()
     then
-        Log.info("Customers answer: " + answer + " [" + agent.getLastInteractionTime() + "]"); 
+        Log.info("Customers answer: " + answer.getAnswer() + " [" + agent.getLastInteractionTime() + "]"); 
 end
