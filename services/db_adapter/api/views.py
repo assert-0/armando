@@ -1,13 +1,15 @@
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from forge.core.db import DBView
 
+import services.db_adapter
 
-class ReasonForLackOfInterest(Enum):
-    INTERESTED = 0
-    SATISFIED_ALREADY = 1
-    NO_MONEY = 2
+
+class ReasonForLackOfInterest(str, Enum):
+    INTERESTED = "INTERESTED"
+    SATISFIED_ALREADY = "SATISFIED_ALREADY"
+    NO_MONEY = "NO_MONEY"
 
 class User(DBView):
     id: str
@@ -21,6 +23,10 @@ class User(DBView):
     datesOfPurchaseInAgency: List[str]
     lastBoughtRE: str
     lastInteractionWithAgent: str
-    interested: bool
-    reasonIfNotInterested: ReasonForLackOfInterest
-    telegramChatId: str
+    interested: Optional[bool]
+    reasonIfNotInterested: Optional[ReasonForLackOfInterest]
+    telegramChatId: Optional[str]
+
+    @classmethod
+    def get_service_name() -> str:
+        return db_adapter.SERVICE_NAME

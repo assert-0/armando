@@ -50,10 +50,6 @@ class DBAdapter(BaseService):
 
         for entry in read_data:
             print(entry)
+            entry["datesOfPurchaseInAgency"] = entry["datesOfPurchaseInAgency"].split(settings.DB_ARRAY_DELIMITER)
             user = UserModel(**entry)
             user.save()
-
-    @staticmethod
-    def _process_csv_entry(entry):
-        entry[8] = entry[8].split(settings.DB_ARRAY_DELIMITER)
-        return entry

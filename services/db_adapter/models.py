@@ -19,9 +19,9 @@ class UserModel(DBModel):
     datesOfPurchaseInAgency: List[str]
     lastBoughtRE: str
     lastInteractionWithAgent: str
-    interested: bool
-    reasonIfNotInterested: ReasonForLackOfInterest
-    telegramChatId: str
+    interested: Optional[bool]
+    reasonIfNotInterested: Optional[ReasonForLackOfInterest]
+    telegramChatId: Optional[str]
 
 
     @classmethod

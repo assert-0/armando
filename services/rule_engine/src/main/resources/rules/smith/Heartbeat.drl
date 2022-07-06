@@ -5,6 +5,7 @@ import com.mindsmiths.ruleEngine.util.Log
 import com.mindsmiths.ruleEngine.util.Agents
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI
+import com.mindsmiths.dbAdapter.FetchResult
 
 
 rule "Smith's Heartbeat"
