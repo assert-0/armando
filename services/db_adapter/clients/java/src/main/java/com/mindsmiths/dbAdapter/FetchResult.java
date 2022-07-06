@@ -1,4 +1,4 @@
-package com.mindsmiths.db_adapter;
+package com.mindsmiths.dbAdapter;
 
 import java.io.Serializable;
 import java.util.List;
