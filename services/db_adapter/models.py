@@ -1,7 +1,10 @@
-from forge.core.db import DBModel
+from typing import List, Type, TypeVar, Optional
 
-from .api.views import User
-from .api.api import ReasonForLackOfInterest
+from forge.core.db import DBModel, DBView
+
+from .api import ReasonForLackOfInterest, User
+
+ModelT = TypeVar('ModelT', bound='DBModel')
 
 
 class UserModel(DBModel):
@@ -16,8 +19,9 @@ class UserModel(DBModel):
     datesOfPurchaseInAgency: List[str]
     lastBoughtRE: str
     lastInteractionWithAgent: str
-    booleanInterested: bool
+    interested: bool
     reasonIfNotInterested: ReasonForLackOfInterest
+    telegramChatId: str
 
 
     @classmethod

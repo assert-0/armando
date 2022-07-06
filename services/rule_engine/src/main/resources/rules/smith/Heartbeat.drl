@@ -4,6 +4,8 @@ import com.mindsmiths.ruleEngine.model.Heartbeat
 import com.mindsmiths.ruleEngine.util.Log
 import com.mindsmiths.ruleEngine.util.Agents
 
+import com.mindsmiths.dbAdapter.DBAdapterAPI
+
 
 rule "Smith's Heartbeat"
     when
@@ -11,4 +13,19 @@ rule "Smith's Heartbeat"
     then
         // logging the info in Terminal
         Log.info("Smith's heartbeat - num agents: " + Agents.getCount());
+end
+
+rule "test adapter"
+    when
+        Heartbeat() from entry-point "signals"  // a heartbeat happened
+    then
+        DBAdapterAPI.fetchAllUsers();
+        
+end
+
+rule "get fetched"
+    when
+        res: FetchResult() from entry-point "signals"
+    then
+        Log.info(res.getUsers());
 end

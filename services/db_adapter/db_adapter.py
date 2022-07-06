@@ -9,9 +9,7 @@ from forge.core.base import BaseService
 
 from .api import User, FetchResult
 from ..db_adapter import settings
-from .api
 from .models import UserModel
-from .views import User
 
 
 logger = logging.getLogger(forge_settings.DEFAULT_LOGGER)
@@ -23,18 +21,18 @@ class DBAdapter(BaseService):
     def __init__(self):
         super().__init__()
 
-        if UserModel.count() == 0:
+        if UserModel.count({}) == 0:
             self._load_csv()
 
         self.start()
 
     @api
     def fetch_user(self, userId) -> FetchResult:
-        return FetchResult(success=True, users=[UserModel.get(id=userId)])
+        return FetchResult(success=True, users=[UserModel.get(id=userId).to_view()])
 
     @api
     def fetch_all_users(self) -> FetchResult:
-        return FetchResult(success=True, users=list(UserModel.all()))
+        return FetchResult(success=True, users=[user.to_view() for user in UserModel.all()])
 
     @api
     def update_user(self, new_user: User) -> bool:
@@ -51,6 +49,7 @@ class DBAdapter(BaseService):
         read_data = self._csv_dict_read()
 
         for entry in read_data:
+            print(entry)
             user = UserModel(**entry)
             user.save()
 

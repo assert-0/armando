@@ -1,7 +1,13 @@
+from enum import Enum
+from typing import List
+
 from forge.core.db import DBView
 
-from .api.api import ReasonForLackOfInterest
 
+class ReasonForLackOfInterest(Enum):
+    INTERESTED = 0
+    SATISFIED_ALREADY = 1
+    NO_MONEY = 2
 
 class User(DBView):
     id: str
@@ -15,5 +21,6 @@ class User(DBView):
     datesOfPurchaseInAgency: List[str]
     lastBoughtRE: str
     lastInteractionWithAgent: str
-    booleanInterested: bool
+    interested: bool
     reasonIfNotInterested: ReasonForLackOfInterest
+    telegramChatId: str

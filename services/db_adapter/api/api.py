@@ -1,13 +1,9 @@
-from forge.core.models import ExtendableModel
-
-from enum import Enum
 from typing import List
 
+from forge.core.models import ExtendableModel
 
-class ReasonForLackOfInterest(Enum):
-    INTERESTED = 0
-    SATISFIED_ALREADY = 1
-    NO_MONEY = 2
+from .views import User
+
 
 class FetchResult(ExtendableModel):
     success: bool

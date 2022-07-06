@@ -2,7 +2,7 @@ from forge.core.api import BaseAPI, Future
 from forge.core.api import api_interface
 
 from services import db_adapter
-from .api import FetchResult
+from .api import FetchResult, User
 
 
 @api_interface

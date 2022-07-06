@@ -1,4 +1,4 @@
-Id,Name,Surname,Gender,Age,Email,Phone number,Amount of bought RE,Date of each RE purchase in agency,Last bought RE,Last interaction with agent,Interested in purchase,Reason for lack of interest,*Type of RE,*Value of RE,*Family size,*NET income
+id,name,surname,gender,age,email,phoneNumber,amountOfBoughtRE,datesOfPurchaseInAgency,lastBoughtRE,lastInteractionWithAgent,interested,reasonIfNotInterested,*Type of RE,*Value of RE,*Family size,*NET income
 1,Boris,Johnson,M,47,Boris.Johnson@gmail.com,123456789,1,14/01/1992,14/01/1992,06/09/1995,,,,,,
 2,Margaret,Thatcher,F,75,Margaret.Thatcher@gmail.com,123456789,3,23/07/1999;14/11/2004;03/01/2009,03/01/2009,17/10/2016,,,,,,
 3,Winston,Churchill,M,26,Winston.Churchill@gmail.com,123456789,2,15/02/2000;17/10/2004,17/10/2004,25/10/2015,,,,,,
