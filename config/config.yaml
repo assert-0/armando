@@ -88,7 +88,7 @@ services:
     db:
       mongo: true
     env:
-      DB_FILE: 'Real Estate Agent Backlog - Database.csv'
+      DB_FILE: 'services/db_adapter/data.csv'
     resources:
       cpu: 100m
       memory: 100Mi
