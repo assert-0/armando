@@ -12,6 +12,12 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
+    enum NoInterestReason {
+        NO_FUNDS,
+        NO_INTERESTING_OFFERS,
+        GENERAL_NO_INTEREST
+    }
+
     String id;
     String name;
     String surname;
@@ -23,4 +29,6 @@ public class User implements Serializable {
     List<Date> datesOfPurchaseInAgency;
     Date lastBoughtRE;
     Date lastInteractionWithAgent;
+    boolean interested;
+    NoInterestReason noInterestReason;
 }

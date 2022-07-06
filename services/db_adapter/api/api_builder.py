@@ -6,13 +6,13 @@ from .api import FetchResult
 
 
 @api_interface
-class Db_AdapterAPI(BaseAPI):
+class DBAdapterAPI(BaseAPI):
     service_name = db_adapter.SERVICE_NAME
 
     @staticmethod
-    def fetch_user(phone: str) -> Future[FetchResult]:
-        """Returns user data based on specified phone"""
+    def fetch_user(userId: str) -> Future[FetchResult]:
+        """Returns user data based on user Id"""
 
     @staticmethod
-    def fetch_users() -> Future[FetchResult]:
+    def fetch_all_users() -> Future[FetchResult]:
         """Returns all users data"""

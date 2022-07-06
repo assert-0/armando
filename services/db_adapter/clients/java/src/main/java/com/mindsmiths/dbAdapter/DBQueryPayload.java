@@ -10,6 +10,6 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhonePayload implements Serializable {
+public class DBQueryPayload implements Serializable {
     private String phone;
 }

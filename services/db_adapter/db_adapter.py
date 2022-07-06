@@ -1,19 +1,19 @@
 import logging
+import csv
+
+from typing import TextIO
 
 from forge.conf import settings as forge_settings
 from forge.core.api import api
 from forge.core.base import BaseService
 
-import csv
-from typing import TextIO
 from .api import User, FetchResult
-
 from ..db_adapter import settings
 
 logger = logging.getLogger(forge_settings.DEFAULT_LOGGER)
 
 
-class Db_Adapter(BaseService):
+class DBAdapter(BaseService):
     file: TextIO
     def start(self):
         self.file = open(settings.DB_FILE)
@@ -25,14 +25,13 @@ class Db_Adapter(BaseService):
         return csv.reader(self.file, delimiter=settings.DB_DELIMITER)
 
     @staticmethod
-    def _process_entry(entry):
+    def _process_csv_entry(entry):
         entry[8] = entry[8].split(settings.DB_ARRAY_DELIMITER)
         return entry
 
     @api
     def fetch_user(self, phone: str) -> FetchResult:
-        # This function is automatically called when another service invokes it through the service's API.
-
+        
         if (not self._valid()):
             return FetchResult(success=False, users=[])
 
@@ -47,7 +46,7 @@ class Db_Adapter(BaseService):
         return FetchResult(success=False, users=[])
 
     @api
-    def fetch_users(self) -> FetchResult:
+    def fetch_all_users(self) -> FetchResult:
         if (not self._valid()):
             return FetchResult(success=False, users=[])
 
