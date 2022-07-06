@@ -18,8 +18,11 @@ rule "First contact"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Homesmart()
     then
-        agent.sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!");
-        agent.sendInterestQuestionare();
+        modify(agent) {
+            sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!");
+            sendInterestQuestionare();
+            setUserId(message.getText())
+        }
         delete(message);
 end
 
@@ -32,8 +35,8 @@ rule "Re-engage costumer"
     then
         modify(agent) {
             setLastInteractionTime(new Date())
+            sendInterestQuestionare();
         };
-        agent.sendInterestQuestionare();
 end
 
 rule "Process customer answer"
@@ -41,5 +44,18 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Homesmart()
     then
-        Log.info("Customers answer: " + answer.getAnswer() + " [" + agent.getLastInteractionTime() + "]"); 
+        modify(agent) {
+            setCostumerAnswer(answer.getAnswer())
+        };
+        DB_AdapterAPI.fetch_user();
+end
+
+rule "Fetch user"
+    when
+        user: FetchResult() from entry-point "signals"
+        agent: Homesmart()
+    then
+        modify(agent) {
+            updateUserAnswer(answer)
+        };
 end
