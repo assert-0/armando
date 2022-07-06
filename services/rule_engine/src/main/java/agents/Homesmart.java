@@ -11,10 +11,11 @@ import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 
+@Getter
 @Setter
 public class Homesmart extends Agent {
     private Date lastInteractionTime;
-    private String costumerAnswer;
+    private String customerAnswer;
     private String userId;
 
     public Homesmart() {
@@ -46,8 +47,12 @@ public class Homesmart extends Agent {
         );
     }
 
-    public void updateUserAnswer(User user, String answer) {
-        user.answer = answer;
-        DB_AdapterAPI.updateUser(user);
-    }    
+
+    // TODO: fix
+    public void updateUserAnswer(Object obj1, Object obj2) {}
+
+//    public void updateUserAnswer(User user, String answer) {
+//        user.answer = answer;
+//        DB_AdapterAPI.updateUser(user);
+//    }
 } 

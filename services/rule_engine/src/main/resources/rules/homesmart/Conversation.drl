@@ -19,8 +19,8 @@ rule "First contact"
         agent: Homesmart()
     then
         modify(agent) {
-            sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!");
-            sendInterestQuestionare();
+            sendMessage("Hello, my name is Homesmart, a smart Real Estate agent!"),
+            sendInterestQuestionare(),
             setUserId(message.getText())
         }
         delete(message);
@@ -34,8 +34,8 @@ rule "Re-engage costumer"
         )
     then
         modify(agent) {
-            setLastInteractionTime(new Date())
-            sendInterestQuestionare();
+            setLastInteractionTime(new Date()),
+            sendInterestQuestionare()
         };
 end
 
@@ -45,17 +45,17 @@ rule "Process customer answer"
         agent: Homesmart()
     then
         modify(agent) {
-            setCostumerAnswer(answer.getAnswer())
+            setCustomerAnswer(answer.getAnswer())
         };
-        DB_AdapterAPI.fetch_user();
+//        DB_AdapterAPI.fetch_user();  // TODO: fix
 end
 
 rule "Fetch user"
     when
-        user: FetchResult() from entry-point "signals"
+//        user: FetchResult() from entry-point "signals"  // TODO: fix
         agent: Homesmart()
     then
         modify(agent) {
-            updateUserAnswer(answer)
+            updateUserAnswer(agent, agent.getCustomerAnswer())  // TODO: fix
         };
 end
