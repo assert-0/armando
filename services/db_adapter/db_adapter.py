@@ -23,7 +23,7 @@ class DBAdapter(BaseService):
     def __init__(self):
         super().__init__()
 
-        if len(UserModel.all()) == 0:
+        if UserModel.count() == 0:
             self._load_csv()
 
         self.start()
@@ -38,8 +38,7 @@ class DBAdapter(BaseService):
 
     @api
     def update_user(self, new_user: User) -> bool:
-        old_user = UserModel.get(id=new_user["id"])
-        old_user.update(new_user)
+        UserModel(**new_user.dict()).save()
         return True
 
     def _csv_dict_read(self):
