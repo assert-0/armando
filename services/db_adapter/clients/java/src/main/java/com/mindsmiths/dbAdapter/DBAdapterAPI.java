@@ -22,4 +22,11 @@ public class DBAdapterAPI {
         message.send(topic);
         new CallbackResult(message.getConfiguration().getMessageId(), FetchResult.class).save();
     }
+
+    public static void updateUser(User newUser) {
+        Serializable payload = new DBUpdatePayload(newUser);
+        BaseMessage message = new BaseMessage("UPDATE_USER", payload);
+        message.send(topic);
+        new CallbackResult(message.getConfiguration().getMessageId(), Boolean.class).save();
+    }
 }

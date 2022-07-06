@@ -12,6 +12,3 @@ class ReasonForLackOfInterest(Enum):
 class FetchResult(ExtendableModel):
     success: bool
     users: List[User]
-
-class FetchResult(ExtendableModel):
-    
