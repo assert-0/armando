@@ -41,6 +41,11 @@
 			<artifactId>telegram-adapter-client</artifactId>
 			<version>4.0.0a9</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mindsmiths</groupId>
+			<artifactId>db-adapter-client</artifactId>
+			<version>4.0.0a0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>app</finalName>

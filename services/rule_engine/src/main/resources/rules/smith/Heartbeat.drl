@@ -5,6 +5,7 @@ import com.mindsmiths.ruleEngine.util.Log
 import com.mindsmiths.ruleEngine.util.Agents
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI
+import com.mindsmiths.dbAdapter.User
 import com.mindsmiths.dbAdapter.FetchResult
 
 
@@ -20,13 +21,16 @@ rule "test adapter"
     when
         Heartbeat() from entry-point "signals"  // a heartbeat happened
     then
-        DBAdapterAPI.fetchAllUsers();
+        DBAdapterAPI.fetchUser("11");
         
 end
 
 rule "get fetched"
     when
-        res: FetchResult() from entry-point "signals"
+        res: FetchResult(success == true) from entry-point "signals"
     then
+        User user = res.getUsers().get(0);
+        user.setSurname('Ghendi');
+        DBAdapterAPI.updateUser(user);
         Log.info(res.getUsers());
 end

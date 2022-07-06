@@ -1,6 +1,7 @@
 package com.mindsmiths.dbAdapter;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import com.mindsmiths.sdk.core.api.BaseMessage;
 import com.mindsmiths.sdk.core.api.CallbackResult;
@@ -18,7 +19,8 @@ public class DBAdapterAPI {
     }
 
     public static void fetchAllUsers() {
-        BaseMessage message = new BaseMessage("FETCH_ALL_USERS", null);
+        Serializable payload = new HashMap<Integer, Integer>();
+        BaseMessage message = new BaseMessage("FETCH_ALL_USERS", payload);
         message.send(topic);
         new CallbackResult(message.getConfiguration().getMessageId(), FetchResult.class).save();
     }

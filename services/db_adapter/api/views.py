@@ -1,9 +1,10 @@
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional
 
 from forge.core.db import DBView
 
-import services.db_adapter
+import services.db_adapter as db_adapter
 
 
 class ReasonForLackOfInterest(str, Enum):
@@ -20,13 +21,13 @@ class User(DBView):
     email: str
     phoneNumber: str
     amountOfBoughtRE: int
-    datesOfPurchaseInAgency: List[str]
-    lastBoughtRE: str
-    lastInteractionWithAgent: str
+    datesOfPurchaseInAgency: List[datetime]
+    lastBoughtRE: datetime
+    lastInteractionWithAgent: datetime
     interested: Optional[bool]
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
 
     @classmethod
-    def get_service_name() -> str:
+    def get_service_name(cls) -> str:
         return db_adapter.SERVICE_NAME

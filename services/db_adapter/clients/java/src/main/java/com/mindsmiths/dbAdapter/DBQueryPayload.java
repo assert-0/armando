@@ -11,5 +11,5 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DBQueryPayload implements Serializable {
-    private String phone;
+    private String userId;
 }

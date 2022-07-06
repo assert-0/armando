@@ -1,16 +1,16 @@
-import logging
 import csv
+import logging
+from datetime import datetime
 from typing import TextIO
 
 from forge.conf import settings as forge_settings
 from forge.core.api import api
 from forge.core.base import BaseService
-
+from forge.utils.datetime_helpers import str_to_date
 
 from .api import User, FetchResult
-from ..db_adapter import settings
 from .models import UserModel
-
+from ..db_adapter import settings
 
 logger = logging.getLogger(forge_settings.DEFAULT_LOGGER)
 
@@ -35,8 +35,8 @@ class DBAdapter(BaseService):
         return FetchResult(success=True, users=[user.to_view() for user in UserModel.all()])
 
     @api
-    def update_user(self, new_user: User) -> bool:
-        UserModel(**new_user.dict()).save()
+    def update_user(self, newUser: User) -> bool:
+        UserModel(**newUser.dict()).save()
         return True
 
     def _csv_dict_read(self):
@@ -49,7 +49,15 @@ class DBAdapter(BaseService):
         read_data = self._csv_dict_read()
 
         for entry in read_data:
-            print(entry)
-            entry["datesOfPurchaseInAgency"] = entry["datesOfPurchaseInAgency"].split(settings.DB_ARRAY_DELIMITER)
+            entry["datesOfPurchaseInAgency"] = [
+                datetime.combine(
+                    str_to_date(dateOfPurchase), datetime.min.time()
+                ) for dateOfPurchase in entry["datesOfPurchaseInAgency"]
+                .split(settings.DB_ARRAY_DELIMITER)
+            ]
+            entry["lastBoughtRE"] = datetime.combine(str_to_date(entry["lastBoughtRE"]), datetime.min.time())
+            entry["lastInteractionWithAgent"] = datetime.combine(
+                str_to_date(entry["lastInteractionWithAgent"]), datetime.min.time()
+            )
             user = UserModel(**entry)
             user.save()

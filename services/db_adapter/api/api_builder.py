@@ -18,5 +18,5 @@ class DBAdapterAPI(BaseAPI):
         """Returns all users data"""
 
     @staticmethod
-    def update_user(new_user: User) -> Future[FetchResult]:
+    def update_user(newUser: User) -> Future[FetchResult]:
         """Updates user based on user ID"""

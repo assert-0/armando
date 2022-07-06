@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Type, TypeVar, Optional
 
 from forge.core.db import DBModel, DBView
@@ -16,9 +17,9 @@ class UserModel(DBModel):
     email: str
     phoneNumber: str
     amountOfBoughtRE: int
-    datesOfPurchaseInAgency: List[str]
-    lastBoughtRE: str
-    lastInteractionWithAgent: str
+    datesOfPurchaseInAgency: List[datetime]
+    lastBoughtRE: datetime
+    lastInteractionWithAgent: datetime
     interested: Optional[bool]
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
