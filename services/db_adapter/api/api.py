@@ -1,20 +1,17 @@
 from forge.core.models import ExtendableModel
 
+from enum import Enum
 from typing import List
 
-class User(ExtendableModel):
-    id: str
-    name: str
-    surname: str
-    gender: str
-    age: int
-    email: str
-    phoneNumber: str
-    amountOfBoughtRE: int
-    datesOfPurchaseInAgency: List[str]
-    lastBoughtRE: str
-    lastInteractionWithAgent: str
+
+class ReasonForLackOfInterest(Enum):
+    INTERESTED = 0
+    SATISFIED_ALREADY = 1
+    NO_MONEY = 2
 
 class FetchResult(ExtendableModel):
     success: bool
     users: List[User]
+
+class FetchResult(ExtendableModel):
+    
