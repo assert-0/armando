@@ -10,7 +10,7 @@ from forge.core.base import BaseService
 from .api import User, FetchResult
 from ..db_adapter import settings
 from .api
-from .model import UserModel
+from .models import UserModel
 from .views import User
 
 
