@@ -3,3 +3,9 @@ com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
     connectionName: telegram
     connectionField: chatId
     agentType: agents.Homesmart
+
+com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered:
+  - !GetOrCreateAgentByConnection
+    connectionName: telegram
+    connectionField: chatId
+    agentType: agents.Homesmart
