@@ -13,16 +13,16 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 @Getter
 @Setter
-public class Homesmart extends Agent {
+public class Armando extends Agent {
     private Date lastInteractionTime;
     private String customerAnswer;
     private String userId;
 
-    public Homesmart() {
+    public Armando() {
         lastInteractionTime = new Date();
     }
 
-    public Homesmart(String connectionName, String connectionId) {
+    public Armando(String connectionName, String connectionId) {
         super(connectionName, connectionId);
         lastInteractionTime = new Date();
     }
