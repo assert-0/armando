@@ -24,7 +24,7 @@ rule "First contact"
         modify(agent) {
             sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
             sendInterestQuestionare(),
-            setUserId("2") //message.getText()
+            setUserId(message.getText())
         }
         delete(message);
 end
@@ -50,7 +50,7 @@ rule "Process customer answer"
         modify(agent) {
             setCustomerAnswer(answer.getAnswer())
         };        
-        DBAdapterAPI.fetchUser("2"); // agent.getUserId()
+        DBAdapterAPI.fetchUser(agent.getUserId());
 end
 
 rule "Update user"

@@ -6,6 +6,7 @@ import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 
 import agents.AgentHitl;
+import signals.UserIdSignal;
 
 
 rule "First AgentHitl contact"
@@ -21,8 +22,8 @@ end
 
 rule "Set AgentHitl user id"
     when
-        userId: String() from entry-point "hitl-agent"
+        signal: UserIdSignal() from entry-point "signals"
         agent: AgentHitl()
     then
-        agent.setUserId(userId);
+        agent.setUserId(signal.getUserId());
 end

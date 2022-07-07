@@ -4,9 +4,10 @@ package rules.protoagent;
 import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
-import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 
-import agents.AgentAgent
+import agents.AgentAgent;
+import signals.UserIdSignal;
 
 
 rule "First AgentAgent contact"
@@ -22,8 +23,8 @@ end
 
 rule "Set AgentAgent user id"
     when
-        userId: String() from entry-point "human-agent"
+        signal: UserIdSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        agent.setUserId(userId);
+        agent.setUserId(signal.getUserId());
 end

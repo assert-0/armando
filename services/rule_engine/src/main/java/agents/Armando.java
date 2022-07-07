@@ -13,6 +13,8 @@ import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
+import signals.UserIdSignal;
+
 
 @Getter
 @Setter
@@ -55,5 +57,12 @@ public class Armando extends Agent {
 
         DBAdapterAPI.updateUser(user);
         Log.info(user); // za testiranje
+    }
+
+    public void sendUserSignal() {
+        UserIdSignal signal = new UserIdSignal();
+        signal.setUserId(getUserId());
+        if (customerAnswer.equals("YES")) send("AGENT", signal, "signals");
+        else send("HITL", signal, "signals");
     }
 } 
