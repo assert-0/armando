@@ -16,10 +16,11 @@ import com.mindsmiths.dbAdapter.User;
 
 @Getter
 @Setter
-public class AgentHitl extends AbstractAgent{
+public class AgentHitl extends AbstractAgent {
+    public static String ID = "HITL";
 
-    public AgentHitl(String connectionName, String connectionId, String clientId) {
-        super(connectionName, connectionId, clientId);
+    public AgentHitl(String connectionName, String connectionId) {
+        super(connectionName, connectionId, ID);
     }
 
     public void sendSurvey(){

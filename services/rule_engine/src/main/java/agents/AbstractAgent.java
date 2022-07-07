@@ -17,8 +17,9 @@ import com.mindsmiths.dbAdapter.DBAdapterAPI;
 public abstract class AbstractAgent extends Agent{
     private String userId;
 
-    public AbstractAgent(String connectionName, String connectionId, String clientId) {
+    public AbstractAgent(String connectionName, String connectionId, String agentId) {
         super(connectionName, connectionId);
+        id = agentId;
     }
 
     public void sendMessage(String text) {

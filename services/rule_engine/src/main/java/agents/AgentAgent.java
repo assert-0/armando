@@ -14,10 +14,11 @@ import com.mindsmiths.dbAdapter.DBAdapterAPI;
 
 @Getter
 @Setter
-public class AgentAgent extends AbstractAgent{
+public class AgentAgent extends AbstractAgent {
+    public static String ID = "AGENT";
 
-    public AgentAgent(String connectionName, String connectionId, String clientId) {
-        super(connectionName, connectionId, clientId);
+    public AgentAgent(String connectionName, String connectionId) {
+        super(connectionName, connectionId, ID);
     }
 
     public void sendSurvey(){
