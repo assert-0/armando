@@ -5,9 +5,12 @@ import java.util.Arrays;
 
 import lombok.*;
 
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.User;
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
+import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 
@@ -16,7 +19,7 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 public class Armando extends Agent {
     private Date lastInteractionTime;
     private String customerAnswer;
-    private String userId;
+    private String userId = "2"; //hardkodirano za testiranje
 
     public Armando() {
         lastInteractionTime = new Date();
@@ -47,12 +50,9 @@ public class Armando extends Agent {
         );
     }
 
-
-    // TODO: fix
-    public void updateUserAnswer(Object obj1, Object obj2) {}
-
-//    public void updateUserAnswer(User user, String answer) {
-//        user.answer = answer;
-//        DB_AdapterAPI.updateUser(user);
-//    }
+    public void updateUserAnswer(User user, String answer) {
+        user.setInterested(answer.equals("YES") ? true : false);
+        DBAdapterAPI.updateUser(user);
+        Log.info(user); // za testiranje
+    }
 } 

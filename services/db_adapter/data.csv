@@ -1,0 +1,15 @@
+id,name,surname,gender,age,email,phoneNumber,amountOfBoughtRE,datesOfPurchaseInAgency,lastBoughtRE,lastInteractionWithAgent
+1,Boris,Johnson,M,47,Boris.Johnson@gmail.com,123456789,1,1992-01-01;1992-03-01;1992-07-01,1992-07-01,2001-05-05
+2,Margaret,Thatcher,F,75,Margaret.Thatcher@gmail.com,123456789,3,1992-01-10,1992-01-10,2001-06-05
+3,Winston,Churchill,M,26,Winston.Churchill@gmail.com,123456789,2,1992-01-13;1992-03-01,1992-03-01,2001-05-05
+4,Tony,Blair,M,34,Tony.Blair@gmail.com,123456789,6,1992-01-16,1992-01-16,2001-05-05
+5,Theresa,May,F,35,Theresa.May@gmail.com,123456789,1,1992-01-29,1992-01-29,2001-05-05
+6,Barack,Obama,M,80,Barack.Obama@gmail.com,123456789,3,1992-01-01,1992-01-01,2001-05-05
+7,George,Bush,M,31,George.Bush@gmail.com,123456789,4,1992-01-01,1992-01-01,2001-07-07
+8,Dick,Cheney,M,56,Dick.Cheney@gmail.com,123456789,7,1992-01-04;1992-07-04;1992-12-04,1992-12-04,2001-05-05
+9,Joe,Biden,M,25,Joe.Biden@gmail.com,123456789,1,1992-01-03,1992-01-03,2001-05-05
+10,Nancy,Pelosi,F,60,Nancy.Pelosi@gmail.com,123456789,2,1992-02-06,1992-02-06,2001-05-05
+11,Mahatma,Gandhi,M,35,Mahatma.Gandhi@gmail.com,123456789,8,1992-01-25,1992-01-25,2001-05-05
+12,Arnold,Schwarzenegger,M,78,Arnold.Schwarzenegger@gmail.com,123456789,4,1992-01-20,1992-01-20,2013-05-05
+13,Hillary,Clinton,F,44,Hillary.Clinton@gmail.com,123456789,6,1992-02-07,1992-02-07,2001-05-05
+14,Greta,Thunberg,F,20,Greta.Thunberg@gmail.com,123456789,2,1992-02-08,1992-02-08,2001-05-05

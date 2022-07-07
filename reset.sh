@@ -20,8 +20,9 @@ kill_consumers() {
 
 trap kill_consumers EXIT
 
-launch_consumers kaliopa-telegram_adapter-input telegram_adapter
-launch_consumers kaliopa-rule_engine-input rule_engine
-launch_consumers kaliopa-gpt3_adapter-input gpt3_adapter
+launch_consumers armando-telegram_adapter-input telegram_adapter
+launch_consumers armando-rule_engine-input rule_engine
+launch_consumers armando-gpt3_adapter-input gpt3_adapter
+launch_consumers armando-db_adapter-input db_adapter
 
 sleep 10
