@@ -31,10 +31,10 @@ rule "Create agent"
             case "User":
                 break;
             case "Agent":
-                Agents.createAgent(new AgentAgent())
+                Agents.createAgent(new AgentAgent("telegram", getConnection("telegram")))
                 break;
             case "Hitl":
-                Agents.createAgent(new AgentHitl())
+                Agents.createAgent(new AgentHitl("telegram", getConnection("telegram")))
                 break;
             default:
                 throw new Exception();

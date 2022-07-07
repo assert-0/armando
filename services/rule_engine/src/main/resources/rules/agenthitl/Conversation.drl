@@ -23,5 +23,5 @@ rule "Set AgentHitl user id"
     when
         userId: String() from entry-point "hitl-agent"
     then
-        setUserId(userId)
+        setUserId(userId);
 end
