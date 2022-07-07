@@ -13,13 +13,14 @@ import agents.AgentAgent;
 
 
 rule "First proto contact"
-    salience 100
+    salience 101
     when
         initialize: Initialize() from entry-point "agent-created"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: ProtoAgent()
     then
         agent.sendRoleAssignment();
+        Log.info("Proto se pokrenuo");
         delete(message);
 end
 

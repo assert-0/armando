@@ -3,9 +3,11 @@ com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
     connectionName: telegram
     connectionField: chatId
     agentType: agents.Armando
+    agentType: agents.ProtoAgent
 
 com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered:
   - !GetOrCreateAgentByConnection
     connectionName: telegram
     connectionField: chatId
     agentType: agents.Armando
+    agentType: agents.ProtoAgent

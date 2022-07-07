@@ -13,7 +13,10 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 @Getter
 @Setter
-public class ProtoAgent extends Agent{
+public class ProtoAgent extends Agent {
+    public ProtoAgent(String connectionName, String connectionId) {
+        super(connectionName, connectionId);
+    }
 
     @Override
     public String getConnection(String connectionName) {
