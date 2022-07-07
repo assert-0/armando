@@ -3,7 +3,9 @@ package rules.protoagent;
 import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
-import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
+import com.mindsmiths.ruleEngine.util.Agents;
+
 
 import agents.ProtoAgent
 import agents.AgentHitl
@@ -24,16 +26,15 @@ end
 rule "Create agent"
     when
         answer: TelegramKeyboardAnswered() from entry-point "signals"
-        agent: ProtoAgent() //??
     then
         switch(answer.getAnswer()) {
             case "User":
                 break;
             case "Agent":
-                //does this work createAgent(AgentAgent)
+                Agents.createAgent(new AgentAgent())
                 break;
             case "Hitl":
-                //does this work createAgent(AgentHitl)
+                Agents.createAgent(new AgentHitl())
                 break;
             default:
                 throw new Exception();

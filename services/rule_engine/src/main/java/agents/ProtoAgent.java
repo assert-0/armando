@@ -15,6 +15,12 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 @Setter
 public class ProtoAgent extends Agent{
 
+    @Override
+    public String getConnection(String connectionName) {
+        // TODO Auto-generated method stub
+        return super.getConnection(connectionName);
+    }
+
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);

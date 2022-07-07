@@ -29,6 +29,7 @@ public abstract class AbstractAgent extends Agent{
     public void sendContactInfo() {
         sendMessage("Your client's name and contact info is as follows:\n");
         DBAdapterAPI.fetchUser(userId);
+        //needs to be done
 
 
     }
