@@ -5,22 +5,27 @@ import java.util.Arrays;
 
 import lombok.*;
 
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.User;
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
+import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 
 @Getter
 @Setter
-public class Homesmart extends Agent {
+public class Armando extends Agent {
     private Date lastInteractionTime;
+    private String customerAnswer;
+    private String userId = "2"; //hardkodirano za testiranje
 
-    public Homesmart() {
+    public Armando() {
         lastInteractionTime = new Date();
     }
 
-    public Homesmart(String connectionName, String connectionId) {
+    public Armando(String connectionName, String connectionId) {
         super(connectionName, connectionId);
         lastInteractionTime = new Date();
     }
@@ -43,5 +48,12 @@ public class Homesmart extends Agent {
                 )
             )
         );
+    }
+
+    public void updateUserAnswer(User user, String answer) {
+        user.setInterested(answer.equals("YES") ? true : false);
+
+        DBAdapterAPI.updateUser(user);
+        Log.info(user); // za testiranje
     }
 } 
