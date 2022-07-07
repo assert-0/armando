@@ -7,9 +7,9 @@ import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 import com.mindsmiths.ruleEngine.util.Agents;
 
 
-import agents.ProtoAgent
-import agents.AgentHitl
-import agents.AgentAgent
+import agents.ProtoAgent;
+import agents.AgentHitl;
+import agents.AgentAgent;
 
 
 rule "First proto contact"
@@ -26,15 +26,16 @@ end
 rule "Create agent"
     when
         answer: TelegramKeyboardAnswered() from entry-point "signals"
+        agent: ProtoAgent()
     then
         switch(answer.getAnswer()) {
             case "User":
                 break;
             case "Agent":
-                Agents.createAgent(new AgentAgent("telegram", getConnection("telegram")))
+                Agents.createAgent(new AgentAgent("telegram", agent.getConnection("telegram")));
                 break;
             case "Hitl":
-                Agents.createAgent(new AgentHitl("telegram", getConnection("telegram")))
+                Agents.createAgent(new AgentHitl("telegram", agent.getConnection("telegram")));
                 break;
             default:
                 throw new Exception();

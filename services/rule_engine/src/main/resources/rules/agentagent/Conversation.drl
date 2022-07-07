@@ -23,6 +23,7 @@ end
 rule "Set AgentAgent user id"
     when
         userId: String() from entry-point "human-agent"
+        agent: AgentAgent()
     then
-        setUserId(userId);
+        agent.setUserId(userId);
 end
