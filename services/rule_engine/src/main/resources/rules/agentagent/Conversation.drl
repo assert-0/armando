@@ -19,3 +19,10 @@ rule "First AgentAgent contact"
         agent.sendSurvey();
         delete(message);
 end
+
+rule "Set AgentAgent user id"
+    when
+        userId: String() from entry-point "human-agent"
+    then
+        setUserId(userId)
+end
