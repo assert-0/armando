@@ -31,7 +31,7 @@ public abstract class AbstractAgent extends Agent{
         sendMessage("Your client's name and contact info is as follows:\n");
         DBAdapterAPI.fetchUser(userId);
 
-
+        
     }
 
     public abstract void sendSurvey();

@@ -18,3 +18,10 @@ rule "First AgentHitl contact"
         agent.sendSurvey();
         delete(message);
 end
+
+rule "Set AgentHitl user id"
+    when
+        userId: String() from entry-point "hitl-agent"
+    then
+        setUserId(userId)
+end
