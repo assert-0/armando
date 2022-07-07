@@ -52,6 +52,7 @@ public class Armando extends Agent {
 
     public void updateUserAnswer(User user, String answer) {
         user.setInterested(answer.equals("YES") ? true : false);
+
         DBAdapterAPI.updateUser(user);
         Log.info(user); // za testiranje
     }

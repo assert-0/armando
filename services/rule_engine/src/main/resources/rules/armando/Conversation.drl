@@ -61,5 +61,8 @@ rule "Update user"
         modify(agent) {
             updateUserAnswer(user.getUsers().get(0), agent.getCustomerAnswer()) 
         };
+        agent.getCustomerAnswer().equals("YES") ?
+            agent.send("AGENT", agent.getUserId(), "human-agent") :
+            agent.send("HITL", agent.getUserId(), "hitl-agent");
         delete(user);
 end
