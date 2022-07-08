@@ -1,4 +1,4 @@
-package rules.protoagent;
+package rules.agentagent;
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.FetchResult;
@@ -24,9 +24,9 @@ end
 rule "Set AgentAgent user id"
     when
         sig: UserIdSignal() from entry-point "signals"
-        agent: AgentAgent()
+        //agent: AgentAgent()
     then
-        Log.info("Received signal");
+        Log.warn("Received signal");
         Log.info(sig.getUserId());
         DBAdapterAPI.fetchUser(sig.getUserId());
 end
@@ -36,6 +36,7 @@ rule "Send AgentAgent contact info"
         res: FetchResult(success == true) from entry-point "signals"
         agent: AgentAgent()
     then
+        Log.warn("Sent contact");
         agent.sendContactInfo(res.getUsers().get(0));
         delete(res);
 end

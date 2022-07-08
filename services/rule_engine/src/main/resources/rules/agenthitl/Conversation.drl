@@ -1,4 +1,4 @@
-package rules.protoagent;
+package rules.agenthitl;
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.FetchResult;

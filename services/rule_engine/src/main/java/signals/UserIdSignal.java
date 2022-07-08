@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import com.mindsmiths.sdk.core.api.Signal;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
