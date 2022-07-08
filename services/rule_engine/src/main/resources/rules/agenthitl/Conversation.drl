@@ -11,16 +11,6 @@ import agents.AgentHitl;
 import signals.UserIdSignal;
 
 
-rule "First AgentHitl contact"
-    salience 100
-    when
-        initialize: Initialize() from entry-point "agent-created"
-        agent: AgentHitl()
-    then
-        agent.sendSurvey();
-        delete(initialize);
-end
-
 rule "Set AgentHitl user id"
     when
         sig: UserIdSignal() from entry-point "signals"
@@ -35,5 +25,6 @@ rule "Send AgentHitl contact info"
         agent: AgentHitl()
     then
         agent.sendContactInfo(res.getUsers().get(0));
+        agent.sendSurvey();
         delete(res);
 end

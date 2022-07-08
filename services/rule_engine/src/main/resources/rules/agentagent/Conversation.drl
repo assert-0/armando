@@ -11,20 +11,10 @@ import agents.AgentAgent;
 import signals.UserIdSignal;
 
 
-rule "First AgentAgent contact"
-    salience 100
-    when
-        initialize: Initialize() from entry-point "agent-created"
-        agent: AgentAgent()
-    then
-        agent.sendSurvey();
-        delete(initialize);
-end
-
 rule "Set AgentAgent user id"
     when
         sig: UserIdSignal() from entry-point "signals"
-        //agent: AgentAgent()
+        agent: AgentAgent()
     then
         Log.warn("Received signal");
         Log.info(sig.getUserId());
@@ -36,7 +26,7 @@ rule "Send AgentAgent contact info"
         res: FetchResult(success == true) from entry-point "signals"
         agent: AgentAgent()
     then
-        Log.warn("Sent contact");
         agent.sendContactInfo(res.getUsers().get(0));
+        agent.sendSurvey();
         delete(res);
 end
