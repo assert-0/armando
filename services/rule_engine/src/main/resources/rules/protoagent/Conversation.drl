@@ -8,12 +8,13 @@ import com.mindsmiths.ruleEngine.util.Agents;
 
 
 import agents.ProtoAgent;
+import agents.Armando;
 import agents.AgentHitl;
 import agents.AgentAgent;
 
 
 rule "First proto contact"
-    salience 101
+    salience 100
     when
         initialize: Initialize() from entry-point "agent-created"
         message: TelegramReceivedMessage() from entry-point "signals"
@@ -31,6 +32,7 @@ rule "Create agent"
     then
         switch(answer.getAnswer()) {
             case "User":
+                Agents.createAgent(new Armando("telegram", agent.getConnection("telegram")));
                 break;
             case "Agent":
                 Agents.createAgent(new AgentAgent("telegram", agent.getConnection("telegram")));

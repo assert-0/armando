@@ -14,6 +14,9 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 @Getter
 @Setter
 public class ProtoAgent extends Agent {
+    public ProtoAgent() {
+    }
+
     public ProtoAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId);
     }

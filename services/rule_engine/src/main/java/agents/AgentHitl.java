@@ -19,6 +19,9 @@ import com.mindsmiths.dbAdapter.User;
 public class AgentHitl extends AbstractAgent {
     public static String ID = "HITL";
 
+    public AgentHitl() {
+    }
+
     public AgentHitl(String connectionName, String connectionId) {
         super(connectionName, connectionId, ID);
     }

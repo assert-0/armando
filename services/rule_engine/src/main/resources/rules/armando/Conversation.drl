@@ -18,7 +18,7 @@ rule "First contact"
     salience 100
     when
         initialize: Initialize() from entry-point "agent-created"
-        message: TelegramReceivedMessage(text.startsWith("/start ")) from entry-point "signals"
+        message: TelegramReceivedMessage() from entry-point "signals"
         agent: Armando()
     then
         modify(agent) {
