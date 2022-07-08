@@ -38,4 +38,9 @@ public class AgentHitl extends AbstractAgent {
             )
         );
     }
+
+    public static void handleFetchResult(User user, String answer) {
+        user.setNoInterestReason(User.NoInterestReason.valueOf(answer));
+        DBAdapterAPI.updateUser(user);
+    }
 }

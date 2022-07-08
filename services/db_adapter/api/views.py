@@ -27,6 +27,7 @@ class User(DBView):
     interested: Optional[bool]
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
+    bought: Optional[bool]
 
     @classmethod
     def get_service_name(cls) -> str:

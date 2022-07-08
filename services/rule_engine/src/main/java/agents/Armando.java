@@ -56,12 +56,10 @@ public class Armando extends Agent {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
         if (answer.equals("YES")) {
-            this.send("AGENT", signal);
-            Log.warn("AGENT Signal sent");
+            send("AGENT", signal, "signals");
         }
         else {
-            this.send("HITL", signal);
-            Log.warn("HITL Signal sent");
+            send("HITL", signal, "signals");
         }
     }
 
