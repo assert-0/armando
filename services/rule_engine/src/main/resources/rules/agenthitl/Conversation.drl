@@ -13,11 +13,10 @@ rule "First AgentHitl contact"
     salience 100
     when
         initialize: Initialize() from entry-point "agent-created"
-        message: TelegramReceivedMessage() from entry-point "signals"
         agent: AgentHitl()
     then
         agent.sendSurvey();
-        delete(message);
+        delete(initialize);
 end
 
 rule "Set AgentHitl user id"

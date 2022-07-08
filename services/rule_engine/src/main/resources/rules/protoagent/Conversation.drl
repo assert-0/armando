@@ -34,7 +34,6 @@ rule "Create agent"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: ProtoAgent()
     then
-        Log.info(answer.getAnswer());
         switch(answer.getAnswer()) {
             case "USER":
                 Agents.createAgent(new Armando("telegram", agent.getConnection("telegram")));
@@ -48,5 +47,4 @@ rule "Create agent"
             default:
                 throw new Exception();
         }
-
 end

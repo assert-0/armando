@@ -14,11 +14,10 @@ rule "First AgentAgent contact"
     salience 100
     when
         initialize: Initialize() from entry-point "agent-created"
-        message: TelegramReceivedMessage() from entry-point "signals"
         agent: AgentAgent()
     then
         agent.sendSurvey();
-        delete(message);
+        delete(initialize);
 end
 
 rule "Set AgentAgent user id"
