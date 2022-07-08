@@ -22,8 +22,7 @@ rule "First contact"
     then
         modify(agent) {
             sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
-            sendInterestQuestionare(),
-            setUserId("2") //message.getText()
+            sendInterestQuestionare()
         }
         Log.info("Armando se pokrenuo");
         delete(initialize);
@@ -47,20 +46,19 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        modify(agent) {
-            setCustomerAnswer(answer.getAnswer())
-        };        
-        DBAdapterAPI.fetchUser("2"); // agent.getUserId()
+        insert(answer);
+        DBAdapterAPI.fetchUser(agent.getUserId());
 end
 
 rule "Update user"
     when
+        res: FetchResult(success == true) from entry-point "signals"
+        answer: TelegramKeyboardAnswered()
         agent: Armando()
-        user: FetchResult(success == true) from entry-point "signals"
     then
-        modify(agent) {
-            updateUserAnswer(user.getUsers().get(0), agent.getCustomerAnswer()),
-            sendUserSignal()
-        };
-        delete(user);
+        Log.info(res);
+        agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
+        agent.sendUserSignal(answer.getAnswer());
+        delete(res);
+        delete(answer);
 end

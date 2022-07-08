@@ -5,17 +5,16 @@ import java.util.Arrays;
 
 import lombok.*;
 
+import com.mindsmiths.dbAdapter.User;
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
-import com.mindsmiths.dbAdapter.DBAdapterAPI;
 
 
 @Getter
 @Setter
-public abstract class AbstractAgent extends Agent{
-    private String userId;
+public abstract class AbstractAgent extends Agent {
 
     protected AbstractAgent() {
     }
@@ -30,12 +29,8 @@ public abstract class AbstractAgent extends Agent{
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
-    public void sendContactInfo() {
-        sendMessage("Your client's name and contact info is as follows:\n");
-        DBAdapterAPI.fetchUser(userId);
-        //needs to be done
-
-        
+    public void sendContactInfo(User user) {
+        sendMessage("Your client's name and contact info is as follows: " + user.getPhoneNumber());
     }
 
     public abstract void sendSurvey();

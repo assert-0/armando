@@ -1,5 +1,7 @@
 package rules.protoagent;
 
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.FetchResult;
 import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
@@ -21,8 +23,17 @@ end
 
 rule "Set AgentHitl user id"
     when
-        signal: UserIdSignal() from entry-point "signals"
+        sig: UserIdSignal() from entry-point "signals"
         agent: AgentHitl()
     then
-        agent.setUserId(signal.getUserId());
+        DBAdapterAPI.fetchUser(sig.getUserId());
+end
+
+rule "Send AgentHitl contact info"
+    when
+        res: FetchResult(success == true) from entry-point "signals"
+        agent: AgentHitl()
+    then
+        agent.sendContactInfo(res.getUsers().get(0));
+        delete(res);
 end

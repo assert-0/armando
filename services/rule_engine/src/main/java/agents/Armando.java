@@ -19,16 +19,10 @@ import signals.UserIdSignal;
 @Getter
 @Setter
 public class Armando extends Agent {
+    private String userId;
     private Date lastInteractionTime;
-    private String customerAnswer;
-    private String userId = "2"; //hardkodirano za testiranje
 
     public Armando() {
-        lastInteractionTime = new Date();
-    }
-
-    public Armando(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
         lastInteractionTime = new Date();
     }
 
@@ -58,17 +52,19 @@ public class Armando extends Agent {
         );
     }
 
-    public void updateUserAnswer(User user, String answer) {
-        user.setInterested(answer.equals("YES") ? true : false);
-
-        DBAdapterAPI.updateUser(user);
-        Log.info(user); // za testiranje
-    }
-
-    public void sendUserSignal() {
+    public void sendUserSignal(String answer) {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
-        if (customerAnswer.equals("YES")) send("AGENT", signal, "signals");
-        else send("HITL", signal, "signals");
+        if (answer.equals("YES")) {
+            send("AGENT", signal, "signals");
+        }
+        else {
+            send("HITL", signal, "signals");
+        }
     }
-} 
+
+    public static void handleFetchResult(User user, String answer) {
+        user.setInterested(answer.equals("YES"));
+        DBAdapterAPI.updateUser(user);
+    }
+}
