@@ -20,8 +20,12 @@ rule "First proto contact"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: ProtoAgent()
     then
-        agent.sendRoleAssignment();
-        Log.info("Proto se pokrenuo");
+        if (message.getText().startsWith("/start ")) {
+            Agents.createAgent(new Armando("telegram", agent.getConnection("telegram"), message.getText().split(" ")[1]));
+        }
+        else {
+            agent.sendRoleAssignment();
+        }
         delete(message);
 end
 
@@ -30,14 +34,15 @@ rule "Create agent"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: ProtoAgent()
     then
+        Log.info(answer.getAnswer());
         switch(answer.getAnswer()) {
-            case "User":
+            case "USER":
                 Agents.createAgent(new Armando("telegram", agent.getConnection("telegram")));
                 break;
-            case "Agent":
+            case "AGENT":
                 Agents.createAgent(new AgentAgent("telegram", agent.getConnection("telegram")));
                 break;
-            case "Hitl":
+            case "HITL":
                 Agents.createAgent(new AgentHitl("telegram", agent.getConnection("telegram")));
                 break;
             default:

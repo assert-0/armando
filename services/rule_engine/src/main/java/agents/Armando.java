@@ -32,6 +32,12 @@ public class Armando extends Agent {
         lastInteractionTime = new Date();
     }
 
+    public Armando(String connectionName, String connectionId, String userId) {
+        super(connectionName, connectionId);
+        lastInteractionTime = new Date();
+        this.userId = userId;
+    }
+
 
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
