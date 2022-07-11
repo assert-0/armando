@@ -18,14 +18,12 @@ rule "First contact"
     salience 100
     when
         initialize: Initialize() from entry-point "agent-created"
-        message: TelegramReceivedMessage() from entry-point "signals"
         agent: Armando()
     then
         modify(agent) {
             sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
             sendInterestQuestionare()
         }
-        Log.warn("Armando se pokrenuo " + message.getText());
         delete(initialize);
 end
 
