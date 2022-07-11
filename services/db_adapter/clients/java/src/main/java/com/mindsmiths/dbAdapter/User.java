@@ -48,5 +48,5 @@ public class User implements Serializable {
     Date lastInteractionWithAgent;
     boolean interested;
     NoInterestReason noInterestReason;
-    boolean bought;
+    boolean boughtRE;
 }

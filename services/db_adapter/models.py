@@ -23,7 +23,7 @@ class UserModel(DBModel):
     interested: Optional[bool]
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
-    bought: Optional[bool]
+    boughtRE: Optional[bool]
 
 
     @classmethod

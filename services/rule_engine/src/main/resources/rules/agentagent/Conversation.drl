@@ -40,7 +40,6 @@ rule "Receive user bought"
     then
         insert(answer);
         DBAdapterAPI.fetchUser(1, answer.getReferenceId());
-        Log.info("[UPDATE] Ref id: " + answer.getReferenceId());
 end
 
 rule "Update user bought"
@@ -49,6 +48,7 @@ rule "Update user bought"
         answer: TelegramKeyboardAnswered()
         agent: AgentAgent()
     then
+        Log.info("[UPDATE FROM RULE] Update user bought: " + answer.getAnswer());
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);

@@ -12,6 +12,7 @@ import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.User;
+import com.mindsmiths.ruleEngine.util.Log;
 
 
 @Getter
@@ -38,6 +39,7 @@ public class AgentHitl extends AbstractAgent {
     }
 
     public static void handleFetchResult(User user, String answer) {
+        Log.warn("[UPDATE FROM RULE] Update user interest: " + answer);
         user.setNoInterestReason(User.NoInterestReason.valueOf(answer));
         DBAdapterAPI.updateUser(user);
     }

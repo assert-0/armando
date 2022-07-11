@@ -10,6 +10,7 @@ import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.ruleEngine.util.Log;
 
 
 @Getter
@@ -37,7 +38,8 @@ public class AgentAgent extends AbstractAgent {
     }
 
     public static void handleFetchResult(User user, String answer) {
-        user.setBought(answer.equals("YES"));
+        user.setBoughtRE(answer.equals("YES"));
+        Log.info("[UPDATE FROM METHOD] Update user bought: " + answer);
         DBAdapterAPI.updateUser(user);
     }
 }

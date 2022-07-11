@@ -55,7 +55,6 @@ rule "Update user"
         answer: TelegramKeyboardAnswered()
         agent: Armando()
     then
-        Log.info(res);
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         agent.sendUserSignal(answer.getAnswer());
         delete(res);
