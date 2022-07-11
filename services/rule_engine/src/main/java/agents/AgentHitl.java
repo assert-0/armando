@@ -16,31 +16,29 @@ import com.mindsmiths.dbAdapter.User;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class AgentHitl extends AbstractAgent {
     public static String ID = "HITL";
-
-    public AgentHitl() {
-    }
 
     public AgentHitl(String connectionName, String connectionId) {
         super(connectionName, connectionId, ID);
     }
 
-    public void sendSurvey(){
+    public void sendSurvey(User user) {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
             "Why are they not interested?\n",
             new KeyboardData(
-                "5982093762831",
+                user.getId(),
                 Arrays.stream(User.NoInterestReason.values())
-                    .map(value -> new KeyboardOption(value.name().toUpperCase(), value.name()))
+                    .map(value -> new KeyboardOption(value.name(), value.name()))
                     .toList()
             )
         );
     }
 
     public static void handleFetchResult(User user, String answer) {
-        user.setNoInterestReason(User.NoInterestReason.valueOf(answer));
+        user.setNoInterestReason(User.NoInterestReason.from(answer));
         DBAdapterAPI.updateUser(user);
     }
 }

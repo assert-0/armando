@@ -34,7 +34,7 @@ public abstract class AbstractAgent extends Agent {
         + "\nYour client's contact:" + user.getPhoneNumber());
     }
 
-    public abstract void sendSurvey();
+    public abstract void sendSurvey(User user);
 
     
 }

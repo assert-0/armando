@@ -19,9 +19,8 @@ import agents.AgentAgent;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ProtoAgent extends Agent {
-    public ProtoAgent() {
-    }
 
     public ProtoAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId);
@@ -29,7 +28,6 @@ public class ProtoAgent extends Agent {
 
     @Override
     public String getConnection(String connectionName) {
-        // TODO Auto-generated method stub
         return super.getConnection(connectionName);
     }
 

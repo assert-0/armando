@@ -6,6 +6,7 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
+import com.mindsmiths.dbAdapter.User;
 
 import agents.AgentAgent;
 import signals.UserIdSignal;
@@ -18,24 +19,36 @@ rule "Set AgentAgent user id"
     then
         Log.warn("Received signal");
         Log.info(sig.getUserId());
-        DBAdapterAPI.fetchUser(sig.getUserId());
+        DBAdapterAPI.fetchUser(0, sig.getUserId());
 end
 
 rule "Send AgentAgent contact info"
     when
-        res: FetchResult(success == true) from entry-point "signals"
+        res: FetchResult(requestId == 0, success == true) from entry-point "signals"
         agent: AgentAgent()
     then
-        agent.sendContactInfo(res.getUsers().get(0));
-        agent.sendSurvey();
+        User user = res.getUsers().get(0);
+        agent.sendContactInfo(user);
+        agent.sendSurvey(user);
         delete(res);
 end
 
-rule "Update user bought"
+rule "Receive user bought"
     when
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: AgentAgent()
     then
+        insert(answer);
+        DBAdapterAPI.fetchUser(1, answer.getReferenceId());
+end
+
+rule "Update user bought"
+    when
+        res: FetchResult(requestId == 1, success == true) from entry-point "signals"
+        answer: TelegramKeyboardAnswered()
+        agent: AgentAgent()
+    then
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
+        delete(res);
 end

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DBUpdatePayload implements Serializable {
+    private int requestId;
     private User newUser;
 }
 

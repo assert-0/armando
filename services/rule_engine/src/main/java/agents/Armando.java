@@ -18,17 +18,13 @@ import signals.UserIdSignal;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Armando extends Agent {
     private String userId;
-    private Date lastInteractionTime;
-
-    public Armando() {
-        lastInteractionTime = new Date();
-    }
+    private Date lastInteractionTime = new Date();
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
-        lastInteractionTime = new Date();
         this.userId = userId;
     }
 

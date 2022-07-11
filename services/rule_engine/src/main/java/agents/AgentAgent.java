@@ -14,22 +14,20 @@ import com.mindsmiths.dbAdapter.DBAdapterAPI;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class AgentAgent extends AbstractAgent {
     public static String ID = "AGENT";
-
-    public AgentAgent() {
-    }
 
     public AgentAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId, ID);
     }
 
-    public void sendSurvey(){
+    public void sendSurvey(User user) {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
             "They bought?\n",
             new KeyboardData(
-                "5982093762831",
+                user.getId(),
                 Arrays.asList(
                     new KeyboardOption("YES", "YES"),
                     new KeyboardOption("NO", "NO")
