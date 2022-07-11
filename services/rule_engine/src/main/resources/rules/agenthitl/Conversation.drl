@@ -50,4 +50,5 @@ rule "Update user interest"
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);
+        Log.info("[UPDATE DONE] AgentHitl Answer: " + answer.getAnswer());
 end
