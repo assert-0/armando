@@ -4,6 +4,7 @@ from forge.core.models import ExtendableModel
 
 from .views import User
 
+
 class FetchResult(ExtendableModel):
     requestId: int
     success: bool
