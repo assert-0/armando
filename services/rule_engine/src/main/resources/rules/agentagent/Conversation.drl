@@ -30,3 +30,12 @@ rule "Send AgentAgent contact info"
         agent.sendSurvey();
         delete(res);
 end
+
+rule "Update user bought"
+    when
+        res: FetchResult(success == true) from entry-point "signals"
+        answer: TelegramKeyboardAnswered()
+        agent: AgentAgent()
+    then
+        agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
+        delete(answer);

@@ -28,3 +28,12 @@ rule "Send AgentHitl contact info"
         agent.sendSurvey();
         delete(res);
 end
+
+rule "Update user not interested"
+    when
+        res: FetchResult(success == true) from entry-point "signals"
+        answer: TelegramKeyboardAnswered()
+        agent: AgentHitl()
+    then
+        agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
+        delete(answer);

@@ -36,4 +36,9 @@ public class AgentAgent extends AbstractAgent {
             )
         );
     }
+
+    public static void handleFetchResult(User user, String answer) {
+        user.setBought(answer.equals("YES"));
+        DBAdapterAPI.updateUser(user);
+    }
 }
