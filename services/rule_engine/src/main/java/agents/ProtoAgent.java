@@ -10,6 +10,7 @@ import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
+import com.mindsmiths.ruleEngine.util.Log;
 
 import agents.Armando;
 import agents.AgentHitl;
@@ -55,9 +56,12 @@ public class ProtoAgent extends Agent {
     public void handleFirstMessage(String text) {
         if (text.startsWith("/start ")) {
             Agents.createAgent(new Armando("telegram", getConnection("telegram"), text.split(" ")[1]));
+            Log.info("Armando " + text.split(" ")[1]);
+            Agents.deleteAgent(this);
         }
         else {
             sendRoleAssignment();
+            Log.info("Else");
         }
     }
 
