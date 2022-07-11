@@ -31,9 +31,9 @@ end
 
 rule "Update user not interested"
     when
-        res: FetchResult(success == true) from entry-point "signals"
-        answer: TelegramKeyboardAnswered()
+        answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: AgentHitl()
     then
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
+end
