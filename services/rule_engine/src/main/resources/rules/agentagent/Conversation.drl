@@ -40,6 +40,7 @@ rule "Receive user bought"
     then
         insert(answer);
         DBAdapterAPI.fetchUser(1, answer.getReferenceId());
+        Log.info("[UPDATE] Ref id: " + answer.getReferenceId());
 end
 
 rule "Update user bought"

@@ -31,14 +31,14 @@ public class AgentHitl extends AbstractAgent {
             new KeyboardData(
                 user.getId(),
                 Arrays.stream(User.NoInterestReason.values())
-                    .map(value -> new KeyboardOption(value.name(), value.name()))
+                    .map(value -> new KeyboardOption(value.name(), value.getText()))
                     .toList()
             )
         );
     }
 
     public static void handleFetchResult(User user, String answer) {
-        user.setNoInterestReason(User.NoInterestReason.from(answer));
+        user.setNoInterestReason(User.NoInterestReason.valueOf(answer));
         DBAdapterAPI.updateUser(user);
     }
 }
