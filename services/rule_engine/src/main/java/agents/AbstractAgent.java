@@ -30,7 +30,8 @@ public abstract class AbstractAgent extends Agent {
     }
 
     public void sendContactInfo(User user) {
-        sendMessage("Your client's name and contact info is as follows: " + user.getPhoneNumber());
+        sendMessage("Your client's name and surname: " + user.getName() + " " + user.getSurname() 
+        + "\nYour client's contact:" + user.getPhoneNumber());
     }
 
     public abstract void sendSurvey();
