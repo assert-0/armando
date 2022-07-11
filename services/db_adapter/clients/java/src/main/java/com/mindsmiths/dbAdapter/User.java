@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
@@ -12,10 +13,14 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
-    enum NoInterestReason {
-        NO_FUNDS,
-        NO_INTERESTING_OFFERS,
-        GENERAL_NO_INTEREST
+    @Getter
+    @AllArgsConstructor
+    public enum NoInterestReason {
+        NO_FUNDS("No funds"),
+        NO_INTERESTING_OFFERS("No interesting offers"),
+        GENERAL_NO_INTEREST("General no interest");
+
+        private final String text;
     }
 
     String id;
@@ -31,4 +36,5 @@ public class User implements Serializable {
     Date lastInteractionWithAgent;
     boolean interested;
     NoInterestReason noInterestReason;
+    boolean boughtRE;
 }

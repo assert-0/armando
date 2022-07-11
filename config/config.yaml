@@ -6,7 +6,7 @@ global:
       - cecs==4.0.0a1
       - services/*.py
   env:
-    PROJECT_SLUG: "demo"
+    PROJECT_SLUG: "armando"
 
     ENVIRONMENT_NAME: {{ env.CI_COMMIT_REF_SLUG }}
     MODULE: '{{ env.MODULE | default("local", True) }}'

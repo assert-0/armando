@@ -8,7 +8,7 @@ from forge.core.api import api
 from forge.core.base import BaseService
 from forge.utils.datetime_helpers import str_to_date
 
-from .api import User, FetchResult
+from .api import User, FetchResult, UpdateResult
 from .models import UserModel
 from ..db_adapter import settings
 
@@ -27,17 +27,17 @@ class DBAdapter(BaseService):
         self.start()
 
     @api
-    def fetch_user(self, userId) -> FetchResult:
-        return FetchResult(success=True, users=[UserModel.get(id=userId).to_view()])
+    def fetch_user(self, requestId: int, userId: str) -> FetchResult:
+        return FetchResult(requestId=requestId, success=True, users=[UserModel.get(id=userId).to_view()])
 
     @api
-    def fetch_all_users(self) -> FetchResult:
-        return FetchResult(success=True, users=[user.to_view() for user in UserModel.all()])
+    def fetch_all_users(self, requestId: int) -> FetchResult:
+        return FetchResult(requestId=requestId, success=True, users=[user.to_view() for user in UserModel.all()])
 
     @api
-    def update_user(self, newUser: User) -> bool:
+    def update_user(self, requestId: int, newUser: User) -> bool:
         UserModel(**newUser.dict()).save()
-        return True
+        return UpdateResult(requestId=requestId, success=True)
 
     def _csv_dict_read(self):
         a = [{k: v for k, v in row.items()}

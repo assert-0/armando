@@ -8,9 +8,9 @@ import services.db_adapter as db_adapter
 
 
 class ReasonForLackOfInterest(str, Enum):
-    INTERESTED = "INTERESTED"
-    SATISFIED_ALREADY = "SATISFIED_ALREADY"
-    NO_MONEY = "NO_MONEY"
+    GENERAL_NO_INTEREST = "GENERAL_NO_INTEREST"
+    NO_INTERESTING_OFFERS = "NO_INTERESTING_OFFERS"
+    NO_FUNDS = "NO_FUNDS"
 
 class User(DBView):
     id: str
@@ -27,6 +27,7 @@ class User(DBView):
     interested: Optional[bool]
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
+    boughtRE: Optional[bool]
 
     @classmethod
     def get_service_name(cls) -> str:

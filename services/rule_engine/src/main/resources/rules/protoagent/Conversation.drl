@@ -1,0 +1,29 @@
+package rules.protoagent;
+
+import com.mindsmiths.ruleEngine.util.Log;
+import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
+import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
+
+import agents.ProtoAgent;
+
+
+rule "First proto contact"
+    salience 100
+    when
+        initialize: Initialize() from entry-point "agent-created"
+        message: TelegramReceivedMessage() from entry-point "signals"
+        agent: ProtoAgent()
+    then
+        agent.handleFirstMessage(message.getText());
+        delete(message);
+end
+
+rule "Create agent"
+    when
+        answer: TelegramKeyboardAnswered() from entry-point "signals"
+        agent: ProtoAgent()
+    then
+        Log.info(answer.getAnswer());
+        agent.handleAgentAssignment(answer.getAnswer());
+end

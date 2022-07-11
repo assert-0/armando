@@ -5,24 +5,27 @@ import java.util.Arrays;
 
 import lombok.*;
 
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.User;
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
+import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
+
+import signals.UserIdSignal;
 
 
 @Getter
 @Setter
-public class Homesmart extends Agent {
-    private Date lastInteractionTime;
+@NoArgsConstructor
+public class Armando extends Agent {
+    private String userId;
+    private Date lastInteractionTime = new Date();
 
-    public Homesmart() {
-        lastInteractionTime = new Date();
-    }
-
-    public Homesmart(String connectionName, String connectionId) {
+    public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
-        lastInteractionTime = new Date();
+        this.userId = userId;
     }
 
 
@@ -44,4 +47,21 @@ public class Homesmart extends Agent {
             )
         );
     }
-} 
+
+    public void sendUserSignal(String answer) {
+        UserIdSignal signal = new UserIdSignal();
+        signal.setUserId(getUserId());
+        if (answer.equals("YES")) {
+            send("AGENT", signal, "signals");
+        }
+        else {
+            send("HITL", signal, "signals");
+        }
+    }
+
+    public static void handleFetchResult(User user, String answer) {
+        user.setInterested(answer.equals("YES"));
+        DBAdapterAPI.updateUser(user);
+        Log.info(user);
+    }
+}

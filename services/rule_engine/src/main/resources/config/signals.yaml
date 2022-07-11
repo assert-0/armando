@@ -2,10 +2,10 @@ com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
   - !GetOrCreateAgentByConnection
     connectionName: telegram
     connectionField: chatId
-    agentType: agents.Homesmart
+    agentType: agents.ProtoAgent
 
 com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered:
   - !GetOrCreateAgentByConnection
     connectionName: telegram
     connectionField: chatId
-    agentType: agents.Homesmart
+    agentType: agents.ProtoAgent

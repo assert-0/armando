@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DBQueryPayload implements Serializable {
+public class DBFetchPayload implements Serializable {
+    private int requestId;
     private String userId;
 }

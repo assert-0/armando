@@ -10,6 +10,7 @@ public class Runner extends RuleEngineService {
 
         if (!Agents.exists(Smith.ID))
             Agents.createAgent(new Smith());
+        
     }
 
     public static void main(String[] args) {
