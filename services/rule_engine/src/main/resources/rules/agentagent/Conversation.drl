@@ -40,7 +40,7 @@ rule "Receive user bought"
     then
         insert(answer);
         DBAdapterAPI.fetchUser(1, answer.getReferenceId());
-        Log.info("[UPDATE] Ref id: " + answer.getReferenceId());
+        Log.info("[UPDATE] AgentAgent Ref id: " + answer.getReferenceId());
 end
 
 rule "Update user bought"
@@ -52,4 +52,5 @@ rule "Update user bought"
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);
+        Log.info("[UPDATE DONE] AgentAgent Answer: " + answer.getAnswer());
 end

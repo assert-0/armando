@@ -38,7 +38,7 @@ rule "Receive user interest"
     then
         insert(answer);
         DBAdapterAPI.fetchUser(1, answer.getReferenceId());
-        Log.info("[UPDATE] Ref id: " + answer.getReferenceId());
+        Log.info("[UPDATE] AgentHitl Ref id: " + answer.getReferenceId());
 end
 
 rule "Update user interest"
@@ -50,4 +50,5 @@ rule "Update user interest"
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);
+        Log.info("[UPDATE DONE] AgentHitl Answer: " + answer.getAnswer());
 end
