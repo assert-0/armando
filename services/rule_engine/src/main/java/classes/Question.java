@@ -7,5 +7,5 @@ import lombok.*;
 @Data
 public class Question {
     private String text;
-    private List<String> answers;
+    private List<Answer> answers;
 }
