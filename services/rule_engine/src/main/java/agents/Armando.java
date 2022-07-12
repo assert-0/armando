@@ -16,6 +16,7 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import signals.UserIdSignal;
+import classes.Question;
 
 
 @Getter
@@ -23,6 +24,7 @@ import signals.UserIdSignal;
 @NoArgsConstructor
 public class Armando extends Agent {
     private String userId;
+    private User user;
     private Date lastInteractionTime = new Date();
     private List<Question> questions = new ArrayList<>();
     private int currentIndex = 0;
@@ -31,7 +33,6 @@ public class Armando extends Agent {
         super(connectionName, connectionId);
         this.userId = userId;
     }
-
 
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
@@ -67,7 +68,7 @@ public class Armando extends Agent {
         
     }
 
-    public static void handleFetchResult(User user, String answer) {
+    public void handleFetchResult(String answer) {
         user.setInterested(answer.equals("YES"));
         DBAdapterAPI.updateUser(user);
         Log.info(user);

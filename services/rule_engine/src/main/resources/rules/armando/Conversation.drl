@@ -24,7 +24,19 @@ rule "First contact"
             sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
             sendInterestQuestionare()
         }
+        DBAdapterAPI.fetchUser(0, agent.getUserId());
         delete(initialize);
+end
+
+rule "Receive user data"
+    when
+        res: FetchResult(requestId == 0, success == true) from entry-point "signals"
+        agent: Armando()
+    then
+        modify(agent) {
+            setUser(res.getUsers().get(0))
+        };
+        delete(res);
 end
 
 rule "Re-engage costumer"
@@ -35,9 +47,9 @@ rule "Re-engage costumer"
         )
     then
         modify(agent) {
-            setLastInteractionTime(new Date()),
-            sendInterestQuestionare()
+            setLastInteractionTime(new Date())
         };
+        agent.sendInterestQuestionare();
 end
 
 rule "Process customer answer"
@@ -45,19 +57,8 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered(referenceId == "5982093762831") from entry-point "signals"
         agent: Armando()
     then
-        insert(answer);
-        DBAdapterAPI.fetchUser(agent.getUserId());
-end
-
-rule "Update user"
-    when
-        res: FetchResult(success == true) from entry-point "signals"
-        answer: TelegramKeyboardAnswered(referenceId == "5982093762831")
-        agent: Armando()
-    then
-        agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
+        agent.handleFetchResult(answer.getAnswer());
         agent.sendUserSignal(answer.getAnswer());
-        delete(res);
         delete(answer);
 end
 
