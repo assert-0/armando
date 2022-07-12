@@ -63,6 +63,10 @@ public class Armando extends Agent {
         }
     }
 
+    public void handleAnswer(String answer) {
+        
+    }
+
     public static void handleFetchResult(User user, String answer) {
         user.setInterested(answer.equals("YES"));
         DBAdapterAPI.updateUser(user);

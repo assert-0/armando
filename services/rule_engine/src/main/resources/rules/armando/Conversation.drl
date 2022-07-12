@@ -60,3 +60,12 @@ rule "Update user"
         delete(res);
         delete(answer);
 end
+
+rule "Receive answer"
+    when
+        answer: TelegramKeyboardAnswered() from entry-point "signals"
+        agent: Armando()
+    then
+        agent.handleAnswer(answer.getAnswer());
+        delete(answer);
+end
