@@ -64,9 +64,9 @@ end
 
 rule "Receive answer"
     when
-        answer: TelegramKeyboardAnswered() from entry-point "signals"
+        answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        agent.handleAnswer(answer.getAnswer());
+        agent.handleAnswer(answer.getAnswers());
         delete(answer);
 end

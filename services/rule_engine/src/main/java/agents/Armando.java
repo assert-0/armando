@@ -117,6 +117,21 @@ public class Armando extends Agent {
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
+    public void sendQuestion(Question question) {
+        TelegramAdapterAPI.sendMessage(
+            connections.get("telegram"),
+            question.getText(),
+            new KeyboardData(
+                "5982093762832",
+                question.getAnswers()
+                    .stream()
+                    .map(answer => new KeyboardOption(answer.getText(), answer.getText())),
+                false,
+                true
+            )
+        );
+    }
+
     public void sendInterestQuestionare() {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
@@ -136,19 +151,35 @@ public class Armando extends Agent {
         signal.setUserId(getUserId());
         if (answer.equals("YES")) {
             send("AGENT", signal, "signals");
+            questions = YesQuestions;
         }
         else {
             send("HITL", signal, "signals");
+            questions = NoQuestions;
         }
     }
 
-    public void handleAnswer(String answer) {
-        
+    public void handleAnswer(List<String> answers) {
+        for (var answer : answers) {
+            for (var questionAnswer : questions.get(currentIndex).getAnswers()) {
+                if (answer.equals(questionAnswer.getText())) {
+                    switch (questionAnswer.getAction()) {
+                        case Answer.Action.CALL_HITL:
+                            break;
+                        case Answer.Action.CALL_AGENT:
+                            break;
+                        case Answer.Action.NEXT_QUESTION:
+                            break;
+                        case Answer.Action.EXIT:
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     public void handleFetchResult(String answer) {
         user.setInterested(answer.equals("YES"));
         DBAdapterAPI.updateUser(user);
-        Log.info(user);
     }
 }
