@@ -2,6 +2,8 @@ package agents;
 
 import java.util.Date;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
 import lombok.*;
 
@@ -22,6 +24,8 @@ import signals.UserIdSignal;
 public class Armando extends Agent {
     private String userId;
     private Date lastInteractionTime = new Date();
+    private List<Question> questions = new ArrayList<>();
+    private int currentIndex = 0;
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);

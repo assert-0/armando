@@ -42,7 +42,7 @@ end
 
 rule "Process customer answer"
     when
-        answer: TelegramKeyboardAnswered() from entry-point "signals"
+        answer: TelegramKeyboardAnswered(referenceId == "5982093762831") from entry-point "signals"
         agent: Armando()
     then
         insert(answer);
@@ -52,7 +52,7 @@ end
 rule "Update user"
     when
         res: FetchResult(success == true) from entry-point "signals"
-        answer: TelegramKeyboardAnswered()
+        answer: TelegramKeyboardAnswered(referenceId == "5982093762831")
         agent: Armando()
     then
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
