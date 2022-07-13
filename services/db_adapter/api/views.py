@@ -3,9 +3,17 @@ from enum import Enum
 from typing import List, Optional
 
 from forge.core.db import DBView
+from forge.core.models import ExtendableModel
 
 import services.db_adapter as db_adapter
 
+
+class Question(ExtendableModel):
+    text: str
+    answers: List[str]
+
+    def __eq__(self, other):
+        return self.text == other.text
 
 class ReasonForLackOfInterest(str, Enum):
     GENERAL_NO_INTEREST = "GENERAL_NO_INTEREST"
@@ -28,6 +36,7 @@ class User(DBView):
     reasonIfNotInterested: Optional[ReasonForLackOfInterest]
     telegramChatId: Optional[str]
     boughtRE: Optional[bool]
+    questions: List[Question]
 
     @classmethod
     def get_service_name(cls) -> str:

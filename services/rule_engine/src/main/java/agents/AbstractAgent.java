@@ -32,5 +32,8 @@ public abstract class AbstractAgent extends Agent {
     public void sendContactInfo(User user) {
         sendMessage("Your client's name and surname: " + user.getName() + " " + user.getSurname()
         + "\nYour client's contact:" + user.getPhoneNumber());
+        for (var question : user.getQuestions()) {
+            sendMessage(question.getText() + " = " + String.join(", ", question.getAnswers()));
+        }
     }
 }

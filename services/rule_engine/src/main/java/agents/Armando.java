@@ -9,6 +9,7 @@ import lombok.*;
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.User;
+import com.mindsmiths.dbAdapter.Question;
 import com.mindsmiths.ruleEngine.model.Agent;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
@@ -16,8 +17,6 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import signals.UserIdSignal;
-import classes.Question;
-import classes.Answer;
 import classes.QuestionFactory;
 
 
@@ -25,8 +24,8 @@ import classes.QuestionFactory;
 @Setter
 @NoArgsConstructor
 public class Armando extends Agent {
-    public static List<Question> YesQuestions = new ArrayList<>();
-    public static List<Question> NoQuestions = new ArrayList<>();
+    public static List<classes.Question> YesQuestions = new ArrayList<>();
+    public static List<classes.Question> NoQuestions = new ArrayList<>();
 
     static {
         QuestionFactory.fillQuestions(YesQuestions, "YES");
@@ -35,7 +34,7 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private List<Question> questions;
+    private List<classes.Question> questions;
     private int currentIndex = -1;
 
     public Armando(String connectionName, String connectionId, String userId) {
@@ -53,7 +52,7 @@ public class Armando extends Agent {
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
-    public void sendQuestion(Question question) {
+    public void sendQuestion(classes.Question question) {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
             question.getText(),
@@ -116,9 +115,10 @@ public class Armando extends Agent {
                 }
             }
         }
-        if(callHitlFlag) send("HITL", signal);
-        if(callAgentFlag) send("AGENT", signal);
-        if(nextQuestionFlag) sendNextQuestion();
+        if (callHitlFlag) send("HITL", signal);
+        if (callAgentFlag) send("AGENT", signal);
+        if (nextQuestionFlag) sendNextQuestion();
+        user.getQuestions().add(new Question(questions.get(currentIndex).getText(), answers));
         DBAdapterAPI.updateUser(user);
     }
 
