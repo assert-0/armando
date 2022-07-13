@@ -24,8 +24,8 @@ import classes.Answer;
 @Setter
 @NoArgsConstructor
 public class Armando extends Agent {
-    private static List<Question> YesQuestions = new ArrayList<>();
-    private static List<Question> NoQuestions = new ArrayList<>();
+    public static List<Question> YesQuestions = new ArrayList<>();
+    public static List<Question> NoQuestions = new ArrayList<>();
 
     static {
         YesQuestions.add(
@@ -105,7 +105,7 @@ public class Armando extends Agent {
     private User user;
     private Date lastInteractionTime = new Date();
     private List<Question> questions;
-    private int currentIndex = 0;
+    private int currentIndex = -1;
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
@@ -125,11 +125,19 @@ public class Armando extends Agent {
                 "5982093762832",
                 question.getAnswers()
                     .stream()
-                    .map(answer => new KeyboardOption(answer.getText(), answer.getText())),
+                    .map(answer -> new KeyboardOption(answer.getText(), answer.getText()))
+                    .toList(),
                 false,
                 true
             )
         );
+    }
+
+    public void sendNextQuestion() {
+        currentIndex++;
+        if (currentIndex < questions.size()) {
+            sendQuestion(questions.get(currentIndex));
+        }
     }
 
     public void sendInterestQuestionare() {
@@ -146,31 +154,23 @@ public class Armando extends Agent {
         );
     }
 
-    public void sendUserSignal(String answer) {
+    public void handleAnswer(List<String> answers) {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
-        if (answer.equals("YES")) {
-            send("AGENT", signal, "signals");
-            questions = YesQuestions;
-        }
-        else {
-            send("HITL", signal, "signals");
-            questions = NoQuestions;
-        }
-    }
-
-    public void handleAnswer(List<String> answers) {
         for (var answer : answers) {
             for (var questionAnswer : questions.get(currentIndex).getAnswers()) {
                 if (answer.equals(questionAnswer.getText())) {
                     switch (questionAnswer.getAction()) {
-                        case Answer.Action.CALL_HITL:
+                        case CALL_HITL:
+                            send("HITL", signal);
                             break;
-                        case Answer.Action.CALL_AGENT:
+                        case CALL_AGENT:
+                            send("AGENT", signal);
                             break;
-                        case Answer.Action.NEXT_QUESTION:
+                        case NEXT_QUESTION:
+                            sendNextQuestion();
                             break;
-                        case Answer.Action.EXIT:
+                        case EXIT:
                             break;
                     }
                 }
@@ -181,5 +181,6 @@ public class Armando extends Agent {
     public void handleFetchResult(String answer) {
         user.setInterested(answer.equals("YES"));
         DBAdapterAPI.updateUser(user);
+        sendNextQuestion();
     }
 }

@@ -9,6 +9,7 @@ import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
+import com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered;
 import com.mindsmiths.ruleEngine.util.Log;
 
 import agents.Armando;
@@ -57,8 +58,10 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered(referenceId == "5982093762831") from entry-point "signals"
         agent: Armando()
     then
+        modify(agent) {
+            setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
+        }
         agent.handleFetchResult(answer.getAnswer());
-        agent.sendUserSignal(answer.getAnswer());
         delete(answer);
 end
 
