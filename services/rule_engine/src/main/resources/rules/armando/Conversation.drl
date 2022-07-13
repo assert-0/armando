@@ -23,7 +23,6 @@ rule "First contact"
         agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
         DBAdapterAPI.fetchUser(agent.getUserId());
         delete(initialize);
-        agent.info("[DEBUG] Agent user id: " + agent.getUserId());
 end
 
 rule "Receive user data"
@@ -61,7 +60,6 @@ rule "Process customer answer"
         }
         agent.handleFetchResult(answer.getAnswer());
         delete(answer);
-        agent.info("[DEBUG] User : " + agent.getUser());
 end
 
 rule "Receive answer"
@@ -69,7 +67,7 @@ rule "Receive answer"
         answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        agent.info("[DEBUG] Received multiple answer: " + answer.getAnswers());
+        Log.info("[DEBUG] Received multiple answer: " + answer.getAnswers());
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
 end
