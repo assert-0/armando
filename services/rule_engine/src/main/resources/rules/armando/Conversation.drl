@@ -21,11 +21,7 @@ rule "First contact"
         initialize: Initialize() from entry-point "agent-created"
         agent: Armando()
     then
-        modify(agent) {
-            sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
-            sendInterestQuestionare()
-        }
-        Log.info("[DEBUG] User id : " + agent.getUserId());
+        agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
         DBAdapterAPI.fetchUser(0, agent.getUserId());
         delete(initialize);
 end
@@ -38,7 +34,7 @@ rule "Receive user data"
         modify(agent) {
             setUser(res.getUsers().get(0))
         };
-        Log.info("[DEBUG] " + agent.getUser());
+        agent.sendInterestQuestionare();
         delete(res);
 end
 
