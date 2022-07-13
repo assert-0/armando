@@ -79,7 +79,7 @@ public class Armando extends Agent {
     public void sendInterestQuestionare() {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
-            "Are you interested in a purchase of Real Estate?\n",
+            "Is everything okay with your real estate?\n",
             new KeyboardData(
                 "5982093762831",
                 Arrays.asList(
