@@ -10,7 +10,6 @@ import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 import com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered;
-import com.mindsmiths.ruleEngine.util.Log;
 
 import agents.Armando;
 
@@ -22,13 +21,14 @@ rule "First contact"
         agent: Armando()
     then
         agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
-        DBAdapterAPI.fetchUser(0, agent.getUserId());
+        DBAdapterAPI.fetchUser(agent.getUserId());
         delete(initialize);
+        throw new Exception("Agent user id: " + agent.getUserId());
 end
 
 rule "Receive user data"
     when
-        res: FetchResult(requestId == 0, success == true) from entry-point "signals"
+        res: FetchResult(success == true) from entry-point "signals"
         agent: Armando()
     then
         modify(agent) {
@@ -36,6 +36,7 @@ rule "Receive user data"
         };
         agent.sendInterestQuestionare();
         delete(res);
+        throw new Exception("[DEBUG2] Agent user: " + agent.getUser() + "\nRes user: " + res.getUsers().get(0));
 end
 
 rule "Re-engage costumer"
@@ -48,14 +49,14 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
-        agent.sendInterestQuestionare();
 end
 
 rule "Process customer answer"
     when
-        answer: TelegramKeyboardAnswered(referenceId == "5982093762831") from entry-point "signals"
+        answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
+        Log.info("[DEBUG] User : " + agent.getUser());
         modify(agent) {
             setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
         }
