@@ -43,6 +43,11 @@ public class Armando extends Agent {
         this.userId = userId;
     }
 
+    public void setUser(User user) {
+        Log.info("Setting user: " + user);
+        this.user = user;
+    }
+
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);

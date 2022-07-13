@@ -23,7 +23,7 @@ rule "First contact"
         agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
         DBAdapterAPI.fetchUser(agent.getUserId());
         delete(initialize);
-        throw new Exception("Agent user id: " + agent.getUserId());
+        Log.info("[DEBUG] Agent user id: " + agent.getUserId());
 end
 
 rule "Receive user data"
@@ -36,7 +36,7 @@ rule "Receive user data"
         };
         agent.sendInterestQuestionare();
         delete(res);
-        throw new Exception("[DEBUG2] Agent user: " + agent.getUser() + "\nRes user: " + res.getUsers().get(0));
+        Log.info("[DEBUG] Agent user: " + agent.getUser() + ", Res user: " + res.getUsers().get(0));
 end
 
 rule "Re-engage costumer"
@@ -56,12 +56,12 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        Log.info("[DEBUG] User : " + agent.getUser());
         modify(agent) {
             setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
         }
         agent.handleFetchResult(answer.getAnswer());
         delete(answer);
+        Log.info("[DEBUG] User : " + agent.getUser());
 end
 
 rule "Receive answer"
@@ -69,6 +69,7 @@ rule "Receive answer"
         answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
+        Log.info("[DEBUG] Received multiple answer: " + answer.getAnswers());
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
 end

@@ -3,13 +3,11 @@ package classes;
 import java.util.List;
 import java.util.Arrays;
 
-import classes.Question;
-import classes.Answer;
 
-public class QuestionFactory {
+public abstract class QuestionFactory {
     public static void fillQuestions(List<Question> list, String type) {
         if(type.equals("YES")) {
-                list.add(
+            list.add(
                 new Question(
                     "Glad to hear that! What exactly do you like with your new real estate?",
                     Arrays.asList(
