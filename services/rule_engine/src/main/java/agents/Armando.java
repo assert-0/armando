@@ -93,19 +93,22 @@ public class Armando extends Agent {
     public void handleAnswer(List<String> answers) {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
+        boolean callHitlFlag = false;
+        boolean callAgentFlag = false;
+        boolean nextQuestionFlag = false;
         for (var answer : answers) {
             for (var questionAnswer : questions.get(currentIndex).getAnswers()) {
                 this.info("Answer: " + answer + ", QuestionAnswer: " + questionAnswer);
                 if (answer.equals(questionAnswer.getText())) {
                     switch (questionAnswer.getAction()) {
                         case CALL_HITL:
-                            send("HITL", signal);
+                            callHitlFlag = true;
                             break;
                         case CALL_AGENT:
-                            send("AGENT", signal);
+                            callAgentFlag = true;
                             break;
                         case NEXT_QUESTION:
-                            sendNextQuestion();
+                            nextQuestionFlag = true;
                             break;
                         case EXIT:
                             break;
@@ -113,6 +116,10 @@ public class Armando extends Agent {
                 }
             }
         }
+        if(callHitlFlag) send("HITL", signal);
+        if(callAgentFlag) send("AGENT", signal);
+        if(nextQuestionFlag) sendNextQuestion();
+        DBAdapterAPI.updateUser(user);
     }
 
     public void handleFetchResult(String answer) {
