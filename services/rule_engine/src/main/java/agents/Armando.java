@@ -44,7 +44,7 @@ public class Armando extends Agent {
     }
 
     public void setUser(User user) {
-        Log.info("Setting user: " + user);
+        this.info("Setting user: " + user);
         this.user = user;
     }
 
@@ -95,6 +95,7 @@ public class Armando extends Agent {
         signal.setUserId(getUserId());
         for (var answer : answers) {
             for (var questionAnswer : questions.get(currentIndex).getAnswers()) {
+                this.info("Answer: " + answer + ", QuestionAnswer: " + questionAnswer);
                 if (answer.equals(questionAnswer.getText())) {
                     switch (questionAnswer.getAction()) {
                         case CALL_HITL:
@@ -118,5 +119,9 @@ public class Armando extends Agent {
         user.setInterested(answer.equals("YES"));
         DBAdapterAPI.updateUser(user);
         sendNextQuestion();
+    }
+
+    public static void info(String message) {
+        Log.LOGGER.info(message);
     }
 }
