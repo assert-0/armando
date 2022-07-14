@@ -27,6 +27,8 @@ public class Armando extends Agent {
     public static List<classes.Question> YesQuestions = new ArrayList<>();
     public static List<classes.Question> NoQuestions = new ArrayList<>();
 
+    public static String initialQuestion = "Is everything okay with your real estate?";
+
     static {
         QuestionFactory.fillQuestions(YesQuestions, "YES");
         QuestionFactory.fillQuestions(NoQuestions, "NO");
@@ -78,7 +80,7 @@ public class Armando extends Agent {
     public void sendInterestQuestionare() {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
-            "Is everything okay with your real estate?\n",
+            initialQuestion,
             new KeyboardData(
                 "5982093762831",
                 Arrays.asList(
@@ -97,7 +99,6 @@ public class Armando extends Agent {
         boolean nextQuestionFlag = false;
         for (var answer : answers) {
             for (var questionAnswer : questions.get(currentIndex).getAnswers()) {
-                this.info("Answer: " + answer + ", QuestionAnswer: " + questionAnswer);
                 if (answer.equals(questionAnswer.getText())) {
                     switch (questionAnswer.getAction()) {
                         case CALL_HITL:
@@ -115,17 +116,18 @@ public class Armando extends Agent {
                 }
             }
         }
+        user.getQuestions().add(new Question(questions.get(currentIndex).getText(), answers));
+        DBAdapterAPI.updateUser(user);
         if (callHitlFlag) send("HITL", signal);
         if (callAgentFlag) send("AGENT", signal);
         if (nextQuestionFlag) sendNextQuestion();
-        user.getQuestions().add(new Question(questions.get(currentIndex).getText(), answers));
-        DBAdapterAPI.updateUser(user);
     }
 
-    public void handleFetchResult(String answer) {
+    public void updateUserInterest(String answer) {
         user.setInterested(answer.equals("YES"));
+        user.getQuestions().clear();
+        user.getQuestions().add(new Question(initialQuestion, Arrays.asList(answer)));
         DBAdapterAPI.updateUser(user);
-        sendNextQuestion();
     }
 
     public static void info(String message) {

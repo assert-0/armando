@@ -35,7 +35,6 @@ rule "Receive user data"
         };
         agent.sendInterestQuestionare();
         delete(res);
-        agent.info("[DEBUG] Agent user: " + agent.getUser() + ", Res user: " + res.getUsers().get(0));
 end
 
 rule "Re-engage costumer"
@@ -58,7 +57,8 @@ rule "Process customer answer"
         modify(agent) {
             setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
         }
-        agent.handleFetchResult(answer.getAnswer());
+        agent.updateUserInterest(answer.getAnswer());
+        agent.sendNextQuestion();
         delete(answer);
 end
 
@@ -67,7 +67,6 @@ rule "Receive answer"
         answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        Log.info("[DEBUG] Received multiple answer: " + answer.getAnswers());
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
 end

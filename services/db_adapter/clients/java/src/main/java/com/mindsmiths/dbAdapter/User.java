@@ -3,7 +3,6 @@ package com.mindsmiths.dbAdapter;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Date;
-import java.util.Set;
 
 import lombok.Data;
 import lombok.Getter;
@@ -39,5 +38,5 @@ public class User implements Serializable {
     boolean interested;
     NoInterestReason noInterestReason;
     boolean boughtRE;
-    Set<Question> questions;
+    List<Question> questions;
 }
