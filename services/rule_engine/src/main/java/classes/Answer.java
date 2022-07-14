@@ -2,6 +2,8 @@ package classes;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.*;
 
 
@@ -9,13 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answer {
-    public enum Action {
-        CALL_HITL,
-        CALL_AGENT,
-        NONE
-    }
-
     private String text;
+    @JsonDeserialize(as = CallAgentAction.class)
     private Action action;
     private Question nextQuestion;
 }
