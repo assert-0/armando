@@ -1,4 +1,4 @@
-package classes;
+package util;
 
 import lombok.*;
 

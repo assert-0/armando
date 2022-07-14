@@ -20,9 +20,9 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import signals.UserIdSignal;
-import classes.QuestionFactory;
-import classes.Question;
-import classes.Action;
+import util.QuestionFactory;
+import util.Question;
+import util.Action;
 
 
 @Getter
