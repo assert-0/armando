@@ -17,26 +17,26 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import signals.UserIdSignal;
-import classes.QuestionFactory;
+import util.QuestionFactory;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class Armando extends Agent {
-    public static List<classes.Question> YesQuestions = new ArrayList<>();
-    public static List<classes.Question> NoQuestions = new ArrayList<>();
+    public static List<util.Question> YesQuestions = new ArrayList<>();
+    public static List<util.Question> NoQuestions = new ArrayList<>();
 
     public static String initialQuestion = "Is everything okay with your real estate?";
 
     static {
-        QuestionFactory.fillQuestions(YesQuestions, "YES");
-        QuestionFactory.fillQuestions(NoQuestions, "NO");
+        YesQuestions = QuestionFactory.fillQuestions("YES");
+        NoQuestions = QuestionFactory.fillQuestions("NO");
     }
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private List<classes.Question> questions;
+    private List<util.Question> questions;
     private int currentIndex = -1;
 
     public Armando(String connectionName, String connectionId, String userId) {
@@ -44,17 +44,12 @@ public class Armando extends Agent {
         this.userId = userId;
     }
 
-    public void setUser(User user) {
-        this.info("Setting user: " + user);
-        this.user = user;
-    }
-
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
-    public void sendQuestion(classes.Question question) {
+    public void sendQuestion(util.Question question) {
         TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
             question.getText(),

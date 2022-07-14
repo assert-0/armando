@@ -1,11 +1,13 @@
-package classes;
+package util;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public abstract class QuestionFactory {
-    public static void fillQuestions(List<Question> list, String type) {
+    public static List<Question> fillQuestions(String type) {
+        List<Question> list = new ArrayList<Question>();
         if(type.equals("YES")) {
             list.add(
                 new Question(
@@ -80,5 +82,6 @@ public abstract class QuestionFactory {
                 )
             );    
         }
+        return list;
     }
 }
