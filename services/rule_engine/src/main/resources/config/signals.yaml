@@ -9,3 +9,9 @@ com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered:
     connectionName: telegram
     connectionField: chatId
     agentType: agents.ProtoAgent
+
+com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered:
+  - !GetOrCreateAgentByConnection
+    connectionName: telegram
+    connectionField: chatId
+    agentType: agents.ProtoAgent

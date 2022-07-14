@@ -9,7 +9,7 @@ import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
-import com.mindsmiths.ruleEngine.util.Log;
+import com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered;
 
 import agents.Armando;
 
@@ -20,11 +20,21 @@ rule "First contact"
         initialize: Initialize() from entry-point "agent-created"
         agent: Armando()
     then
-        modify(agent) {
-            sendMessage("Hello, my name is Armando, a smart Real Estate agent!"),
-            sendInterestQuestionare()
-        }
+        agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
+        DBAdapterAPI.fetchUser(agent.getUserId());
         delete(initialize);
+end
+
+rule "Receive user data"
+    when
+        res: FetchResult(success == true) from entry-point "signals"
+        agent: Armando()
+    then
+        modify(agent) {
+            setUser(res.getUsers().get(0))
+        };
+        agent.sendInterestQuestionare();
+        delete(res);
 end
 
 rule "Re-engage costumer"
@@ -35,8 +45,7 @@ rule "Re-engage costumer"
         )
     then
         modify(agent) {
-            setLastInteractionTime(new Date()),
-            sendInterestQuestionare()
+            setLastInteractionTime(new Date())
         };
 end
 
@@ -45,18 +54,19 @@ rule "Process customer answer"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        insert(answer);
-        DBAdapterAPI.fetchUser(agent.getUserId());
+        modify(agent) {
+            setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
+        }
+        agent.updateUserInterest(answer.getAnswer());
+        agent.sendNextQuestion();
+        delete(answer);
 end
 
-rule "Update user"
+rule "Receive answer"
     when
-        res: FetchResult(success == true) from entry-point "signals"
-        answer: TelegramKeyboardAnswered()
+        answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
-        agent.sendUserSignal(answer.getAnswer());
-        delete(res);
+        agent.handleAnswer(answer.getAnswers());
         delete(answer);
 end

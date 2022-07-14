@@ -38,4 +38,5 @@ public class User implements Serializable {
     boolean interested;
     NoInterestReason noInterestReason;
     boolean boughtRE;
+    List<Question> questions;
 }
