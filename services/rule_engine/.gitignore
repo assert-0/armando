@@ -25,7 +25,7 @@ target
 .idea/
 rule_engine.iml
 main.iml
-target/util
+target/classes
 target/maven-status
 *.swp
 
