@@ -3,16 +3,15 @@ package util;
 import java.util.Arrays;
 import java.util.Stack;
 
-import util.Question;
-import util.Answer;
-import util.Action;
-import util.CallAgentAction;
+import util.actions.CallAgentAction;
+import util.actions.SendMessageAction;
 
 
 public abstract class QuestionFactory {
     public static Stack<Question> getQuestionTree() {
         Action callAgentAction = new CallAgentAction("AGENT");
         Action callHITLAction = new CallAgentAction("HITL");
+        Action sendHelloAction = new SendMessageAction("Hello");
         Question interestedQuestion = new Question(
             "4",
             "Yikes, maybe I can help with that! Are you perhaps interested in buying a new real estate?",
@@ -80,7 +79,7 @@ public abstract class QuestionFactory {
             "Is everything okay with your real estate?",
             false,
             Arrays.asList(
-                new Answer("YES", null, likeQuestion),
+                new Answer("YES", sendHelloAction, likeQuestion),
                 new Answer("NO", null, botheringQuestion)
             )
         );

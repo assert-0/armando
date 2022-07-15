@@ -45,6 +45,7 @@ public class Armando extends Agent {
     }
 
     public void sendQuestion() {
+        Log.warn("Sending question");
         Question question;
         try {
             question = questions.peek();
