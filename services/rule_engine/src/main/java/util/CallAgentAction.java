@@ -1,9 +1,10 @@
-package util.actions;
+package util;
 
 import lombok.*;
 
 import util.Action;
 import agents.Armando;
+
 
 @Data
 @AllArgsConstructor
