@@ -3,21 +3,19 @@ package agents;
 import java.util.Date;
 import java.util.EmptyStackException;
 import java.util.HashSet;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.Stack;
 
 import lombok.*;
 
-import com.mindsmiths.dbAdapter.DBAdapterAPI;
-import com.mindsmiths.dbAdapter.User;
 import com.mindsmiths.ruleEngine.model.Agent;
+import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
-import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.User;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
