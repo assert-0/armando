@@ -4,12 +4,9 @@ import lombok.*;
 
 import util.Action;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import agents.Armando;
 
 
-@JsonDeserialize(as = CallAgentAction.class)
 @Data
 @NoArgsConstructor
 public class CallAgentAction extends Action {
