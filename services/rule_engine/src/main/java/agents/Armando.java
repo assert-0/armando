@@ -18,8 +18,9 @@ import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import com.mindsmiths.armory.ArmoryAPI;
-import com.mindsmiths.armory.templates.GenericInterface;
+
 import com.mindsmiths.armory.components.*;
+import com.mindsmiths.armory.templates.DisplayTemplate;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
@@ -142,8 +143,9 @@ public class Armando extends Agent {
         List<SubmitButton> btnList = new ArrayList<>();
         btnList.add(new SubmitButton("1", "Next", new HashMap()));
         btnList.add(new SubmitButton("2", "Previous", new HashMap()));
-        GenericInterface ui = new GenericInterface(
+        DisplayTemplate ui = new DisplayTemplate(
             new Title("Real Estate Selection"), 
+            new Image("https://images.adsttc.com/media/images/629f/3517/c372/5201/650f/1c7f/large_jpg/hyde-park-house-robeson-architects_1.jpg?1654601149"),
             new Description(String.format("Hello %s! This is our personalized selection of Real Estate for you!", user.getName())),
             btnList
         );
