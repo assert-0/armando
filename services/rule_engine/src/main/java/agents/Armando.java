@@ -1,6 +1,7 @@
 package agents;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.ruleEngine.util.Log;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
+
+import com.mindsmiths.armory.ArmoryAPI;
+import com.mindsmiths.armory.templates.GenericInterface;
+import com.mindsmiths.armory.components.*;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
@@ -127,5 +132,22 @@ public class Armando extends Agent {
 
     public static void info(String message) {
         Log.LOGGER.info(message);
+    }
+
+    public void addConnection(String connectionName, String connectionId) {
+        this.connections.put(connectionName, connectionId);
+    }
+
+    public void testUI() {
+        List<SubmitButton> btnList = new ArrayList<>();
+        btnList.add(new SubmitButton("1", "Next", new HashMap()));
+        btnList.add(new SubmitButton("2", "Previous", new HashMap()));
+        GenericInterface ui = new GenericInterface(
+            new Title("Real Estate Selection"), 
+            new Description(String.format("Hello %s! This is our personalized selection of Real Estate for you!", user.getName())),
+            btnList
+        );
+        Log.warn(user.getName());
+        ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 }
