@@ -10,6 +10,7 @@ import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 import com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.mindsmiths.armory.events.ArmoryEvent; 
 import com.mindsmiths.armory.events.SubmitEvent; 
@@ -27,7 +28,10 @@ rule "First contact"
     then
         agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
         DBAdapterAPI.fetchUser(agent.getUserId());
-        agent.addConnection("armory", "connectionId");
+        modify(agent) {
+            addConnection("armory", agent.getConnections().get("telegram"))
+        };
+        System.out.println(agent.toString());
         delete(initialize);
 end
 
@@ -36,10 +40,11 @@ rule "Receive user data"
         res: FetchResult(success == true) from entry-point "signals"
         agent: Armando()
     then
+        Log.warn("Fetched user!");
         modify(agent) {
             setUser(res.getUsers().get(0))
         };
-        agent.testUI();
+        agent.displayUI();
         agent.sendInterestQuestionare();
         delete(res);
 end
@@ -76,4 +81,24 @@ rule "Receive answer"
     then
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
+end
+
+rule "User connected event"
+    when 
+        event: UserConnectedEvent() from entry-point "signals"
+        agent: Armando()
+    then
+        agent.displayUI();
+        delete(event);
+end
+
+rule "Armory submit"
+    when
+        event: SubmitEvent() from entry-point "signals"
+        agent: Armando()
+    then
+        if (event.getData().get("submit").asText().equals("1")) agent.setReIndex((agent.getReIndex() + 1) % 3);
+        else agent.setReIndex(((agent.getReIndex() - 1) + 3) % 3);
+        agent.displayUI();
+        delete(event);
 end

@@ -20,10 +20,11 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.armory.ArmoryAPI;
 
 import com.mindsmiths.armory.components.*;
-import com.mindsmiths.armory.templates.DisplayTemplate;
+import com.mindsmiths.armory.templates.GenericInterface;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
+import util.RealEstate;
 
 
 @Getter
@@ -44,6 +45,13 @@ public class Armando extends Agent {
     private Date lastInteractionTime = new Date();
     private List<util.Question> questions;
     private int currentIndex = -1;
+    private static List<RealEstate> reImages = new ArrayList<RealEstate>();
+    static {
+        reImages.add(new RealEstate("https://images.adsttc.com/media/images/629f/3517/c372/5201/650f/1c7f/large_jpg/hyde-park-house-robeson-architects_1.jpg?1654601149", "Poseidon Villa", "1 000 000 EUR"));
+        reImages.add(new RealEstate("https://q4g9y5a8.rocketcdn.me/wp-content/uploads/2020/02/home-banner-2020-02-min.jpg", "Family Palmatin House", "300 000 EUR"));
+        reImages.add(new RealEstate("https://www.croatialuxuryrent.com/storage/upload/60a/bf3/6be/IMG_5654_tn.jpg", "Modern Villa", "2 200 000 EUR"));
+    }
+    private int reIndex = 1;
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
@@ -139,17 +147,19 @@ public class Armando extends Agent {
         this.connections.put(connectionName, connectionId);
     }
 
-    public void testUI() {
+    public void displayUI() {
         List<SubmitButton> btnList = new ArrayList<>();
         btnList.add(new SubmitButton("1", "Next", new HashMap()));
         btnList.add(new SubmitButton("2", "Previous", new HashMap()));
-        DisplayTemplate ui = new DisplayTemplate(
-            new Title("Real Estate Selection"), 
-            new Image("https://images.adsttc.com/media/images/629f/3517/c372/5201/650f/1c7f/large_jpg/hyde-park-house-robeson-architects_1.jpg?1654601149"),
-            new Description(String.format("Hello %s! This is our personalized selection of Real Estate for you!", user.getName())),
-            btnList
+        GenericInterface ui = new GenericInterface(
+            new Title(reImages.get(reIndex).getName()), 
+            new Image(reImages.get(reIndex).getSrc()),
+            null,
+            new Description(String.format("Hello %s! This is our personalized selection of Real Estate for you! It can be yours for just %s!", user.getName(), reImages.get(reIndex).getPrice())),
+            null,
+            btnList,
+            false
         );
-        Log.warn(user.getName());
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 }
