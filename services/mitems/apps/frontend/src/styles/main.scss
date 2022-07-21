@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+// Import a Google Font
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
+@import "./variables";
+@import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/elements/button.sass";
+@import "../../node_modules/bulma/sass/elements/container.sass";
+@import "../../node_modules/bulma/sass/elements/title.sass";
+@import "../../node_modules/bulma/sass/form/_all.sass";
+
+.mr-1 {
+  margin-right: 0.5rem !important;
+}
+
+.mr-2 {
+  margin-right: 1rem !important;
+}
+
+.editor {
+  border: 1px solid #eee;
+  border-radius: 3px;
+}
+
+.editor-header {
+  display: flex;
+  // border-bottom: 1px solid #eee;
+  background: #f7f7f7;
+}
+
+.editor-content {
+  padding: 1rem;
+}
+
+.editor-label {
+  padding: 3px 10px;
+  // border-radius: 10px;
+  color: #fff;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+
+.notice {
+  margin: $size-4 0;
+  // padding: $size-4;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+}
+.home-icon {
+  width: 25px;
+  display: block;
+}
+
+.empty-state {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: #fff;
+}
+
+.panel {
+  padding: $size-4;
+  background: #ffffff;
+  box-shadow: $shadow-basic;
+  border-radius: 10px;
+}
+
+.header-actions {
+  margin: 0 1rem;
+}
+
+.header-action {
+  margin: 0 0.5rem;
+}

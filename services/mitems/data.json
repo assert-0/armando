@@ -1,0 +1,1332 @@
+[
+  {
+    "title": "Business Card",
+    "description": "Texts and images regarding business card flow",
+    "items": [
+      {
+        "name": "Collect Feedback Already Has",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes, very useful\",\"id\":\"USEFUL\"},{\"text\":\"Not that much\",\"id\":\"NOT_USEFUL\"}]"
+          },
+          {
+            "description": "Additional Feedback Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"SUBMIT\"},{\"text\":\"Nothing to share\",\"id\":\"NOTHING\"}]"
+          },
+          {
+            "description": "Additional Feedback Placeholder",
+            "type": "TEXT",
+            "content": "Type here..."
+          },
+          {
+            "description": "Additional Feedback Title",
+            "type": "TEXT",
+            "content": "Could you please elaborate a bit?🙏🏼"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Your experience can help improve my recommendations for other students. So I would appreciate your feedback."
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Success Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Don’t worry Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Success Description",
+            "type": "TEXT",
+            "content": "I think that everything would be so much easier if we would learn from each other's experiences. Thanks for helping me with that."
+          },
+          {
+            "description": "Success Title",
+            "type": "TEXT",
+            "content": "OK. This time you helped me more than I helped you 🤗"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "OK, I didn't know that. Learning opportunity 🙃 Did you find them helpful so far?"
+          }
+        ]
+      },
+      {
+        "name": "Collect Feedback Not Interested",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"I already work somewhere\",\"id\":\"ALREADY_WORKS\"},{\"text\":\"I don't think they're useful\",\"id\":\"NOT_USEFUL\"},{\"text\":\"Other\",\"id\":\"OTHER\"}]"
+          },
+          {
+            "description": "Additional Feedback Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"SUBMIT\"},{\"text\":\"Nothing to share\",\"id\":\"NOTHING\"}]"
+          },
+          {
+            "description": "Additional Feedback Placeholder",
+            "type": "TEXT",
+            "content": "Type here..."
+          },
+          {
+            "description": "Additional Feedback Title",
+            "type": "TEXT",
+            "content": "OK. Is there something you could share to help me improve the business card experience?"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "The more you tell me, the better I'll understand you and recommend more relevant career boost opportunities."
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Success Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Don’t worry Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Success Description",
+            "type": "TEXT",
+            "content": "I think that everything would be so much easier if we would learn from each other's experiences. Thanks for helping me with that."
+          },
+          {
+            "description": "Success Title",
+            "type": "TEXT",
+            "content": "This time you helped me more than I helped you 🤗"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Oops, learning opportunity 🙃 Please tell me why?"
+          }
+        ]
+      },
+      {
+        "name": "Confirm Info",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes, please do it!\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "{{ template }}"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Awesome. Does this look good? Can I make an order?"
+          }
+        ]
+      },
+      {
+        "name": "Invite Email",
+        "elements": [
+          {
+            "description": "Call to action",
+            "type": "TEXT",
+            "content": "Let's go!"
+          },
+          {
+            "description": "Image URL",
+            "type": "TEXT",
+            "content": "https://smartcampuspublic.blob.core.windows.net/production/business-card-creation/email-image.png"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "{{ name.split()[0] }}, I have a career boost opportunity for you"
+          }
+        ]
+      },
+      {
+        "name": "Send Order",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Confirmation Subject",
+            "type": "TEXT",
+            "content": "I’ve ordered your business cards 😎"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "I'll first check everything with Student services, and when they confirm everything looks good, I'll place the order. You can expect your cards in 5 to 7 days."
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Order Emails",
+            "type": "TEXT",
+            "content": "ruzica.pekic@proptiq.com, majana@mindsmiths.com"
+          },
+          {
+            "description": "Order Subject",
+            "type": "TEXT",
+            "content": "New order: Frankfurt School business cards 😎"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "You did your part of the job and now relax 😎 I'm taking over."
+          }
+        ]
+      },
+      {
+        "name": "Show Details",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"I would like that\",\"id\":\"INTERESTED\"},{\"text\":\"I don't need them\",\"id\":\"NOT_INTERESTED\"},{\"text\":\"I already have them\",\"id\":\"ALREADY_HAS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "If you don't have a business card, this is an excellent option. I can organize everything. <strong>Fifty pieces, freshly printed and delivered to you.</strong> Because I have a special deal with the school, you can get them free of charge."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "I can get you your FS business cards free of charge 😎"
+          }
+        ]
+      },
+      {
+        "name": "Show Intro",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Ok, sounds good\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Frankfurt School business card is one of the best-kept secrets. However, generations of students claim that it <strong>helped boost their image and appearance</strong> when starting their careers. It's helpful during job interviews, events, traveling, or when you're just having fun at the bar. <a href=\"https://medium.com/@masterpieceweb/10-reasons-why-business-cards-are-important-in-the-digital-age-839d0c7d390\" target=\"_blank\">Check more about benefits.</a>"
+          },
+          {
+            "description": "Image",
+            "type": "TEXT",
+            "content": "https://smartcampuspublic.blob.core.windows.net/production/business-card-creation/intro-image.png"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "A business card that opens doors"
+          }
+        ]
+      },
+      {
+        "name": "Verify Address",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "All delivery addresses within Germany work fine. It can be your place or your friend's place. It doesn't matter. However, please provide clear instructions for delivery service."
+          },
+          {
+            "description": "Placeholder",
+            "type": "TEXT",
+            "content": "Frankie S\nAdickesallee 32\n60322 Frankfurt am Main\nGermany"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "OK. What's the address?"
+          }
+        ]
+      },
+      {
+        "name": "Verify Address Choice",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Student Help Desk\",\"id\":\"HELP_DESK\"},{\"text\":\"Some other place\",\"id\":\"MY_ADDRESS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "If you're regularly at the campus, delivery to the Student Help Desk works excellent. If you're not, let's organize delivery to your home or some other place. I'm very flexible 😊"
+          },
+          {
+            "description": "Help Desk Address",
+            "type": "TEXT",
+            "content": "Student Help Desk"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Great. Where do you want the delivery?"
+          }
+        ]
+      },
+      {
+        "name": "Verify Email",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Although you could put your home email address here, the Frankfurt school email address boosts credibility, and I would recommend that. "
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "And now your email address. "
+          }
+        ]
+      },
+      {
+        "name": "Verify Language",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"English\",\"id\":\"ENGLISH\"},{\"text\":\"German\",\"id\":\"GERMAN\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "I would recommend English unless you have a good reason to go with German. Think about who you want to connect with in the future and what will be easier for them."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "In English or in German?"
+          }
+        ]
+      },
+      {
+        "name": "Verify Name",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "An obvious choice is first and last names, but nicknames are also acceptable. If most people call you by your nickname, feel free to use it. Middle names are not required. Leave it out unless you have a solid reason to include it. Unisex names can be preceded with Mr. or Ms. if you find it necessary."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Perfect 😎, let's start with the name on the card."
+          }
+        ]
+      },
+      {
+        "name": "Verify Phone",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "A phone number will help people to reach out to you. Don't worry about having a number with the \"right\" country code. In the age of messenger apps, they all work fine. However, please use the international phone number format. You never know from where your next opportunity is going to come 😉"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Your phone number goes next."
+          }
+        ]
+      },
+      {
+        "name": "Verify Title",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Your card will say you are a student at Frankfurt School. To tell people about your area of expertise, we'll also add your study program. What I know about you from my database is what you see above, but feel free to propose something else if this won't work. "
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Now, let’s add your study program."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "CV",
+    "description": "Texts and images regarding the CV flow",
+    "items": [
+      {
+        "name": "Ask If Updated",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes\",\"id\":\"YES\"},{\"text\":\"No, it needs an upgrade\",\"id\":\"NO\"},{\"text\":\"No, nothing to add\",\"id\":\"NOTHING_NEW\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Even when you’re not looking for an internship or a job, it’s a good practice to update your CV at least twice per semester to have a clear sense of your career journey."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Temperature check: Have you updated your CV in the last 30 days?"
+          }
+        ]
+      },
+      {
+        "name": "Check-In Email",
+        "elements": [
+          {
+            "description": "Call to action",
+            "type": "TEXT",
+            "content": "Let's go!"
+          },
+          {
+            "description": "Image URL",
+            "type": "TEXT",
+            "content": "https://smartcampuspublic.blob.core.windows.net/production/cv/email-image.png"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "It's Career Boost Check-In time! 🚀"
+          }
+        ]
+      },
+      {
+        "name": "Connect With CS",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "CS Emails",
+            "type": "TEXT",
+            "content": "ruzica.pekic@proptiq.com, majana@mindsmiths.com"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Career Services will take some time to prepare well for your 1:1 meeting. They will contact you to make an appointment. In the meantime, you just need to send them your CV in reply to the email I sent you and relax."
+          },
+          {
+            "description": "Email Body",
+            "type": "TEXT",
+            "content": "{{ name.split()[0] }},\n\nYour career advisor is in the loop, they will reach out to you to make an appointment for a 1:1 meeting.\n\nUntil then, please send your CV in response to this email so that your career advisor has an understanding of your experience so far.\n\nIt was nice to talk to you today 😊\n\nYours sincerely,\nFrankie"
+          },
+          {
+            "description": "Email Subject",
+            "type": "TEXT",
+            "content": "You're connected with your career advisor 😎"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Great! I’ve connected you with Career Services. Check your inbox 😎"
+          }
+        ]
+      },
+      {
+        "name": "Show Intro",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"OK, sounds good\",\"id\":\"OK\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "I’ll help keep you on track with it so that you are well-prepared to reach your next career goals. CVs are key to understanding where you’re at, how far you’ve come and where are you going. <a href=\"https://www.forbes.com/sites/forbescoachescouncil/2017/06/08/six-reasons-why-you-must-keep-your-resume-up-to-date/?sh=2567d5422a57\" target=\"_blank\">Research supports</a> its importance."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Keeping your CV updated can be overwhelming at times. That’s why I’m here 😎"
+          }
+        ]
+      },
+      {
+        "name": "Show Nothing New",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Here’s some career inspiration for your next commute to campus. In this engaging podcast by Career Services, learn how to create a state-of-the-art CV. I’ve emailed you the link, you can also <a href=\"https://www.dropbox.com/s/di26xzcvm7l96b0/FS%20Career%20PodCaSt%20-%20Episode%201.mp3?dl=0\" target=\"_blank\">find it here</a> 🎧"
+          },
+          {
+            "description": "Email Body",
+            "type": "TEXT",
+            "content": "{{name.split()[0]}},\n\nAt this link (https://www.dropbox.com/s/di26xzcvm7l96b0/FS%20Career%20PodCaSt%20-%20Episode%201.mp3?dl=0) you’ll find the podcast on creating state-of-the-art CVs - the one I mentioned to you. Shout out to Career Services for putting it together. 🙌🏻\n\nIn case you have any questions, feel free to email me back.\n\nIt was nice to talk to you today 😊\n\nYours,\nFrankie"
+          },
+          {
+            "description": "Email Subject",
+            "type": "TEXT",
+            "content": "Podcast on creating CVs 😎"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Sounds like you’ve got it covered for now 😉"
+          }
+        ]
+      },
+      {
+        "name": "Show Outdated",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes, I'll try!\",\"id\":\"HIMSELF\"},{\"text\":\"Please connect me with CS\",\"id\":\"CONNECT_CS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "If you’re making small changes to your CV, I can give you some suggestions based on what Career Services has advised. If you’re feeling lost or stuck, I can connect you with Career Services directly."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Time to shine! Do you want to try updating it yourself first?"
+          }
+        ]
+      },
+      {
+        "name": "Show Under Control",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Count on me to check in again next month with more career tips you might be interested in. Chat later!"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Great. I trust that you have the situation under control 😎"
+          }
+        ]
+      },
+      {
+        "name": "Show Update Yourself",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "There are some really helpful checklists in the learning package that I’d recommend reading. I’ve shared the link in your inbox for easy access later, but you can also find it in <a href=\"https://frankfurt-school.jobteaser.com/de/handbook/articles/8879\" target=\"_blank\">Job Teaser here</a>."
+          },
+          {
+            "description": "Email Body",
+            "type": "TEXT",
+            "content": "{{name.split()[0]}},\n\nAt this link (https://frankfurt-school.jobteaser.com/de/handbook/articles/8879), you’ll find a learning package on how to update your CV. Shout out to Career Services for putting it together. 🙌🏻\n\nIn case you have any questions, feel free to email me back.\n\nIt was nice to talk to you today 😊\n\nYours,\nFrankie"
+          },
+          {
+            "description": "Email Subject",
+            "type": "TEXT",
+            "content": "How to update your CV 😎"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "I’ve got your back. Try out the CV learning package I’ve just emailed you 😎"
+          }
+        ]
+      },
+      {
+        "name": "Show Updated",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes, please\",\"id\":\"TRUE\"},{\"text\":\"No, not this time\",\"id\":\"FALSE\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "If you made some significant changes, I'm happy to arrange a meeting with an expert. It could help take your CV to the next level. But, if things are under control, let's save everyone’s time."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Nice 🤓 I can arrange for you to get feedback from Career Services. Would you like that?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Event Recommendation",
+    "description": "Texts and images that define the event recommendation flow",
+    "items": [
+      {
+        "name": "Collect Feedback",
+        "elements": [
+          {
+            "description": "Additional Feedback Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"SUBMIT\"},{\"text\":\"Nothing to share\",\"id\":\"NOTHING\"}]"
+          },
+          {
+            "description": "Additional Feedback Placeholder",
+            "type": "TEXT",
+            "content": "Type here..."
+          },
+          {
+            "description": "Additional Feedback Title",
+            "type": "TEXT",
+            "content": "Is there something else you could share that could help me with recommendations?\n"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Format Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"No\",\"id\":\"NOT_INTERESTED\"},{\"text\":\"Yes, but not in this one\",\"id\":\"NOT_IN_THIS_ONE\"},{\"text\":\"Not at the moment\",\"id\":\"NOT_NOW\"}]"
+          },
+          {
+            "description": "Format Description",
+            "type": "TEXT",
+            "content": "The more you tell me, the better I'll understand your needs and recommend you more relevant events."
+          },
+          {
+            "description": "Format Title",
+            "type": "TEXT",
+            "content": "OK, learning opportunity 🙃 Are you interested in %s?"
+          },
+          {
+            "description": "Success Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Success Description",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "Success Title",
+            "type": "TEXT",
+            "content": "Thank you. Now it’s my job to find something better 😎"
+          },
+          {
+            "description": "Topic Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Yes\",\"id\":\"INTERESTED\"},{\"text\":\"No\",\"id\":\"NOT_INTERESTED\"},{\"text\":\"I did it already\",\"id\":\"PARTIALLY_INTERESTED\"}]"
+          },
+          {
+            "description": "Topic Description",
+            "type": "TEXT",
+            "content": "The more you tell me, the better I’ll understand your needs, and my future recommendations will be better.\n"
+          },
+          {
+            "description": "Topic Title",
+            "type": "TEXT",
+            "content": "OK, that means you are not interested in {{topic}} at the moment?"
+          }
+        ]
+      },
+      {
+        "name": "Invite Email",
+        "elements": [
+          {
+            "description": "Call to action",
+            "type": "TEXT",
+            "content": "Tell me more"
+          }
+        ]
+      },
+      {
+        "name": "Next Time",
+        "elements": [
+          {
+            "description": "Actions Cant Make It",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Actions No Time",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description Cant Make It",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "Description No Time",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          },
+          {
+            "description": "Title Cant Make It",
+            "type": "TEXT",
+            "content": "Don’t worry. Now that I know this sparked your interest, I’ll make sure you don’t miss the next one 💪"
+          },
+          {
+            "description": "Title No Time",
+            "type": "TEXT",
+            "content": "Don’t worry. Now that I know this sparked your interest, I’ll make sure you don’t miss the next one 💪"
+          }
+        ]
+      },
+      {
+        "name": "Organizer Notification",
+        "elements": [
+          {
+            "description": "Body",
+            "type": "TEXT",
+            "content": "Hi {{ organizer.name.split()[0] }},\n\nI'm sending you details:\n\nSigned up for: {% if response == 'BOOK_SEAT' %}On Campus{% else %}Zoom{% endif %}\nName: {{applicant.name}}\nEmail address: {{applicant.email}}\nEvent date: {{event.startsAt.strftime('%d.%m.%Y.')}}\n\nHave a nice day 😎\nFrankie"
+          },
+          {
+            "description": "Subject",
+            "type": "TEXT",
+            "content": "New student application - {{event.name}}"
+          }
+        ]
+      },
+      {
+        "name": "Send Invite",
+        "elements": [
+          {
+            "description": "Book Online Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Book Online Description",
+            "type": "TEXT",
+            "content": "A calendar invite is on its way to you 😎"
+          },
+          {
+            "description": "Book Online Title",
+            "type": "TEXT",
+            "content": "Ok, I got it!"
+          },
+          {
+            "description": "Book Seat Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Book Seat Description",
+            "type": "TEXT",
+            "content": "A calendar invite is on its way to you 😎"
+          },
+          {
+            "description": "Book Seat Title",
+            "type": "TEXT",
+            "content": "Mission completed! 🚀"
+          },
+          {
+            "description": "Email subject",
+            "type": "TEXT",
+            "content": "Your details for {{event.name}}"
+          },
+          {
+            "description": "End Screen Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          }
+        ]
+      },
+      {
+        "name": "Show Details",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Sounds interesting\",\"id\":\"INTERESTED\"},{\"text\":\"Sounds boring\",\"id\":\"NOT_INTERESTED\"}]"
+          }
+        ]
+      },
+      {
+        "name": "Show End",
+        "elements": [
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "<div style=\"text-align: center\">\n<p>👍💙</p>\n<p>\nIn case you've changed your mind, let me know at <a target=\"_blank\" href=\"mailto:{{email}}\">frankie@fs.de</a>\n</p>\n</div>"
+          }
+        ]
+      },
+      {
+        "name": "Show Intro",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"OK, that's cool\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Image",
+            "type": "TEXT",
+            "content": ""
+          }
+        ]
+      },
+      {
+        "name": "Show Invite",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Book my seat\",\"id\":\"BOOK_SEAT\"},{\"text\":\"I'll join via Zoom\",\"id\":\"BOOK_ONLINE\"},{\"text\":\"Oh, I can't make it\",\"id\":\"DECLINE\"}]"
+          },
+          {
+            "description": "Text",
+            "type": "TEXT",
+            "content": "The seminar will take place at our Frankfurt Campus. You can join in-person for the best experience or via Zoom. Please book now because the number of seats is limited. ⏳ \n\nDate %s.\nTime: %s"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "The number of seats is limited"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Event attendee list",
+    "description": "",
+    "items": [
+      {
+        "name": "CSV Email",
+        "elements": [
+          {
+            "description": "Subject",
+            "type": "TEXT",
+            "content": "Attendee list for {{event.title}}"
+          },
+          {
+            "description": "Text",
+            "type": "TEXT",
+            "content": "Hi, I've attached the full list of attendees registered for '{{event.title}}'."
+          }
+        ]
+      },
+      {
+        "name": "CSV Sent",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "I've sent a CSV to your email 😎"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Sent! 🚀"
+          }
+        ]
+      },
+      {
+        "name": "First Registration Notification",
+        "elements": [
+          {
+            "description": "Subject",
+            "type": "TEXT",
+            "content": "First registration for {{event.title}}"
+          },
+          {
+            "description": "Text",
+            "type": "TEXT",
+            "content": "Hi, registrations for '{{event.title}}' have started and the first person already registered!\n\nYou can see the full list anytime here: {{armoryLink}}"
+          }
+        ]
+      },
+      {
+        "name": "List Screen",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Send me a CSV\",\"id\":\"SEND_CSV\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "<p>Here's a list of people who signed up for your event:</p><ul>{% for r in event.registrations %}<li>{{r.attendee.firstName}} {{r.attendee.lastName}} ({{r.venueType}})</li>{% endfor %}</ul>"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "{{event.title}}"
+          }
+        ]
+      },
+      {
+        "name": "Show End",
+        "elements": [
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Event recommendation builder",
+    "description": "",
+    "items": [
+      {
+        "name": "Book Seat",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "A calendar invite is on its way to you 😎"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Mission completed! 🚀"
+          }
+        ]
+      },
+      {
+        "name": "Book Seat No Physical Spots Left",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"I'll join via Zoom\",\"id\":\"BOOK_ONLINE\"},{\"text\":\"Oh, I can't make it\",\"id\":\"DECLINE\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "But you can still join via Zoom!"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Unfortunately there are no physical spots left!"
+          }
+        ]
+      },
+      {
+        "name": "Book Seat No Spots Left",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Don’t worry. Now that I know this sparked your interest, I’ll make sure you don’t miss the next one 💪"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Unfortunately there are no spots left! :("
+          }
+        ]
+      },
+      {
+        "name": "Book Seat Online",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "A calendar invite is on its way to you 😎"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Ok, I got it!"
+          }
+        ]
+      },
+      {
+        "name": "Calendar Invite",
+        "elements": [
+          {
+            "description": "Body",
+            "type": "TEXT",
+            "content": "Here's your invite for '{{event.title}}'."
+          },
+          {
+            "description": "Subject",
+            "type": "TEXT",
+            "content": "Invite for {{event.title}}"
+          }
+        ]
+      },
+      {
+        "name": "Collect Feedback 1",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"No\",\"id\":\"NOT_INTERESTED\"},{\"text\":\"Yes, but not in this one\",\"id\":\"NOT_IN_THIS_ONE\"},{\"text\":\"Not at the moment\",\"id\":\"NOT_NOW\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": "true"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "The more you tell me, the better I'll understand your needs and recommend you more relevant events."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "OK, learning opportunity 🙃 Are you interested in research seminars?"
+          }
+        ]
+      },
+      {
+        "name": "Collect Feedback 2",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Submit\",\"id\":\"SUBMIT\"},{\"text\":\"Nothing to share\",\"id\":\"NOTHING\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": "true"
+          },
+          {
+            "description": "Input",
+            "type": "TEXT",
+            "content": "Type here..."
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Is there something else you could share that could help me with recommendations?"
+          }
+        ]
+      },
+      {
+        "name": "Collect Feedback 3",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Thank you. Now it’s my job to find something better 😎"
+          }
+        ]
+      },
+      {
+        "name": "Next Time",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Thanks Frankie!\",\"id\":\"THANKS\"}]"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Don’t worry. Now that I know this sparked your interest, I’ll make sure you don’t miss the next one 💪"
+          }
+        ]
+      },
+      {
+        "name": "Show End",
+        "elements": [
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "👍💙"
+          }
+        ]
+      },
+      {
+        "name": "Show End Refresh",
+        "elements": [
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "<div style=\"text-align: center\">\n<p>👍💙</p>\n<p>\nIn case you've changed your mind, let me know at <a target=\"_blank\" href=\"mailto:{{email}}\">frankie@fs.de</a>\n</p>\n</div>"
+          }
+        ]
+      },
+      {
+        "name": "Show End Refresh With Reset",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Reset flow\",\"id\":\"RESET_FLOW\"}]"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "<div style=\"text-align: center\">\n<p>👍💙</p>\n<p>\nIn case you've changed your mind, let me know at <a target=\"_blank\" href=\"mailto:{{email}}\">frankie@fs.de</a>\n</p>\n</div>"
+          }
+        ]
+      },
+      {
+        "name": "Show Event Not Found",
+        "elements": [
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "I couldn't find this event. It may have already finished or been canceled :("
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Oh no!"
+          }
+        ]
+      },
+      {
+        "name": "Show Intro",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"OK, that's cool\",\"id\":\"NEXT\"}]"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "{{content.introText}}"
+          },
+          {
+            "description": "Image",
+            "type": "TEXT",
+            "content": "{{content.introImageUrl}}"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "{{content.introTitle}}"
+          }
+        ]
+      },
+      {
+        "name": "Show Intro Deadline Passed",
+        "elements": [
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "Application deadline has passed!"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "Oh no!"
+          }
+        ]
+      },
+      {
+        "name": "Show Invite Hybrid Event",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Book my seat\",\"id\":\"BOOK_SEAT\"},{\"text\":\"I'll join via Zoom\",\"id\":\"BOOK_ONLINE\"},{\"text\":\"Oh, I can't make it\",\"id\":\"DECLINE\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "<p>The seminar will take place at our Frankfurt Campus. You can&nbsp;<strong>join in-person for the best</strong>&nbsp;<strong>experience</strong>&nbsp;or via Zoom. Please book now because the number of seats is limited. ⏳&nbsp;</p><p><strong>Date: {{event.startsAt.strftime(\"dd.MM.yyyy\")}}</strong><br /><strong>Time: {{event.startsAt.strftime(\"HH:mm\")}} - {{event.endsAt.strftime(\"HH:mm\")}}</strong></p>"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "The number of seats is limited"
+          }
+        ]
+      },
+      {
+        "name": "Show Invite Physical Event",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Book my seat\",\"id\":\"BOOK_SEAT\"},{\"text\":\"Oh, I can't make it\",\"id\":\"DECLINE\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "<p>The seminar will take place at our Frankfurt Campus. You can&nbsp;<strong>join in-person for the best</strong>&nbsp;<strong>experience</strong>&nbsp;. Please book now because the number of seats is limited. ⏳&nbsp;</p><p><strong>Date: {{event.startsAt.strftime(\"dd.MM.yyyy\")}}</strong><br /><strong>Time: {{event.startsAt.strftime(\"HH:mm\")}} - {{event.endsAt.strftime(\"HH:mm\")}}</strong></p>"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "The number of seats is limited"
+          }
+        ]
+      },
+      {
+        "name": "Show Invite Virtual Event",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"I'll join via Zoom\",\"id\":\"BOOK_ONLINE\"},{\"text\":\"Oh, I can't make it\",\"id\":\"DECLINE\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": ""
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "<p>The seminar will take place online. You can join via Zoom. ⏳&nbsp;</p><p><strong>Date: {{event.startsAt.strftime(\"dd.MM.yyyy\")}}</strong><br /><strong>Time: {{event.startsAt.strftime(\"HH:mm\")}} - {{event.endsAt.strftime(\"HH:mm\")}}</strong></p>"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "The number of seats is limited"
+          }
+        ]
+      },
+      {
+        "name": "Show details",
+        "elements": [
+          {
+            "description": "Actions",
+            "type": "OPTIONS",
+            "content": "[{\"text\":\"Sounds interesting\",\"id\":\"INTERESTED\"},{\"text\":\"Sounds boring\",\"id\":\"NOT_INTERESTED\"}]"
+          },
+          {
+            "description": "Back",
+            "type": "TEXT",
+            "content": "true"
+          },
+          {
+            "description": "Description",
+            "type": "TEXT",
+            "content": "{{content.recommendationReason}}"
+          },
+          {
+            "description": "Title",
+            "type": "TEXT",
+            "content": "{{content.recommendationTitle}}"
+          }
+        ]
+      }
+    ]
+  }
+]
