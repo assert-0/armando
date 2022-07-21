@@ -48,6 +48,7 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
+        agent.sendQuestion();
 end
 
 rule "Receive single answer"

@@ -49,19 +49,27 @@ public class Armando extends Agent {
         } catch (EmptyStackException ignored) {
             return;
         }
-        TelegramAdapterAPI.sendMessage(
-            connections.get("telegram"),
-            question.getText(),
-            new KeyboardData(
-                question.getId(),
-                question.getAnswers()
-                    .stream()
-                    .map(answer -> new KeyboardOption(answer.getText(), answer.getText()))
-                    .toList(),
-                false,
-                question.isMultiple()
-            )
-        );
+        if (question.getAnswers().size() == 0) {
+            TelegramAdapterAPI.sendMessage(
+                connections.get("telegram"),
+                question.getText()
+            );
+        }
+        else {
+            TelegramAdapterAPI.sendMessage(
+                connections.get("telegram"),
+                question.getText(),
+                new KeyboardData(
+                    question.getId(),
+                    question.getAnswers()
+                        .stream()
+                        .map(answer -> new KeyboardOption(answer.getText(), answer.getText()))
+                        .toList(),
+                    false,
+                    question.isMultiple()
+                )
+            );
+        }
     }
 
     public void contactAgent(String agentId) {

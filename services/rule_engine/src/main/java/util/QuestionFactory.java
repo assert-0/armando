@@ -86,4 +86,12 @@ public abstract class QuestionFactory {
         out.push(checkQuestion);
         return out;
     }
+
+    public static Stack<Question> createConversation(String ...messages) {
+        Stack<Question> out = new Stack<>();
+        for (var message : messages) {
+            out.push(new Question(message));
+        }
+        return out;
+    }
 }
