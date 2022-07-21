@@ -1,6 +1,7 @@
 package rules.armando;
 
 import java.util.Date;
+import java.util.Arrays;
 
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.FetchResult;
@@ -45,7 +46,7 @@ rule "Receive user data"
             setUser(res.getUsers().get(0))
         };
         agent.displayUI();
-        agent.sendInterestQuestionare();
+        agent.sendFirstQuestion();
         delete(res);
 end
 
@@ -61,20 +62,16 @@ rule "Re-engage costumer"
         };
 end
 
-rule "Process customer answer"
+rule "Receive single answer"
     when
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: Armando()
     then
-        modify(agent) {
-            setQuestions(answer.getAnswer().equals("YES") ? agent.YesQuestions : agent.NoQuestions)
-        }
-        agent.updateUserInterest(answer.getAnswer());
-        agent.sendNextQuestion();
+        agent.handleAnswer(Arrays.asList(answer.getAnswer()));
         delete(answer);
 end
 
-rule "Receive answer"
+rule "Receive multi answer"
     when
         answer: TelegramMultiChoiceKeyboardAnswered() from entry-point "signals"
         agent: Armando()
