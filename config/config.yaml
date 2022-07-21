@@ -92,3 +92,31 @@ services:
     resources:
       cpu: 100m
       memory: 100Mi
+
+  mitems:
+    type: django
+    db:
+      postgres: true
+    env:
+      SITE_URL: '{{ "mitems." + env.get("HOST_DOMAIN", "") }}'
+      INTERNAL_SITE_URL: "http://mitems/"
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_PASSWORD: '{{ env.MITEMS_ADMIN_PASSWORD | default("knopso123") }}'
+      COMMIT_TOKEN: '{{ env.COMMIT_TOKEN }}'
+      REPO: '{{ env.CI_REPOSITORY_URL }}'
+      BRANCH: '{{ env.CI_COMMIT_BRANCH }}'
+      SECRET_KEY: KE00K%SJ8vjYX46!%6$W3Js1OewOAmk@
+    dependencies:
+      - django==3.2.13
+      - django-environ==0.8.1
+      - psycopg2-binary==2.9.3
+      - gunicorn==20.1.0
+      - django-jet-reboot==1.3.1
+      - django-tinymce==3.4.0
+      - django-json-widget==1.1.1
+      - django-debug-toolbar==3.2.4
+      - beautifulsoup4==4.11.1
+      - python-slugify==6.1.2
+    resources:
+      cpu: 100m
+      memory: 110Mi
