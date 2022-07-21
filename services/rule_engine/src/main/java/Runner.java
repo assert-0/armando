@@ -18,13 +18,13 @@ public class Runner extends RuleEngineService {
 
         configureSignals(
             Signals.on(UserConnectedEvent.class).sendTo(
-                (e) -> Agents.getByConnection("armory", e.getConnectionId()) //, new Armando("armory", e.getConnectionId(), e.getAdditionalData().get("userId").asText()))
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
             ),
             Signals.on(SubmitEvent.class).sendTo(
-                (e) -> Agents.getByConnection("armory", e.getConnectionId()) //), new Armando("armory", e.getConnectionId(), e.getAdditionalData().get("userId").asText()))
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
             ),
             Signals.on(UserDisconnectedEvent.class).sendTo(
-                (e) -> Agents.getByConnection("armory", e.getConnectionId()) // new Armando("armory", e.getConnectionId(), e.getAdditionalData().get("userId").asText()))
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
             )
         );
     }
