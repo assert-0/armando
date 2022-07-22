@@ -20,8 +20,7 @@ public abstract class QuestionFactory {
             Arrays.asList(
                 new Answer("Sure!", callAgentAction, null),
                 new Answer("Not really, no.", callHITLAction, null)
-            ),
-            false
+            )
         );
         Question botheringQuestion = new Question(
             "3",
@@ -39,8 +38,7 @@ public abstract class QuestionFactory {
                 new Answer("Too many/too few rooms..." , null, null),
                 new Answer("The neighbours...", null, null),
                 new Answer("Something else...", callHITLAction, null)
-            ),
-            false
+            )
         );
         Question difficultiesQuestion = new Question(
             "2",
@@ -58,8 +56,7 @@ public abstract class QuestionFactory {
                 new Answer("Too many/too few rooms..." , null, null),
                 new Answer("The neighbours...", null, null),
                 new Answer("Something else...", callHITLAction, null)
-            ),
-            false
+            )
         );
         Question likeQuestion = new Question(
             "1",
@@ -76,8 +73,7 @@ public abstract class QuestionFactory {
                 new Answer("The fact that it was furnished already!", null, difficultiesQuestion),
                 new Answer("The number of rooms!", null, difficultiesQuestion),
                 new Answer("Something else!", callHITLAction, null)
-            ),
-            false
+            )
         );
         Question checkQuestion = new Question(
             "0",
@@ -86,8 +82,7 @@ public abstract class QuestionFactory {
             Arrays.asList(
                 new Answer("YES", null, likeQuestion),
                 new Answer("NO", null, botheringQuestion)
-            ),
-            false
+            )
         );
         Stack<Question> out = new Stack<>();
         out.push(interestedQuestion);
