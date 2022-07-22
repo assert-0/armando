@@ -14,12 +14,14 @@ public class Question {
     private String text;
     private boolean multiple;
     private List<Answer> answers;
+    private boolean throwaway;
 
     public Question(String text) {
         this.id = null;
         this.text = text;
         this.multiple = false;
         this.answers = Collections.emptyList();
+        this.throwaway = true;
     }
 
     public Question(Question question) {
@@ -27,5 +29,6 @@ public class Question {
         this.text = question.text;
         this.multiple = question.multiple;
         this.answers = question.answers;
+        this.throwaway = question.throwaway;
     }
 }

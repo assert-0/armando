@@ -28,9 +28,9 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private QuestionHandler handler1 = new QuestionHandler(
+    private QuestionHandler handler = new QuestionHandler(
         QuestionFactory.createShuffledConversation(
-            "Hej Gita, znaš li da je vrijednost nekretnina na Medveščaku "
+            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
             + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
             + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
             "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
@@ -49,14 +49,6 @@ public class Armando extends Agent {
         ),
         new TemplateQuestionProcessor()
     );
-    private QuestionHandler handler = new QuestionHandler(
-        QuestionFactory.createConversation(
-            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
-            + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-            + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)"
-        ),
-        new TemplateQuestionProcessor()
-    );
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
@@ -70,6 +62,7 @@ public class Armando extends Agent {
 
     public void sendQuestion() {
         var question = handler.getCurrentProcessedQuestion(this);
+        if (question == null) return;
         if (question.getAnswers().size() == 0) {
             TelegramAdapterAPI.sendMessage(
                 connections.get("telegram"),

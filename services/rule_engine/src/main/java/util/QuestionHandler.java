@@ -18,7 +18,9 @@ public class QuestionHandler {
 
     public Question getCurrentQuestion() {
         try {
-            return questions.peek();
+            var question = questions.peek();
+            if (question.isThrowaway()) questions.pop();
+            return question;
         } catch (EmptyStackException ignored) {
             return null;
         }
