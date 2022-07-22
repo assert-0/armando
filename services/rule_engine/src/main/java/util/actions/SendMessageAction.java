@@ -19,7 +19,8 @@ public class SendMessageAction extends Action {
         this.message = message;
     }
 
-    public void act(Armando agent) {
+    public void act(Object value) {
+        var agent = (Armando)value;
         agent.sendMessage(message);
     }
 }
