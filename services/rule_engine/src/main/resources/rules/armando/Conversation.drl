@@ -21,7 +21,6 @@ rule "First contact"
         initialize: Initialize() from entry-point "agent-created"
         agent: Armando()
     then
-        agent.sendMessage("Hello, my name is Armando, a smart Real Estate agent!");
         DBAdapterAPI.fetchUser(agent.getUserId());
         delete(initialize);
 end
@@ -48,6 +47,7 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
+        Log.warn("Sending question again");
         agent.sendQuestion();
 end
 

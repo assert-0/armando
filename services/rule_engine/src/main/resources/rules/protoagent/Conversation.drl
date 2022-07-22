@@ -24,6 +24,5 @@ rule "Create agent"
         answer: TelegramKeyboardAnswered() from entry-point "signals"
         agent: ProtoAgent()
     then
-        Log.info(answer.getAnswer());
         agent.handleAgentAssignment(answer.getAnswer());
 end

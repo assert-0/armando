@@ -1,6 +1,9 @@
 package util;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import util.actions.CallAgentAction;
@@ -89,9 +92,15 @@ public abstract class QuestionFactory {
 
     public static Stack<Question> createConversation(String ...messages) {
         Stack<Question> out = new Stack<>();
-        for (var message : messages) {
-            out.push(new Question(message));
+        for (int i = messages.length - 1; i >= 0; i--) {
+            out.push(new Question(messages[i]));
         }
         return out;
+    }
+
+    public static Stack<Question> createRandomConversation(List<String> ...conversations) {
+        var rand = new Random(LocalDateTime.now().getNano());
+        var index = rand.nextInt(conversations.length);
+        return createConversation(conversations[index].toArray(new String[0]));
     }
 }

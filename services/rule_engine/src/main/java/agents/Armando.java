@@ -30,7 +30,7 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private Stack<Question> questions = QuestionFactory.getQuestionTree();
+    private Stack<Question> questions = QuestionFactory.createConversation("Hello", "Hi", "Yo", "Sup");
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
