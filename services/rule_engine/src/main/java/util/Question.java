@@ -21,4 +21,11 @@ public class Question {
         this.multiple = false;
         this.answers = Collections.emptyList();
     }
+
+    public Question(Question question) {
+        this.id = question.id;
+        this.text = question.text;
+        this.multiple = question.multiple;
+        this.answers = question.answers;
+    }
 }

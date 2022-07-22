@@ -14,6 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 public class QuestionHandler {
     private Stack<Question> questions;
+    private QuestionProcessor processor;
 
     public Question getCurrentQuestion() {
         try {
@@ -21,6 +22,12 @@ public class QuestionHandler {
         } catch (EmptyStackException ignored) {
             return null;
         }
+    }
+
+    public Question getCurrentProcessedQuestion(Object value) {
+        var question = getCurrentQuestion();
+        if (question == null) return question;
+        return processor.process(question, value);
     }
 
     public void submitAnswersAndAct(List<String> answers, Object value) {

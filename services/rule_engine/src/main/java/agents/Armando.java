@@ -18,6 +18,7 @@ import com.mindsmiths.dbAdapter.User;
 import signals.UserIdSignal;
 import util.QuestionFactory;
 import util.QuestionHandler;
+import util.processors.TemplateQuestionProcessor;
 
 
 @Getter
@@ -27,7 +28,7 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private QuestionHandler asker = new QuestionHandler(
+    private QuestionHandler handler1 = new QuestionHandler(
         QuestionFactory.createShuffledConversation(
             "Hej Gita, znaš li da je vrijednost nekretnina na Medveščaku "
             + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
@@ -45,7 +46,16 @@ public class Armando extends Agent {
             "Čisto informativno, na području Medveščaka se mijenja toplovod! "
             + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
             + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
-        )
+        ),
+        new TemplateQuestionProcessor()
+    );
+    private QuestionHandler handler = new QuestionHandler(
+        QuestionFactory.createConversation(
+            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
+            + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
+            + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)"
+        ),
+        new TemplateQuestionProcessor()
     );
 
     public Armando(String connectionName, String connectionId, String userId) {
@@ -59,7 +69,7 @@ public class Armando extends Agent {
     }
 
     public void sendQuestion() {
-        var question = asker.getCurrentQuestion();
+        var question = handler.getCurrentProcessedQuestion(this);
         if (question.getAnswers().size() == 0) {
             TelegramAdapterAPI.sendMessage(
                 connections.get("telegram"),
@@ -96,10 +106,10 @@ public class Armando extends Agent {
     }
 
     public void handleAnswer(List<String> answers) {
-        var question = asker.getCurrentQuestion();
+        var question = handler.getCurrentQuestion();
         user.getQuestions().add(new Question(question.getText(), answers));
         DBAdapterAPI.updateUser(user);
-        asker.submitAnswersAndAct(answers, this);
+        handler.submitAnswersAndAct(answers, this);
         sendQuestion();
     }
 }
