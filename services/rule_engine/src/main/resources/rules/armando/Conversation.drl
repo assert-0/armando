@@ -31,7 +31,8 @@ rule "Receive user data"
         agent: Armando()
     then
         modify(agent) {
-            setUser(res.getUsers().get(0))
+            setUser(res.getUsers().get(0)),
+            setLastInteractionTime(new Date())
         };
         agent.sendFirstQuestion();
         delete(res);

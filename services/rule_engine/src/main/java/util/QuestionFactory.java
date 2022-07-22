@@ -98,9 +98,9 @@ public abstract class QuestionFactory {
         return out;
     }
 
-    public static Stack<Question> createRandomConversation(List<String> ...conversations) {
+    public static Stack<Question> createRandomConversation(List<List<String>> conversations) {
         var rand = new Random(LocalDateTime.now().getNano());
-        var index = rand.nextInt(conversations.length);
-        return createConversation(conversations[index].toArray(new String[0]));
+        var index = rand.nextInt(conversations.size());
+        return createConversation(conversations.get(index).toArray(new String[0]));
     }
 }
