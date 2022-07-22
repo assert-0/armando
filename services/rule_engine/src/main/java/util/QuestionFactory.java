@@ -98,6 +98,19 @@ public abstract class QuestionFactory {
         return out;
     }
 
+    public static Stack<Question> createShuffledConversation(String ...messages) {
+        // Fisher - Yates shuffle
+        var rand = new Random(LocalDateTime.now().getNano());
+        for (int i = messages.length - 1; i >= 0; i--) {
+            var index = rand.nextInt(i + 1);
+            //
+            var temp = messages[i];
+            messages[i] = messages[index];
+            messages[index] = temp;
+        }
+        return createConversation(messages);
+    }
+
     public static Stack<Question> createRandomConversation(List<List<String>> conversations) {
         var rand = new Random(LocalDateTime.now().getNano());
         var index = rand.nextInt(conversations.size());

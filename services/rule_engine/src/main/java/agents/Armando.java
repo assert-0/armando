@@ -31,28 +31,23 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-    private Stack<Question> questions = QuestionFactory.createRandomConversation(
-        Arrays.asList(
-            Arrays.asList(
-                "Hej Gita, znaš li da je vrijednost nekretnina na Medveščaku "
-                + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-                + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
-                "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
-                + "tjedan! Više informacija o tome: "
-                + "[www.armando.com/zagreb/radovi/ilica](www.armando.com/zagreb/radovi/ilica)",
-                "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
-                + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
-                + "[www.armando.com/zagreb/medvescak/prodaja](www.armando.com/zagreb/medvescak/prodaja)",
-                "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
-                + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
-                + "će izgledati možeš saznati ovdje: "
-                + "[www.armando.com/zagreb/novi-projekti](www.armando.com/zagreb/novi-projekti)",
-                "Čisto informativno, na području Medveščaka se mijenja toplovod! "
-                + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
-                + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"),
-            Arrays.asList("Good evening", "I wanna talk about your extended car warranty"),
-            Arrays.asList("Sup", "for all thats good how much has evil prevailed")
-        )
+    private Stack<Question> questions = QuestionFactory.createShuffledConversation(
+        "Hej Gita, znaš li da je vrijednost nekretnina na Medveščaku "
+        + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
+        + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
+        "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
+        + "tjedan! Više informacija o tome: "
+        + "[www.armando.com/zagreb/radovi/ilica](www.armando.com/zagreb/radovi/ilica)",
+        "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
+        + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
+        + "[www.armando.com/zagreb/medvescak/prodaja](www.armando.com/zagreb/medvescak/prodaja)",
+        "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
+        + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
+        + "će izgledati možeš saznati ovdje: "
+        + "[www.armando.com/zagreb/novi-projekti](www.armando.com/zagreb/novi-projekti)",
+        "Čisto informativno, na području Medveščaka se mijenja toplovod! "
+        + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
+        + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
     );
 
     public Armando(String connectionName, String connectionId, String userId) {
