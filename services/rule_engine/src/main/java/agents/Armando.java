@@ -47,7 +47,7 @@ public class Armando extends Agent {
             + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
             + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
         ),
-        new TemplateQuestionProcessor()
+        new TemplateQuestionProcessor(User.class)
     );
 
     public Armando(String connectionName, String connectionId, String userId) {
@@ -61,13 +61,14 @@ public class Armando extends Agent {
     }
 
     public void sendQuestion() {
-        var question = handler.getCurrentProcessedQuestion(this);
+        var question = handler.getCurrentProcessedQuestion(user);
         if (question == null) return;
         if (question.getAnswers().size() == 0) {
             TelegramAdapterAPI.sendMessage(
                 connections.get("telegram"),
                 question.getText()
             );
+            handler.nextQuestion();
         }
         else {
             TelegramAdapterAPI.sendMessage(

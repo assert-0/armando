@@ -19,20 +19,23 @@ public class QuestionHandler {
     public Question getCurrentQuestion() {
         try {
             var question = questions.peek();
-            if (question.getAnswers().size() == 0) questions.pop();
             return question;
         } catch (EmptyStackException ignored) {
             return null;
         }
     }
 
-    public Question getCurrentProcessedQuestion(Object value) {
+    public Question getCurrentProcessedQuestion(Object processValue) {
         var question = getCurrentQuestion();
         if (question == null) return question;
-        return processor.process(question, value);
+        return processor.process(question, processValue);
     }
 
-    public void submitAnswersAndAct(List<String> answers, Object value) {
+    public void nextQuestion() {
+        questions.pop();
+    }
+
+    public void submitAnswersAndAct(List<String> answers, Object actionValue) {
         Question question = questions.pop();
         Set<Action> actions = new HashSet<>();
         for (var answer : answers) {
@@ -46,7 +49,7 @@ public class QuestionHandler {
             }
         }
         for (var action : actions) {
-            action.act(value);
+            action.act(actionValue);
         }
     }
 }

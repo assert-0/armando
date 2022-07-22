@@ -22,7 +22,11 @@ public class QuestionProcessorDeserializer extends JsonDeserializer<QuestionProc
             case BasicQuestionProcessor.PROCESSOR_NAME:
                 return new BasicQuestionProcessor();
             case TemplateQuestionProcessor.PROCESSOR_NAME:
-                return new TemplateQuestionProcessor();
+                try {
+                    return new TemplateQuestionProcessor(Class.forName(node.get("cls").asText()));
+                } catch (ClassNotFoundException ignored) {
+                    return null;
+                }
             default:
                 return null;
         } 

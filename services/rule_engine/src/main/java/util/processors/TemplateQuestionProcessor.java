@@ -19,58 +19,65 @@ public class TemplateQuestionProcessor extends QuestionProcessor {
     public static final String TEMPLATE_START = "${";
     public static final String TEMPLATE_END = "}";
 
-    public TemplateQuestionProcessor() {
+    private Class<?> cls;
+
+    public TemplateQuestionProcessor(Class<?> cls) {
         super(PROCESSOR_NAME);
+        this.cls = cls;
     }
 
-    private void processTemplate(StringBuilder textBuilder, String template, Armando agent) {
+    private void processTemplate(StringBuilder textBuilder, String template, Object value) {
         Method method;
-        try {
-            method = User.class.getMethod("get" + template.substring(0, 1).toUpperCase() + template.substring(1));
-        } catch(NoSuchMethodException | SecurityException ignored) {
-            return;
+        Class<?> cls1 = cls;
+        Object result = null;
+        for (var str : template.split("\\.")) {
+            try {
+                method = cls1.getMethod("get" + str.substring(0, 1).toUpperCase() + str.substring(1));
+            } catch(NoSuchMethodException | SecurityException ignored) {
+                return;
+            }
+            try {
+                result = method.invoke(value);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored) {
+                return;
+            }
+            value = result;
+            cls1 = result.getClass();
         }
-        Object result;
-        try {
-            result = method.invoke(agent.getUser());
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored) {
-            return;
-        }
-        textBuilder.append(result.toString());
+        if (result != null)
+            textBuilder.append(result.toString());
     }
 
     @Override
     public Question process(Question question, Object value) {
-        var agent = (Armando)value;
         var newQuestion = new Question(question);
         //
         boolean inTemplate = false;
-        int startCount = 0;
-        int endCount = 0;
+        int count = 0;
         var textBuilder = new StringBuilder();
         var templateBuilder = new StringBuilder();
         //
         for (var ch : question.getText().toCharArray()) {
             if (inTemplate) {
                 templateBuilder.append(ch);
-                if (ch == TEMPLATE_END.charAt(endCount)) endCount++;
-                if (endCount == TEMPLATE_END.length()) {
-                    var index = templateBuilder.length() - endCount;
-                    processTemplate(textBuilder, templateBuilder.substring(TEMPLATE_START.length(), index), agent);
+                if (ch == TEMPLATE_END.charAt(count)) count++;
+                if (count == TEMPLATE_END.length()) {
+                    var index = templateBuilder.length() - count;
+                    processTemplate(textBuilder, templateBuilder.substring(TEMPLATE_START.length(), index), value);
                     templateBuilder.setLength(0);
                     inTemplate = false;
-                    endCount = 0;
+                    count = 0;
                 }
             }
             else {
                 textBuilder.append(ch);
-                if (ch == TEMPLATE_START.charAt(startCount)) startCount++;
-                if (startCount == TEMPLATE_START.length()) {
-                    var index = textBuilder.length() - startCount;
+                if (ch == TEMPLATE_START.charAt(count)) count++;
+                if (count == TEMPLATE_START.length()) {
+                    var index = textBuilder.length() - count;
                     templateBuilder.append(textBuilder.substring(index));
                     textBuilder.setLength(index);
                     inTemplate = true;
-                    startCount = 0;
+                    count = 0;
                 }
             }
         }
