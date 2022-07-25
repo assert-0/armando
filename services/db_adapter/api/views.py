@@ -15,6 +15,12 @@ class Question(ExtendableModel):
     def __eq__(self, other):
         return self.text == other.text
 
+class Activity(ExtendableModel):
+    class Type(Enum):
+        ARMORY_LINK = 0
+    type: Type
+    datetime: datetime
+
 class ReasonForLackOfInterest(str, Enum):
     GENERAL_NO_INTEREST = "GENERAL_NO_INTEREST"
     NO_INTERESTING_OFFERS = "NO_INTERESTING_OFFERS"
@@ -37,6 +43,7 @@ class User(DBView):
     telegramChatId: Optional[str]
     boughtRE: Optional[bool]
     questions: List[Question]
+    activities: List[Activity]
 
     @classmethod
     def get_service_name(cls) -> str:
