@@ -46,6 +46,11 @@
 			<artifactId>db-adapter-client</artifactId>
 			<version>4.0.0a0</version>
 		</dependency>
+        <dependency>
+			<groupId>com.mindsmiths</groupId>
+			<artifactId>armory-client</artifactId>
+			<version>4.0.0a4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>app</finalName>
