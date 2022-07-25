@@ -11,6 +11,12 @@ import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered;
 import com.mindsmiths.telegramAdapter.TelegramMultiChoiceKeyboardAnswered;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import com.mindsmiths.armory.events.ArmoryEvent; 
+import com.mindsmiths.armory.events.SubmitEvent; 
+import com.mindsmiths.armory.events.UserConnectedEvent; 
+import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
 import agents.Armando;
 
@@ -21,7 +27,12 @@ rule "First contact"
         initialize: Initialize() from entry-point "agent-created"
         agent: Armando()
     then
+        agent.sendMessage("Hej, moje ime je Armando i ja sam pametni agent za nekretnine!");
         DBAdapterAPI.fetchUser(agent.getUserId());
+        modify(agent) {
+            addConnection("armory", agent.getConnections().get("telegram"))
+        };
+        System.out.println(agent.toString());
         delete(initialize);
 end
 
@@ -30,11 +41,14 @@ rule "Receive user data"
         res: FetchResult(success == true) from entry-point "signals"
         agent: Armando()
     then
+        Log.warn("Fetched user!");
         modify(agent) {
             setUser(res.getUsers().get(0)),
             setLastInteractionTime(new Date())
         };
-        agent.sendFirstQuestion();
+        agent.displayUI();
+        agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
+        //agent.sendFirstQuestion();
         delete(res);
 end
 
@@ -68,4 +82,23 @@ rule "Receive multi answer"
     then
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
+end
+
+rule "User connected event"
+    when 
+        event: UserConnectedEvent() from entry-point "signals"
+        agent: Armando()
+    then
+        agent.displayUI();
+        delete(event);
+end
+
+rule "Armory submit"
+    when
+        event: SubmitEvent() from entry-point "signals"
+        agent: Armando()
+    then
+        Log.info(event.getData().get("submit").asText());
+        agent.displayUI(event.getData().get("submit").asText());
+        delete(event);
 end

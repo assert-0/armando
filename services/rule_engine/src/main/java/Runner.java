@@ -1,6 +1,11 @@
+import agents.Armando;
 import agents.Smith;
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
+import com.mindsmiths.ruleEngine.util.Signals;
+import com.mindsmiths.armory.events.SubmitEvent; 
+import com.mindsmiths.armory.events.UserConnectedEvent;
+import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
 
 public class Runner extends RuleEngineService {
@@ -10,7 +15,18 @@ public class Runner extends RuleEngineService {
 
         if (!Agents.exists(Smith.ID))
             Agents.createAgent(new Smith());
-        
+
+        configureSignals(
+            Signals.on(UserConnectedEvent.class).sendTo(
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
+            ),
+            Signals.on(SubmitEvent.class).sendTo(
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
+            ),
+            Signals.on(UserDisconnectedEvent.class).sendTo(
+                (e) -> Agents.getByConnection("armory", e.getConnectionId())
+            )
+        );
     }
 
     public static void main(String[] args) {
