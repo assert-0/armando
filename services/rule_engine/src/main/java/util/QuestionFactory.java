@@ -1,6 +1,9 @@
 package util;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import util.actions.CallAgentAction;
@@ -85,5 +88,32 @@ public abstract class QuestionFactory {
         out.push(interestedQuestion);
         out.push(checkQuestion);
         return out;
+    }
+
+    public static Stack<Question> createConversation(String ...messages) {
+        Stack<Question> out = new Stack<>();
+        for (int i = messages.length - 1; i >= 0; i--) {
+            out.push(new Question(messages[i]));
+        }
+        return out;
+    }
+
+    public static Stack<Question> createShuffledConversation(String ...messages) {
+        // Fisher - Yates shuffle
+        var rand = new Random(LocalDateTime.now().getNano());
+        for (int i = messages.length - 1; i >= 0; i--) {
+            var index = rand.nextInt(i + 1);
+            //
+            var temp = messages[i];
+            messages[i] = messages[index];
+            messages[index] = temp;
+        }
+        return createConversation(messages);
+    }
+
+    public static Stack<Question> createRandomConversation(List<List<String>> conversations) {
+        var rand = new Random(LocalDateTime.now().getNano());
+        var index = rand.nextInt(conversations.size());
+        return createConversation(conversations.get(index).toArray(new String[0]));
     }
 }

@@ -19,7 +19,8 @@ public class CallAgentAction extends Action {
         this.agentId = agentId;
     }
 
-    public void act(Armando agent) {
+    public void act(Object value) {
+        var agent = (Armando)value;
         agent.contactAgent(agentId);
     }
 }

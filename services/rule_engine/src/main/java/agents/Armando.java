@@ -1,16 +1,13 @@
 package agents;
 
+import java.util.Arrays;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashSet;
-
 import java.util.List;
-import java.util.Set;
-import java.util.Stack;
 
 import lombok.*;
 
@@ -20,6 +17,7 @@ import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.Question;
 import com.mindsmiths.dbAdapter.User;
 
 import com.mindsmiths.armory.ArmoryAPI;
@@ -29,12 +27,10 @@ import com.mindsmiths.armory.templates.GenericInterface;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
-
+import util.QuestionHandler;
+import util.processors.TemplateQuestionProcessor;
 import util.RealEstate;
 import util.armory.DisplayInterface;
-import util.Question;
-import util.Action;
-
 
 
 @Getter
@@ -44,8 +40,27 @@ public class Armando extends Agent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
-
-    private int currentIndex = -1;
+    private QuestionHandler handler = new QuestionHandler(
+        QuestionFactory.createShuffledConversation(
+            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
+            + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
+            + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
+            "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
+            + "tjedan! Više informacija o tome: "
+            + "[www.armando.com/zagreb/radovi/ilica](www.armando.com/zagreb/radovi/ilica)",
+            "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
+            + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
+            + "[www.armando.com/zagreb/medvescak/prodaja](www.armando.com/zagreb/medvescak/prodaja)",
+            "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
+            + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
+            + "će izgledati možeš saznati ovdje: "
+            + "[www.armando.com/zagreb/novi-projekti](www.armando.com/zagreb/novi-projekti)",
+            "Čisto informativno, na području Medveščaka se mijenja toplovod! "
+            + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
+            + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
+        ),
+        new TemplateQuestionProcessor(User.class)
+    );
     private static List<RealEstate> reImages = new ArrayList<RealEstate>();
     static {
         reImages.add(new RealEstate("https://images.adsttc.com/media/images/629f/3517/c372/5201/650f/1c7f/large_jpg/hyde-park-house-robeson-architects_1.jpg?1654601149", "Poseidon Villa", "1 000 000 EUR"));
@@ -64,7 +79,6 @@ public class Armando extends Agent {
         for (int i = 3; i < 6; ++i)
             slRealEstates.put(new Image(reImages.get(i - 3).getSrc()), Arrays.asList(new SubmitButton(String.valueOf(i - 3), "More info", new HashMap())));
     } */
-    private Stack<Question> questions = QuestionFactory.getQuestionTree();
 
 
     public Armando(String connectionName, String connectionId, String userId) {
@@ -78,25 +92,30 @@ public class Armando extends Agent {
     }
 
     public void sendQuestion() {
-        Question question;
-        try {
-            question = questions.peek();
-        } catch (EmptyStackException ignored) {
-            return;
+        var question = handler.getCurrentProcessedQuestion(user);
+        if (question == null) return;
+        if (question.getAnswers().size() == 0) {
+            TelegramAdapterAPI.sendMessage(
+                connections.get("telegram"),
+                question.getText()
+            );
+            handler.nextQuestion();
         }
-        TelegramAdapterAPI.sendMessage(
-            connections.get("telegram"),
-            question.getText(),
-            new KeyboardData(
-                question.getId(),
-                question.getAnswers()
-                    .stream()
-                    .map(answer -> new KeyboardOption(answer.getText(), answer.getText()))
-                    .toList(),
-                false,
-                question.isMultiple()
-            )
-        );
+        else {
+            TelegramAdapterAPI.sendMessage(
+                connections.get("telegram"),
+                question.getText(),
+                new KeyboardData(
+                    question.getId(),
+                    question.getAnswers()
+                        .stream()
+                        .map(answer -> new KeyboardOption(answer.getText(), answer.getText()))
+                        .toList(),
+                    false,
+                    question.isMultiple()
+                )
+            );
+        }
     }
 
     public void contactAgent(String agentId) {
@@ -112,23 +131,10 @@ public class Armando extends Agent {
     }
 
     public void handleAnswer(List<String> answers) {
-        Question question = questions.pop();
-        Set<Action> actions = new HashSet<>();
-        for (var answer : answers) {
-            for (var questionAnswer : question.getAnswers()) {
-                if (answer.equals(questionAnswer.getText())) {
-                    Question nextQuestion = questionAnswer.getNextQuestion();
-                    if (nextQuestion != null) questions.push(nextQuestion);
-                    Action action = questionAnswer.getAction();
-                    if (action != null) actions.add(action);
-                }
-            }
-        }
-        for (var action : actions) {
-            action.act(this);
-        }
-        user.getQuestions().add(new com.mindsmiths.dbAdapter.Question(question.getText(), answers));
+        var question = handler.getCurrentQuestion();
+        user.getQuestions().add(new Question(question.getText(), answers));
         DBAdapterAPI.updateUser(user);
+        handler.submitAnswersAndAct(answers, this);
         sendQuestion();
     }
     public static void info(String message) {

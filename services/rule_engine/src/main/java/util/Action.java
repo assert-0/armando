@@ -4,8 +4,6 @@ import lombok.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import agents.Armando;
-
 
 @JsonDeserialize(using = ActionDeserializer.class)
 @Data
@@ -14,5 +12,5 @@ import agents.Armando;
 public abstract class Action {
     private String name;
 
-    public abstract void act(Armando agent);
+    public abstract void act(Object value);
 }

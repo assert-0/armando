@@ -54,12 +54,10 @@ public class ProtoAgent extends Agent {
     public void handleFirstMessage(String text) {
         if (text.startsWith("/start ")) {
             Agents.createAgent(new Armando("telegram", getConnection("telegram"), text.split(" ")[1]));
-            Log.info("Armando " + text.split(" ")[1]);
             Agents.deleteAgent(this);
         }
         else {
             sendRoleAssignment();
-            Log.info("Else");
         }
     }
 

@@ -43,7 +43,8 @@ rule "Receive user data"
     then
         Log.warn("Fetched user!");
         modify(agent) {
-            setUser(res.getUsers().get(0))
+            setUser(res.getUsers().get(0)),
+            setLastInteractionTime(new Date())
         };
         agent.displayUI();
         agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
@@ -61,6 +62,8 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
+        Log.warn("Sending question again");
+        agent.sendQuestion();
 end
 
 rule "Receive single answer"
