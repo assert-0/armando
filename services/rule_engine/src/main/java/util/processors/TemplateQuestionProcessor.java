@@ -19,17 +19,22 @@ public class TemplateQuestionProcessor extends QuestionProcessor {
     public static final String TEMPLATE_START = "${";
     public static final String TEMPLATE_END = "}";
 
-    private Class<?> cls;
+    private String className;
 
     public TemplateQuestionProcessor(Class<?> cls) {
         super(PROCESSOR_NAME);
-        this.cls = cls;
+        this.className = cls.getName();
     }
 
-    private void processTemplate(StringBuilder textBuilder, String template, Object value) {
+    public TemplateQuestionProcessor(String className) {
+        super(PROCESSOR_NAME);
+        this.className = className;
+    }
+
+    private void processTemplate(Class<?> cls, StringBuilder textBuilder, String template, Object value) {
         Method method;
-        Class<?> cls1 = cls;
         Object result = null;
+        Class<?> cls1 = cls;
         for (var str : template.split("\\.")) {
             try {
                 method = cls1.getMethod("get" + str.substring(0, 1).toUpperCase() + str.substring(1));
@@ -50,6 +55,13 @@ public class TemplateQuestionProcessor extends QuestionProcessor {
 
     @Override
     public Question process(Question question, Object value) {
+        Class<?> cls;
+        try {
+            cls = Class.forName(className);
+        } catch (ClassNotFoundException ignored) {
+            return question;
+        }
+        //
         var newQuestion = new Question(question);
         //
         boolean inTemplate = false;
@@ -63,7 +75,7 @@ public class TemplateQuestionProcessor extends QuestionProcessor {
                 if (ch == TEMPLATE_END.charAt(count)) count++;
                 if (count == TEMPLATE_END.length()) {
                     var index = templateBuilder.length() - count;
-                    processTemplate(textBuilder, templateBuilder.substring(TEMPLATE_START.length(), index), value);
+                    processTemplate(cls, textBuilder, templateBuilder.substring(TEMPLATE_START.length(), index), value);
                     templateBuilder.setLength(0);
                     inTemplate = false;
                     count = 0;

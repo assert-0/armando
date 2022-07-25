@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.mindsmiths.ruleEngine.util.Log;
 
 import util.processors.*;
 
@@ -22,11 +23,7 @@ public class QuestionProcessorDeserializer extends JsonDeserializer<QuestionProc
             case BasicQuestionProcessor.PROCESSOR_NAME:
                 return new BasicQuestionProcessor();
             case TemplateQuestionProcessor.PROCESSOR_NAME:
-                try {
-                    return new TemplateQuestionProcessor(Class.forName(node.get("cls").asText()));
-                } catch (ClassNotFoundException ignored) {
-                    return null;
-                }
+                return new TemplateQuestionProcessor(node.get("className").asText());
             default:
                 return null;
         } 

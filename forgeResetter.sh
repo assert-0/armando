@@ -14,8 +14,6 @@ for d in services/*/ ; do
     fi
 done
 
-forge reset && forge init
-
 forge reset && forge init && forge run
 
 pkill forge && pkill java
