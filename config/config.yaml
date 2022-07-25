@@ -94,7 +94,7 @@ services:
       memory: 100Mi
   armory:
     type: django
-    version: 4.0.0a3
+    version: 4.0.0a4
     command:
       run: "daphne -b 0.0.0.0 armory.config.asgi:application"
     db:

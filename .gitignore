@@ -23,7 +23,6 @@ var/
 get-pip.py
 requirements.lock
 package-lock.json
-package.json
 
 *secrets.yaml
 secrets
