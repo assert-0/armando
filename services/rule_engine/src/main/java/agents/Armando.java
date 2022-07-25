@@ -3,10 +3,7 @@ package agents;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.HashSet;
 import java.util.List;
 
 import lombok.*;
@@ -19,6 +16,7 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.Question;
 import com.mindsmiths.dbAdapter.User;
+import com.mindsmiths.dbAdapter.Activity;
 
 import com.mindsmiths.armory.ArmoryAPI;
 
