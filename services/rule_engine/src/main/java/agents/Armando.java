@@ -47,24 +47,29 @@ public class Armando extends Agent {
     private Date lastInteractionTime = new Date();
     private QuestionHandler handler = new QuestionHandler(
         QuestionFactory.createShuffledConversation(
-            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
+            "Hej ${user.name}, znaš li da je vrijednost nekretnina na Medveščaku "
             + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-            + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
+            + "[${codeEnvironment}/${telegramConnection}]"
+            + "(${codeEnvironment}/${telegramConnection})",
             "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
             + "tjedan! Više informacija o tome: "
-            + "[www.armando.com/zagreb/radovi/ilica](www.armando.com/zagreb/radovi/ilica)",
+            + "[${codeEnvironment}/${telegramConnection}]"
+            + "(${codeEnvironment}/${telegramConnection})",
             "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
             + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
-            + "[www.armando.com/zagreb/medvescak/prodaja](www.armando.com/zagreb/medvescak/prodaja)",
+            + "[${codeEnvironment}/${telegramConnection}]"
+            + "(${codeEnvironment}/${telegramConnection})",
             "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
             + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
             + "će izgledati možeš saznati ovdje: "
-            + "[www.armando.com/zagreb/novi-projekti](www.armando.com/zagreb/novi-projekti)",
+            + "[${codeEnvironment}/${telegramConnection}]"
+            + "(${codeEnvironment}/${telegramConnection})",
             "Čisto informativno, na području Medveščaka se mijenja toplovod! "
             + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
-            + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
+            + "[${codeEnvironment}/${telegramConnection}]"
+            + "(${codeEnvironment}/${telegramConnection})"
         ),
-        new TemplateQuestionProcessor(User.class)
+        new TemplateQuestionProcessor(Armando.class)
     );
     private static List<RealEstate> reImages = new ArrayList<RealEstate>();
     static {
@@ -91,13 +96,21 @@ public class Armando extends Agent {
         this.userId = userId;
     }
 
+    public String getTelegramConnection() {
+        return getConnection("telegram");
+    }
+
+    public String getCodeEnvironment() {
+        return "https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com";
+    }
+
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
     public void sendQuestion() {
-        var question = handler.getCurrentProcessedQuestion(user);
+        var question = handler.getCurrentProcessedQuestion(this);
         if (question == null) return;
         if (question.getAnswers().size() == 0) {
             TelegramAdapterAPI.sendMessage(
@@ -141,9 +154,6 @@ public class Armando extends Agent {
         DBAdapterAPI.updateUser(user);
         handler.submitAnswersAndAct(answers, this);
         sendQuestion();
-    }
-    public static void info(String message) {
-        Log.LOGGER.info(message);
     }
 
     public void displayUI(boolean rate) {

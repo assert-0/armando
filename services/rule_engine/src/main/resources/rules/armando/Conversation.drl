@@ -51,8 +51,7 @@ rule "Receive user data"
             setLastInteractionTime(new Date())
         };
         agent.displayUI(true);
-        agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
-        //agent.sendFirstQuestion();
+        agent.sendFirstQuestion();
         delete(res);
 end
 
@@ -66,7 +65,6 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
-        Log.warn("Sending question again");
         agent.sendQuestion();
 end
 
