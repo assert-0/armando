@@ -10,6 +10,7 @@ import com.mindsmiths.dbAdapter.User;
 
 import agents.AgentAgent;
 import signals.UserIdSignal;
+import signals.RatingSignal;
 
 
 rule "Set AgentAgent user id"
@@ -53,4 +54,14 @@ rule "Update user bought"
         delete(answer);
         delete(res);
         Log.info("[UPDATE DONE] AgentAgent Answer: " + answer.getAnswer());
+end
+
+rule "Armory submit"
+    when
+        event: RatingSignal() from entry-point "signals"
+        agent: AgentAgent()
+    then
+        Log.info("GOT SIGNAL IN AGENT");
+        agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber());
+        delete(event);
 end

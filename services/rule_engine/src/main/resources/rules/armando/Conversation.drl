@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.FetchResult;
 import com.mindsmiths.ruleEngine.util.Log;
+import com.mindsmiths.ruleEngine.util.Agents;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.ruleEngine.model.Heartbeat;
@@ -19,6 +20,9 @@ import com.mindsmiths.armory.events.UserConnectedEvent;
 import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
 import agents.Armando;
+import agents.AgentAgent;
+
+import signals.RatingSignal;
 
 
 rule "First contact"
@@ -46,7 +50,7 @@ rule "Receive user data"
             setUser(res.getUsers().get(0)),
             setLastInteractionTime(new Date())
         };
-        agent.displayUI();
+        agent.displayUI(true);
         agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
         //agent.sendFirstQuestion();
         delete(res);
@@ -89,7 +93,7 @@ rule "User connected event"
         event: UserConnectedEvent() from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI();
+        agent.displayUI(true);
         delete(event);
 end
 
@@ -99,6 +103,13 @@ rule "Armory submit"
         agent: Armando()
     then
         Log.info(event.getData().get("submit").asText());
-        agent.displayUI(event.getData().get("submit").asText());
+        if (event.getData().get("submit").asText().equals("getrating")) {
+            Log.info(agent.getUser().getName() + " " + agent.getUser().getSurname());
+            agent.displayUI(false);
+        }
+        if (event.getData().get("submit").asText().equals("submitrating")) {
+            agent.send(AgentAgent.ID, new RatingSignal(agent.getUser()));
+            agent.displayUI(agent.getUserId());
+        }
         delete(event);
 end

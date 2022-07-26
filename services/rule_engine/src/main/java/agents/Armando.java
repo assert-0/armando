@@ -31,6 +31,7 @@ import util.QuestionHandler;
 import util.processors.TemplateQuestionProcessor;
 import util.RealEstate;
 import util.armory.DisplayInterface;
+import util.armory.RateInterface;
 
 
 @Getter
@@ -141,53 +142,31 @@ public class Armando extends Agent {
         Log.LOGGER.info(message);
     }
 
-    public void displayUI() {
-        List<SubmitButton> btnList = new ArrayList<>();
-        btnList.add(new SubmitButton("1", "Next", new HashMap()));
-        btnList.add(new SubmitButton("2", "Previous", new HashMap()));
-        DisplayInterface ui = new DisplayInterface(
-            new Title("Novi park!"), 
+    public void displayUI(boolean rate) {
+        DisplayInterface ui = rate ? new DisplayInterface(
+            new Title("'Feng Shui' park dolazi na Maksimir!"), 
             new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
-            new Description(String.format("Hej %s, gradi se novi park na Ulica izmišljena 13! Planirani rok izgradnje je kraj 2022.", user.getName(), reImages.get(reIndex).getPrice())),
-            new Title("Nekretnine u blizini"), 
-            new Image(reImages.get(0).getSrc()),
-            Arrays.asList(new SubmitButton("0", "More info", new HashMap())),
-            new Image(reImages.get(1).getSrc()),
-            Arrays.asList(new SubmitButton("1", "More info", new HashMap())),
-            new Image(reImages.get(2).getSrc()),
-            Arrays.asList(new SubmitButton("2", "More info", new HashMap())),
-            new Title("Nekretnine sličnih cijena"), 
-            new Image(reImages.get(3).getSrc()),
-            Arrays.asList(new SubmitButton("3", "More info", new HashMap())),
-            new Image(reImages.get(4).getSrc()),
-            Arrays.asList(new SubmitButton("4", "More info", new HashMap())),
-            new Image(reImages.get(5).getSrc()),
-            Arrays.asList(new SubmitButton("5", "More info", new HashMap()))
+            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
+            new Title("Besplatna procjena tvoje nekretnine!"), 
+            Arrays.asList(new SubmitButton("submitrating", "Zatraži procjenu agenta!", new HashMap()))
+        ) : new DisplayInterface(
+            new Title("'Feng Shui' park dolazi na Maksimir!"), 
+            new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
+            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
+            null, 
+            null
         );
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 
     public void displayUI(String idString) {
         int id = Integer.valueOf(idString);
-        DisplayInterface ui = new DisplayInterface(
-            new Title(reImages.get(id).getName()), 
-            new Image(reImages.get(id).getSrc()),
-            new Description(String.format("%s, ova nekretnina može biti tvoja za %s", user.getName(), reImages.get(id).getPrice())),
-            new Title("Nekretnine u blizini"), 
-            new Image(reImages.get(0).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("0", "More info", new HashMap()))),
-            new Image(reImages.get(1).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("1", "More info", new HashMap()))),
-            new Image(reImages.get(2).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("2", "More info", new HashMap()))),
-            new Title("Nekretnine sličnih cijena"), 
-            new Image(reImages.get(3).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("3", "More info", new HashMap()))),
-            new Image(reImages.get(4).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("4", "More info", new HashMap()))),
-            new Image(reImages.get(5).getSrc()),
-            new ArrayList<>(Arrays.asList(new SubmitButton("5", "More info", new HashMap())))
+        Log.info("Displaying rating ui");
+        RateInterface ui = new RateInterface(
+            new Title("Upiši adresu!"),
+            Arrays.asList(new SubmitButton("getrating", "Nazad", new HashMap()))
         );
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
+        Log.info("Updated rating ui");
     }
 }
