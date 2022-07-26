@@ -10,6 +10,5 @@ import com.mindsmiths.sdk.core.api.Signal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserIdSignal extends Signal {
-    private String userId;  
-    private String stringName;
+    private String userId;
 }

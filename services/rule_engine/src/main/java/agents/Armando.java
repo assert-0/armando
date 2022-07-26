@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.HashSet;
 import java.util.List;
 
 import lombok.*;
@@ -22,6 +20,7 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.Question;
 import com.mindsmiths.dbAdapter.User;
+import com.mindsmiths.dbAdapter.Activity;
 
 import com.mindsmiths.armory.ArmoryAPI;
 
