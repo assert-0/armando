@@ -10,6 +10,7 @@ import com.mindsmiths.dbAdapter.User;
 
 import agents.AgentAgent;
 import signals.UserIdSignal;
+import signals.ActivityUsersSignal;
 import signals.RatingSignal;
 
 
@@ -62,5 +63,14 @@ rule "Armory submit"
         agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() 
             + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber()
             + ". Zovi ga " + event.getDate());
+        delete(event);
+end
+
+rule "Activity users" 
+    when 
+        event: ActivityUsersSignal() from entry-point "signals"
+        agent: AgentAgent()
+    then
+        agent.sendMessage(event.getSignalName() + ": " + event.getUsers());
         delete(event);
 end
