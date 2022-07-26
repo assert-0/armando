@@ -39,7 +39,6 @@ import util.armory.RateInterface;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Armando extends AbstractAgent {
     private String userId;
     private User user;
@@ -78,6 +77,9 @@ public class Armando extends AbstractAgent {
     private int openedLinks = 0;
     private int sentLinks = 0;
 
+    public Armando() {
+        userId = "0";
+    }
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
