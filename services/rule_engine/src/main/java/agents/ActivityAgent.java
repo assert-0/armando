@@ -32,9 +32,10 @@ public class ActivityAgent extends AbstractAgent {
     }
 
     public void sendActivityUsers() {
-        for (String key : activitiesMap.keySet()) 
-            this.sendFirst(AgentAgent.class, new ActivityUsersSignal(key, new HashSet(activitiesMap.get(key).stream().map(value -> value.getName() + " " + value.getSurname()).toList())));
-        for (String key : activitiesMap.keySet()) 
-            Log.info(activitiesMap.get(key).stream().map(value -> value.getName() + " " + value.getSurname()).toList());
+        for (String key : activitiesMap.keySet()) {
+            ActivityUsersSignal signal = new ActivityUsersSignal(Activity.typeMap.get(Integer.parseInt(key)), new HashSet(activitiesMap.get(key).stream().map(value -> value.getName() + " " + value.getSurname()).toList()));
+            this.sendFirst(AgentAgent.class, signal);
+            Log.info(signal.getSignalName() + ": " + signal.getUsers());
+        }
     }
 }
