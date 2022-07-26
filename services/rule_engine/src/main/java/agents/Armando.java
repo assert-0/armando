@@ -49,25 +49,20 @@ public class Armando extends Agent {
         QuestionFactory.createShuffledConversation(
             "Hej ${user.name}, znaš li da je vrijednost nekretnina na Medveščaku "
             + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-            + "[${codeEnvironment}/${telegramConnection}]"
-            + "(${codeEnvironment}/${telegramConnection})",
+            + "[${armoryUrl}](${armoryUrl})",
             "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
             + "tjedan! Više informacija o tome: "
-            + "[${codeEnvironment}/${telegramConnection}]"
-            + "(${codeEnvironment}/${telegramConnection})",
+            + "[${armoryUrl}](${armoryUrl})",
             "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
             + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
-            + "[${codeEnvironment}/${telegramConnection}]"
-            + "(${codeEnvironment}/${telegramConnection})",
+            + "[${armoryUrl}](${armoryUrl})",
             "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
             + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
             + "će izgledati možeš saznati ovdje: "
-            + "[${codeEnvironment}/${telegramConnection}]"
-            + "(${codeEnvironment}/${telegramConnection})",
+            + "[${armoryUrl}](${armoryUrl})",
             "Čisto informativno, na području Medveščaka se mijenja toplovod! "
             + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
-            + "[${codeEnvironment}/${telegramConnection}]"
-            + "(${codeEnvironment}/${telegramConnection})"
+            + "[${armoryUrl}](${armoryUrl})"
         ),
         new TemplateQuestionProcessor(Armando.class)
     );
@@ -96,12 +91,8 @@ public class Armando extends Agent {
         this.userId = userId;
     }
 
-    public String getTelegramConnection() {
-        return getConnection("telegram");
-    }
-
-    public String getCodeEnvironment() {
-        return System.getenv("ARMORY_SITE_URL");
+    public String getArmoryUrl() {
+        return "https://" + System.getenv("ARMORY_SITE_URL") + "/" + getConnection("telegram");
     }
 
     public void sendMessage(String text) {
