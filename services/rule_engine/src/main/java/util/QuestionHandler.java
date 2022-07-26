@@ -35,6 +35,10 @@ public class QuestionHandler {
         questions.pop();
     }
 
+    public void addQuestion(Question question) {
+        questions.push(question);
+    }
+
     public void submitAnswersAndAct(List<String> answers, Object actionValue) {
         Question question = questions.pop();
         Set<Action> actions = new HashSet<>();

@@ -41,7 +41,7 @@ import util.armory.DateInterface;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Armando extends Agent {
+public class Armando extends AbstractAgent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
@@ -95,11 +95,6 @@ public class Armando extends Agent {
         return "https://" + System.getenv("ARMORY_SITE_URL") + "/" + getConnection("telegram");
     }
 
-    public void sendMessage(String text) {
-        String chatId = getConnections().get("telegram");
-        TelegramAdapterAPI.sendMessage(chatId, text);
-    }
-
     public void sendQuestion() {
         var question = handler.getCurrentProcessedQuestion(this);
         if (question == null) return;
@@ -127,10 +122,10 @@ public class Armando extends Agent {
         }
     }
 
-    public void contactAgent(String agentId) {
+    public <T extends Agent> void contactAgent(Class<T> agentClass) {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
-        send(agentId, signal);
+        sendFirst(agentClass, signal);
     }
 
     public void sendFirstQuestion() {

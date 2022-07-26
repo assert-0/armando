@@ -19,20 +19,10 @@ import agents.AgentAgent;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProtoAgent extends Agent {
+public class ProtoAgent extends AbstractAgent {
 
     public ProtoAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId);
-    }
-
-    @Override
-    public String getConnection(String connectionName) {
-        return super.getConnection(connectionName);
-    }
-
-    public void sendMessage(String text) {
-        String chatId = getConnections().get("telegram");
-        TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
     public void sendRoleAssignment() {

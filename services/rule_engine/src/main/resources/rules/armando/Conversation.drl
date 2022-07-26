@@ -34,9 +34,8 @@ rule "First contact"
         agent.sendMessage("Hej, moje ime je Armando i ja sam pametni agent za nekretnine!");
         DBAdapterAPI.fetchUser(agent.getUserId());
         modify(agent) {
-            addConnection("armory", agent.getConnections().get("telegram"))
+            addConnection("armory", agent.getConnection("telegram"))
         };
-        System.out.println(agent.toString());
         delete(initialize);
 end
 
@@ -109,7 +108,7 @@ rule "Armory submit"
             agent.displayUI("date");
         }
         if (event.getData().get("submit").asText().equals("date")) {
-            agent.send(AgentAgent.ID, new RatingSignal(agent.getUser(), event.getData().get("date").get("text").asText()));
+            agent.sendFirst(AgentAgent.class, new RatingSignal(agent.getUser(), event.getData().get("date").get("text").asText()));
             agent.displayUI(false);
         }
         delete(event);

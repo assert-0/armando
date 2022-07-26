@@ -7,12 +7,14 @@ import java.util.Random;
 import java.util.Stack;
 
 import util.actions.CallAgentAction;
+import agents.AgentAgent;
+import agents.AgentHitl;
 
 
 public abstract class QuestionFactory {
     public static Stack<Question> getQuestionTree() {
-        Action callAgentAction = new CallAgentAction("AGENT");
-        Action callHITLAction = new CallAgentAction("HITL");
+        Action callAgentAction = new CallAgentAction(AgentAgent.class);
+        Action callHITLAction = new CallAgentAction(AgentHitl.class);
         Question interestedQuestion = new Question(
             "4",
             "Yikes, maybe I can help with that! Are you perhaps interested in buying a new real estate?",

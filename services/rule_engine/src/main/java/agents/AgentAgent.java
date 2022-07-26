@@ -17,10 +17,8 @@ import com.mindsmiths.dbAdapter.User;
 @Setter
 @NoArgsConstructor
 public class AgentAgent extends AbstractAgent {
-    public static String ID = "AGENT";
-
     public AgentAgent(String connectionName, String connectionId) {
-        super(connectionName, connectionId, ID);
+        super(connectionName, connectionId);
     }
 
     public void sendSurvey(User user) {
@@ -41,5 +39,16 @@ public class AgentAgent extends AbstractAgent {
         user.setBoughtRE(answer.equals("YES"));
         Log.info("[UPDATE FROM METHOD] Update user bought: " + answer);
         DBAdapterAPI.updateUser(user);
+    }
+
+    public void sendContactInfo(User user) {
+        sendMessage("Your client's name and surname: " + user.getName() + " " + user.getSurname()
+        + "\nYour client's contact:" + user.getPhoneNumber());
+
+        String msg = "";
+        for (var question : user.getQuestions()) {
+            msg += "\n[[BOT]]: " + question.getText() + "\n[[CUSTOMER]]: " + String.join(", ", question.getAnswers());
+        }
+        sendMessage(msg);
     }
 }
