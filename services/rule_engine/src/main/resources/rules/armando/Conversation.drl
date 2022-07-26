@@ -23,6 +23,7 @@ import agents.Armando;
 import agents.AgentAgent;
 
 import signals.RatingSignal;
+import signals.StatsSignal;
 
 
 rule "First contact"
@@ -44,7 +45,6 @@ rule "Receive user data"
         res: FetchResult(success == true) from entry-point "signals"
         agent: Armando()
     then
-        Log.warn("Fetched user!");
         modify(agent) {
             setUser(res.getUsers().get(0)),
             setLastInteractionTime(new Date())
@@ -83,6 +83,14 @@ rule "Receive multi answer"
     then
         agent.handleAnswer(answer.getAnswers());
         delete(answer);
+end
+
+rule "Stats received"
+    when
+        sig: StatsSignal() from entry-point "signals"
+        agent: Armando()
+    then
+        agent.sendMessage(sig.getFeature() + ": " + String.valueOf(sig.getDifference()));
 end
 
 rule "User connected event"

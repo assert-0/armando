@@ -40,7 +40,6 @@ import util.armory.DateInterface;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Armando extends AbstractAgent {
     private String userId;
     private User user;
@@ -85,6 +84,9 @@ public class Armando extends AbstractAgent {
             slRealEstates.put(new Image(reImages.get(i - 3).getSrc()), Arrays.asList(new SubmitButton(String.valueOf(i - 3), "More info", new HashMap())));
     } */
 
+    public Armando() {
+        userId = "0";
+    }
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);

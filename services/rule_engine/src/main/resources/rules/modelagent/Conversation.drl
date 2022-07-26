@@ -1,0 +1,51 @@
+package rules.modelagent;
+
+import java.util.Date;
+
+import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.ruleEngine.model.Heartbeat;
+import com.mindsmiths.ruleEngine.util.Log;
+
+import agents.ModelAgent;
+
+
+rule "First model contact"
+    salience 100
+    when
+        initialize: Initialize() from entry-point "agent-created"
+        agent: ModelAgent()
+    then
+        modify(agent) {
+            setLastCheckTime(new Date()),
+            setLastUpdateTime(new Date())
+        };
+        agent.updateStats();
+end
+
+rule "Re-do stats"
+    when
+        Heartbeat(ts: timestamp) from entry-point "signals"
+        agent: ModelAgent(
+            lastUpdateTime before[1s] ts
+        )
+    then
+        modify(agent) {
+            setLastUpdateTime(new Date())
+        };
+        Log.warn("MODEL: Updating stats");
+        agent.updateStats();
+end
+
+rule "Re-check stats"
+    when
+        Heartbeat(ts: timestamp) from entry-point "signals"
+        agent: ModelAgent(
+            lastCheckTime before[30s] ts
+        )
+    then
+        modify(agent) {
+            setLastCheckTime(new Date())
+        };
+        Log.warn("MODEL: Checking stats");
+        agent.checkStats();
+end
