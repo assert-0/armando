@@ -12,10 +12,13 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity implements Serializable {
-    public enum Type {
-        ARMORY_LINK
+    public abstract class Type {
+        public static int ARMORY_LINK = 0;
+        public static int PURCHASE_SIGNAL = 1;
+        public static int SELLING_SIGNAL = 2;
+        public static int APPRAISAL_SIGNAL = 3;
     }
 
-    private Type type;
+    private int type;
     private Date datetime;
 }

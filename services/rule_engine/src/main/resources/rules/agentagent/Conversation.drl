@@ -18,8 +18,6 @@ rule "Set AgentAgent user id"
         sig: UserIdSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        Log.warn("Received signal");
-        Log.info(sig.getUserId());
         DBAdapterAPI.fetchUser(0, sig.getUserId());
 end
 
@@ -61,7 +59,6 @@ rule "Armory submit"
         event: RatingSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        Log.info("GOT SIGNAL IN AGENT");
         agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() 
             + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber()
             + ". Zovi ga " + event.getDate());

@@ -14,6 +14,7 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 import agents.Armando;
 import agents.AgentHitl;
 import agents.AgentAgent;
+import agents.ActivityAgent;
 
 
 @Getter
@@ -55,6 +56,8 @@ public class ProtoAgent extends AbstractAgent {
         switch(answer) {
             case "USER":
                 Agents.createAgent(new Armando("telegram", getConnection("telegram"), "2")); // TODO:
+                Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
+                Log.info("Created Armando and AA");
                 break;
             case "AGENT":
                 Agents.createAgent(new AgentAgent("telegram", getConnection("telegram")));
