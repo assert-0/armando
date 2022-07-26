@@ -36,7 +36,7 @@ public class ProtoAgent extends Agent {
     }
 
     public void sendRoleAssignment() {
-        /* TelegramAdapterAPI.sendMessage(
+        TelegramAdapterAPI.sendMessage(
             connections.get("telegram"),
             "What is your role?\n",
             new KeyboardData(
@@ -47,8 +47,8 @@ public class ProtoAgent extends Agent {
                     new KeyboardOption("HITL", "Hitl")
                 )
             )
-        ); */ 
-        Agents.createAgent(new Armando("telegram", getConnection("telegram"), String.valueOf((int) (Math.random() * 15))));
+        ); 
+        //Agents.createAgent(new Armando("telegram", getConnection("telegram"), String.valueOf((int) (Math.random() * 15))));
     }
 
     public void handleFirstMessage(String text) {

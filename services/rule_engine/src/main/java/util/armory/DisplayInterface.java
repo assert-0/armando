@@ -17,9 +17,9 @@ public class DisplayInterface extends BaseTemplate {
     protected Title title;
     protected Image image;
     protected Description description;
-    protected Title spTitle;
-    protected Image spImage1;
-    protected List<SubmitButton> spActions1;
+    protected Title rateTitle;
+    protected List<SubmitButton> rateBtn;
+    /* protected Image spImage1;
     protected Image spImage2;
     protected List<SubmitButton> spActions2;
     protected Image spImage3;
@@ -30,5 +30,5 @@ public class DisplayInterface extends BaseTemplate {
     protected Image slImage2;
     protected List<SubmitButton> slActions2;
     protected Image slImage3;
-    protected List<SubmitButton> slActions3;
+    protected List<SubmitButton> slActions3; */
 }
