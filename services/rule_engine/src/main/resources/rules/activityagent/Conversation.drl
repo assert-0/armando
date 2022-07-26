@@ -1,0 +1,42 @@
+package rules.activityagent;
+
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mindsmiths.dbAdapter.DBAdapterAPI;
+import com.mindsmiths.dbAdapter.Activity;
+import com.mindsmiths.dbAdapter.FetchResult;
+import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.dbAdapter.User;
+import com.mindsmiths.ruleEngine.model.Heartbeat;
+import com.mindsmiths.ruleEngine.util.Log;
+
+import agents.ActivityAgent;
+import signals.UserIdSignal;
+import signals.RatingSignal;
+
+rule "Update agent" 
+    when
+        Heartbeat(ts: timestamp) from entry-point "signals"
+        agent: ActivityAgent(
+            lastUpdate before[5s] ts
+        )
+    then
+        DBAdapterAPI.fetchAllUsers();
+        agent.setLastUpdate(new Date());
+        Log.info("pocinje");
+end
+
+rule "Fetch users"
+    when 
+        res: FetchResult(success == true) from entry-point "signals"
+        agent: ActivityAgent()
+    then
+        List<User> users = res.getUsers();
+        for (User user : users) 
+            for (Activity activity : user.getActivities()) 
+                agent.getActivitiesMap().get(String.valueOf(activity.getType())).add(user);
+        agent.sendActivityUsers();
+        Log.info("Sent activity users");
+end

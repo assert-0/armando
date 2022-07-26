@@ -18,6 +18,9 @@ class Question(ExtendableModel):
 class Activity(ExtendableModel):
     class Type(Enum):
         ARMORY_LINK = 0
+        PURCHASE_SIGNAL = 1
+        SELLING_SIGNAL = 2
+        APPRAISAL_SIGNAL = 3
     type: Type
     datetime: datetime
 

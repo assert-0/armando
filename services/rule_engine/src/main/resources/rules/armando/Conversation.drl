@@ -49,8 +49,9 @@ rule "Receive user data"
             setUser(res.getUsers().get(0)),
             setLastInteractionTime(new Date())
         };
-        agent.displayUI(true);
-        agent.sendFirstQuestion();
+        agent.displayUI();
+        agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
+        //agent.sendFirstQuestion();
         delete(res);
 end
 
@@ -64,6 +65,7 @@ rule "Re-engage costumer"
         modify(agent) {
             setLastInteractionTime(new Date())
         };
+        Log.warn("Sending question again");
         agent.sendQuestion();
 end
 
@@ -98,7 +100,8 @@ rule "User connected event"
         event: UserConnectedEvent() from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI(true);
+        agent.displayUI();
+        agent.setOpenedLinks(agent.getOpenedLinks() + 1);
         delete(event);
 end
 
@@ -107,17 +110,7 @@ rule "Armory submit"
         event: SubmitEvent() from entry-point "signals"
         agent: Armando()
     then
-        Log.info(event.getData().get("submit").asText());
-        if (event.getData().get("submit").asText().equals("getrating")) {
-            Log.info(agent.getUser().getName() + " " + agent.getUser().getSurname());
-            agent.displayUI(false);
-        }
-        if (event.getData().get("submit").asText().equals("submitrating")) {
-            agent.displayUI("date");
-        }
-        if (event.getData().get("submit").asText().equals("date")) {
-            agent.sendFirst(AgentAgent.class, new RatingSignal(agent.getUser(), event.getData().get("date").get("text").asText()));
-            agent.displayUI(false);
-        }
+        agent.displayUI();
+        agent.handleSignalResponse(event.getData().get("submit").asText());
         delete(event);
 end
