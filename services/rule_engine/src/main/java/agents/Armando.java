@@ -101,7 +101,7 @@ public class Armando extends Agent {
     }
 
     public String getCodeEnvironment() {
-        return "https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com";
+        return System.getenv("ARMORY_SITE_URL");
     }
 
     public void sendMessage(String text) {
