@@ -19,8 +19,8 @@ public class Runner extends RuleEngineService {
         if (!Agents.exists(Smith.ID))
             Agents.createAgent(new Smith());
 
-        if (!Agents.exists(ModelAgent.ID))
-            Agents.createAgent(new ModelAgent());
+        //if (!Agents.exists(ModelAgent.ID))
+        //    Agents.createAgent(new ModelAgent());
 
         configureSignals(
             Signals.on(UserConnectedEvent.class).sendTo(
