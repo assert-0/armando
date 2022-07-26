@@ -62,6 +62,8 @@ rule "Armory submit"
         agent: AgentAgent()
     then
         Log.info("GOT SIGNAL IN AGENT");
-        agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber());
+        agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() 
+            + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber()
+            + ". Zovi ga " + event.getDate());
         delete(event);
 end

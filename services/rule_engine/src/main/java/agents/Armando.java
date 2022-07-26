@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashSet;
@@ -24,6 +27,7 @@ import com.mindsmiths.armory.ArmoryAPI;
 
 import com.mindsmiths.armory.components.*;
 import com.mindsmiths.armory.templates.GenericInterface;
+import com.mindsmiths.armory.templates.BaseTemplate;
 
 import signals.UserIdSignal;
 import util.QuestionFactory;
@@ -32,6 +36,7 @@ import util.processors.TemplateQuestionProcessor;
 import util.RealEstate;
 import util.armory.DisplayInterface;
 import util.armory.RateInterface;
+import util.armory.DateInterface;
 
 
 @Getter
@@ -159,13 +164,21 @@ public class Armando extends Agent {
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 
-    public void displayUI(String idString) {
-        int id = Integer.valueOf(idString);
-        Log.info("Displaying rating ui");
-        RateInterface ui = new RateInterface(
-            new Title("Upiši adresu!"),
-            Arrays.asList(new SubmitButton("getrating", "Nazad", new HashMap()))
-        );
+    public void displayUI(String template) {
+        BaseTemplate ui;
+        if (template.equals("rate")) {
+            ui = new RateInterface(
+                new Title("Upiši adresu!"),
+                Arrays.asList(new SubmitButton("getrating", "Nazad", new HashMap()))
+            );
+        } else {
+            var date = LocalDateTime.now();
+            ui = new DateInterface(
+                Arrays.asList(new SubmitButton("date", date.format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()), 
+                    new SubmitButton("date", date.plusDays(1L).format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()), 
+                    new SubmitButton("date", date.plusDays(2L).format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()))
+            );
+        }
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
         Log.info("Updated rating ui");
     }

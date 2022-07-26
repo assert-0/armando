@@ -12,4 +12,5 @@ import com.mindsmiths.sdk.core.api.Signal;
 @AllArgsConstructor
 public class RatingSignal extends Signal {
     private User user;
+    private String date;
 }

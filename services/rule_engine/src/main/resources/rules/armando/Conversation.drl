@@ -108,8 +108,11 @@ rule "Armory submit"
             agent.displayUI(false);
         }
         if (event.getData().get("submit").asText().equals("submitrating")) {
-            agent.send(AgentAgent.ID, new RatingSignal(agent.getUser()));
-            agent.displayUI(agent.getUserId());
+            agent.displayUI("date");
+        }
+        if (event.getData().get("submit").asText().equals("date")) {
+            agent.send(AgentAgent.ID, new RatingSignal(agent.getUser(), event.getData().get("date").get("text").asText()));
+            agent.displayUI(false);
         }
         delete(event);
 end
