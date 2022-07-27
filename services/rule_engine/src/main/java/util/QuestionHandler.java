@@ -8,16 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.*;
-
-import util.processors.TemplateQuestionProcessor;
+import util.processors.BasicQuestionProcessor;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionHandler {
-    private Stack<Question> questions;
-    private TemplateQuestionProcessor processor;
+    private Stack<Question> questions = new Stack<>();
+    private QuestionProcessor processor = new BasicQuestionProcessor();
 
     public Question getCurrentQuestion() {
         try {

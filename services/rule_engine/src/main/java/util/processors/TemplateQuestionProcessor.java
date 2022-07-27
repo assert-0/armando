@@ -7,6 +7,8 @@ import lombok.*;
 
 import com.mindsmiths.dbAdapter.User;
 
+import org.apache.commons.lang.StringUtils;
+
 import agents.Armando;
 import util.Question;
 import util.QuestionProcessor;
@@ -14,22 +16,15 @@ import util.QuestionProcessor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class TemplateQuestionProcessor extends QuestionProcessor {
-    public static final String PROCESSOR_NAME = "TemplateProcessor";
-
     public static final String TEMPLATE_START = "${";
     public static final String TEMPLATE_END = "}";
 
     private String className;
 
     public TemplateQuestionProcessor(Class<?> cls) {
-        super(PROCESSOR_NAME);
         this.className = cls.getName();
-    }
-
-    public TemplateQuestionProcessor(String className) {
-        super(PROCESSOR_NAME);
-        this.className = className;
     }
 
     private void processTemplate(Class<?> cls, StringBuilder textBuilder, String template, Object value) {
@@ -38,7 +33,7 @@ public class TemplateQuestionProcessor extends QuestionProcessor {
         Class<?> cls1 = cls;
         for (var str : template.split("\\.")) {
             try {
-                method = cls1.getMethod("get" + str.substring(0, 1).toUpperCase() + str.substring(1));
+                method = cls1.getMethod("get" + StringUtils.capitalize(str));
             } catch(NoSuchMethodException | SecurityException ignored) {
                 return;
             }

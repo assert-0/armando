@@ -6,12 +6,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 
-@JsonDeserialize(using=QuestionProcessorDeserializer.class)
+@JsonSerialize(using=ClassNameSerializer.class, typing=JsonSerialize.Typing.DYNAMIC)
+@JsonDeserialize(using=ClassNameDeserializer.class)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public abstract class QuestionProcessor {
-    private String name;
+    private final String ClassName = this.getClass().getName();
 
     public abstract Question process(Question question, Object value);
 }
