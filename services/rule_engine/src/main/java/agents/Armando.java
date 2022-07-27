@@ -57,9 +57,8 @@ public class Armando extends AbstractAgent {
         reImages.add(new RealEstate("https://www.forbes.com/advisor/wp-content/uploads/2022/03/houses_expensive.jpg", "Secluded House", "450 000 EUR"));
         reImages.add(new RealEstate("https://www.mcdonaldjoneshomes.com.au/sites/default/files/styles/image_gallery/public/daytona-new-house-designs.jpg?itok=Bb9xYGdE", "Cosy Family House", "200 000 EUR"));
     }
-    private int reIndex = 1;
-    private int openedLinks = 0;
-    private int sentLinks = 0;
+    private String articleTitle;
+    private String articleText;
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
@@ -119,9 +118,9 @@ public class Armando extends AbstractAgent {
 
     public void displayUI() {
         DisplayInterface ui = new DisplayInterface(
-            new Title("'Feng Shui' park dolazi na Maksimir!"), 
+            new Title(this.articleTitle), 
             null, // new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
-            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
+            new Description(this.articleText),
             new Title("Dostupni alati"), 
             Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
                         new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),
@@ -133,9 +132,9 @@ public class Armando extends AbstractAgent {
 
     public void displayUI(String base64String) {
         DisplayInterface ui = new DisplayInterface(
-            new Title("'Feng Shui' park dolazi na Maksimir!"), 
+            new Title(this.articleTitle), 
             null, // new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
-            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
+            new Description(this.articleText),
             new Title("Dostupni alati"), 
             Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
                         new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),

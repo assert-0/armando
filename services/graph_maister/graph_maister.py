@@ -34,4 +34,5 @@ class Graph_Maister(BaseService):
         #
         graphBase64 = base64.b64encode(f.read())
         #
+        plt.clf()
         return GraphResult(requestId=requestId, success=True, base64Graph=graphBase64.decode('utf-8'))
