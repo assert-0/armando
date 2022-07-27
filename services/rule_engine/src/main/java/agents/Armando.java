@@ -45,24 +45,7 @@ public class Armando extends AbstractAgent {
     private User user;
     private Date lastInteractionTime = new Date();
     private QuestionHandler handler = new QuestionHandler(
-        QuestionFactory.createShuffledConversation(
-            "Hej ${user.name}, znaš li da je vrijednost nekretnina na Medveščaku "
-            + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-            + "[${armoryUrl}](${armoryUrl})",
-            "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
-            + "tjedan! Više informacija o tome: "
-            + "[${armoryUrl}](${armoryUrl})",
-            "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
-            + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
-            + "[${armoryUrl}](${armoryUrl})",
-            "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
-            + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
-            + "će izgledati možeš saznati ovdje: "
-            + "[${armoryUrl}](${armoryUrl})",
-            "Čisto informativno, na području Medveščaka se mijenja toplovod! "
-            + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
-            + "[${armoryUrl}](${armoryUrl})"
-        ),
+        QuestionFactory.createConversation(),
         new TemplateQuestionProcessor(Armando.class)
     );
     private static List<RealEstate> reImages = new ArrayList<RealEstate>();
@@ -148,14 +131,19 @@ public class Armando extends AbstractAgent {
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 
-    public void displayUI(String template) {
-        RateInterface ui = new RateInterface(
-            new Title("Upiši adresu!"),
-            Arrays.asList(new SubmitButton("getrating", "Nazad", new HashMap()))
+    public void displayUI(String base64String) {
+        DisplayInterface ui = new DisplayInterface(
+            new Title("'Feng Shui' park dolazi na Maksimir!"), 
+            null, // new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
+            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
+            new Title("Dostupni alati"), 
+            Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
+                        new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),
+                        new SubmitButton("prodaja", "Želim prodati nekretninu", new HashMap())),
+            "data:image/png;base64," + base64String
         );
-       
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
-        Log.info("Updated rating ui");
+        Log.warn("Updated new ui");
     }
 
     public void handleSignalResponse(String signalName) {

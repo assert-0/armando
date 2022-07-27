@@ -40,12 +40,11 @@ rule "Re-check stats"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
         agent: ModelAgent(
-            lastCheckTime before[30s] ts
+            lastCheckTime before[10s] ts
         )
     then
         modify(agent) {
             setLastCheckTime(new Date())
         };
-        Log.warn("MODEL: Checking stats");
         agent.checkStats();
 end
