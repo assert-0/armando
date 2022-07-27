@@ -2,6 +2,7 @@ package util;
 
 import java.util.List;
 import java.util.Stack;
+
 import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +33,10 @@ public class QuestionHandler {
     }
 
     public void nextQuestion() {
-        questions.pop();
+        try {
+            questions.pop();
+        } catch (EmptyStackException ignored) {
+        }
     }
 
     public void addQuestion(Question question) {

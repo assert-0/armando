@@ -13,6 +13,7 @@ import util.QuestionProcessor;
 
 
 @Data
+@NoArgsConstructor
 public class TemplateQuestionProcessor extends QuestionProcessor {
     public static final String PROCESSOR_NAME = "TemplateProcessor";
 

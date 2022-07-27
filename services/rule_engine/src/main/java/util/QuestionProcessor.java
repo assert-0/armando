@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 
 
-@JsonDeserialize(using = QuestionProcessorDeserializer.class)
+@JsonDeserialize(using=QuestionProcessorDeserializer.class)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

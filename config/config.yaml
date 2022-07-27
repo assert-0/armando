@@ -114,3 +114,10 @@ services:
     resources:
       cpu: 50m
       memory: 75Mi
+  graph-maister:
+    type: python
+    db:
+      mongo: true
+    resources:
+      cpu: 100m
+      memory: 100Mi

@@ -6,7 +6,6 @@ import com.mindsmiths.armory.events.SubmitEvent;
 import com.mindsmiths.armory.events.UserConnectedEvent;
 import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
-import agents.Armando;
 import agents.Smith;
 import agents.ModelAgent;
 
