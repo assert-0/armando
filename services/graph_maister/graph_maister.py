@@ -3,6 +3,8 @@ import logging
 from typing import List
 from io import BytesIO
 
+import base64
+
 from matplotlib import pyplot as plt
 
 from forge.conf import settings as forge_settings
@@ -26,10 +28,11 @@ class Graph_Maister(BaseService):
         #
         plt.plot(points)
         #
-        plt.savefig(f, format=format)
+        plt.savefig(f, format=imageFormat)
         #
         f.seek(0)
         #
         graphBase64 = base64.b64encode(f.read())
         #
+        plt.clf()
         return GraphResult(requestId=requestId, success=True, base64Graph=graphBase64.decode('utf-8'))

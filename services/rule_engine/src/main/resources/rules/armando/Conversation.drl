@@ -19,11 +19,16 @@ import com.mindsmiths.armory.events.SubmitEvent;
 import com.mindsmiths.armory.events.UserConnectedEvent; 
 import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
+import com.mindsmiths.graphMaister.GraphMaisterAPI;
+import com.mindsmiths.graphMaister.GraphResult;
+
 import agents.Armando;
 import agents.AgentAgent;
 
 import signals.RatingSignal;
 import signals.StatsSignal;
+
+import util.Question;
 
 
 rule "First contact"
@@ -55,7 +60,7 @@ rule "Receive user data"
         delete(res);
 end
 
-rule "Re-engage costumer"
+/* rule "Re-engage costumer"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
         agent: Armando(
@@ -67,7 +72,7 @@ rule "Re-engage costumer"
         };
         Log.warn("Sending question again");
         agent.sendQuestion();
-end
+end */
 
 rule "Receive single answer"
     when
@@ -87,21 +92,12 @@ rule "Receive multi answer"
         delete(answer);
 end
 
-rule "Stats received"
-    when
-        sig: StatsSignal() from entry-point "signals"
-        agent: Armando()
-    then
-        agent.sendMessage(sig.getFeature() + ": " + String.valueOf(sig.getDifference()));
-end
-
 rule "User connected event"
     when 
         event: UserConnectedEvent() from entry-point "signals"
         agent: Armando()
     then
         agent.displayUI();
-        agent.setOpenedLinks(agent.getOpenedLinks() + 1);
         delete(event);
 end
 
@@ -113,4 +109,26 @@ rule "Armory submit"
         agent.displayUI();
         agent.handleSignalResponse(event.getData().get("submit").asText());
         delete(event);
+end
+
+rule "Stats received"
+    when
+        sig: StatsSignal() from entry-point "signals"
+        agent: Armando()
+    then
+        String msg = sig.isGrowing() ? "U zadnjih 30 dana je" + sig.getFeature() + " narastao za čak " + Math.round(sig.getDifference() * 100) + "%."
+                    : "U zadnjih 30 dana je" + sig.getFeature() + " pao za čak " + Math.round(sig.getDifference() * 100)+ "%.";
+        agent.getHandler().addQuestion(new Question(msg + " Graf možeš vidjeti ovdje https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/5415196560."));
+        agent.sendQuestion();
+        GraphMaisterAPI.createGraph(1, sig.getStatList(), sig.getFeature(), "days", "", "png");
+        agent.setArticleTitle(sig.getFeature() + "na Maksimiru");
+        agent.setArticleText(msg);
+end
+
+rule "Stats payload received"
+    when
+        sig: GraphResult(success == true) from entry-point "signals"
+        agent: Armando()
+    then
+        agent.displayUI(sig.getBase64Graph());
 end
