@@ -14,8 +14,17 @@ public abstract class AbstractAgent extends Agent {
     protected AbstractAgent() {
     }
 
+    protected AbstractAgent(String agentId) {
+        id = agentId;
+    }
+
     protected AbstractAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId);
+    }
+
+    protected AbstractAgent(String connectionName, String connectionId, String agentId) {
+        super(connectionName, connectionId);
+        id = agentId;
     }
 
     public void sendMessage(String text) {

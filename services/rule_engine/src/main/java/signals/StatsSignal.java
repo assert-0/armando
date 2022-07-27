@@ -1,9 +1,12 @@
 package signals; 
 
+import java.util.List;
+
+import com.mindsmiths.sdk.core.api.Signal;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import com.mindsmiths.sdk.core.api.Signal;
 
 
 @Data
@@ -13,4 +16,5 @@ public class StatsSignal extends Signal {
     private String feature;
     private boolean growing;
     private double difference;
+    private List<Double> statList;
 }

@@ -42,10 +42,18 @@ public class ProtoAgent extends AbstractAgent {
         //Agents.createAgent(new Armando("telegram", getConnection("telegram"), String.valueOf((int) (Math.random() * 15))));
     }
 
+    public void armandoCreator(String userId) {
+        Agents.createAgent(new Armando("telegram", getConnection("telegram"), userId));
+        if (!Agents.exists(ActivityAgent.ID)) {
+            Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
+        }
+        if (!Agents.exists(ModelAgent.ID))
+            Agents.createAgent(new ModelAgent());
+    }
+
     public void handleFirstMessage(String text) {
         if (text.startsWith("/start ")) {
-            Agents.createAgent(new Armando("telegram", getConnection("telegram"), text.split(" ")[1]));
-            Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
+            armandoCreator(text.split(" ")[1]);
             Agents.deleteAgent(this);
         }
         else {
@@ -56,8 +64,7 @@ public class ProtoAgent extends AbstractAgent {
     public void handleAgentAssignment(String answer) {
         switch(answer) {
             case "USER":
-                Agents.createAgent(new Armando("telegram", getConnection("telegram"), "2")); // TODO:
-                Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
+                armandoCreator("2");
                 Log.info("Created Armando and AA");
                 break;
             case "AGENT":

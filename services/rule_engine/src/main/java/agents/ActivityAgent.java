@@ -19,13 +19,18 @@ import signals.ActivityUsersSignal;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ActivityAgent extends AbstractAgent {
+    public static String ID = "ActivityAgent";
+
     private Map<String, List<User>> activitiesMap = new HashMap<>();
     private Date lastUpdate = new Date();
     
+    public ActivityAgent() {
+        super(ID);
+    }
+
     public ActivityAgent(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
+        super(connectionName, connectionId, ID);
         activitiesMap.put(String.valueOf(Activity.Type.APPRAISAL_SIGNAL), new ArrayList<User>());
         activitiesMap.put(String.valueOf(Activity.Type.PURCHASE_SIGNAL), new ArrayList<User>());
         activitiesMap.put(String.valueOf(Activity.Type.SELLING_SIGNAL), new ArrayList<User>());

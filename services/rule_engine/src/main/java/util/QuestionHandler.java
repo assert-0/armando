@@ -9,13 +9,15 @@ import java.util.Set;
 
 import lombok.*;
 
+import util.processors.TemplateQuestionProcessor;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionHandler {
     private Stack<Question> questions;
-    private QuestionProcessor processor;
+    private TemplateQuestionProcessor processor;
 
     public Question getCurrentQuestion() {
         try {

@@ -44,8 +44,7 @@ public class ModelAgent extends AbstractAgent {
     private LinkedList<DifferenceGrowth> avgCostDiffList = new LinkedList<>();
 
     public ModelAgent() {
-        super();
-        id = ID;
+        super(ID);
     }
 
     public void updateStats() {
@@ -90,11 +89,6 @@ public class ModelAgent extends AbstractAgent {
         var avgCostDiff = calculateDiff(avgCostList);
         avgCostDiffList.add(avgCostDiff);
 
-        numOfSearchesList.clear();
-        numOfREsList.clear();
-        numOfSoldList.clear();
-        avgCostList.clear();
-
         var numOfSearchesDiffMax = getMax(numOfSearchesDiffList);
 
         var numOfREsDiffMax = getMax(numOfREsDiffList);
@@ -108,17 +102,42 @@ public class ModelAgent extends AbstractAgent {
         StatsSignal signal;
 
         if (theBest == numOfSearchesDiffMax) {
-            signal = new StatsSignal("number of searches", numOfSearchesDiffMax.isGrowing(), numOfSearchesDiffMax.getDifference());
+            signal = new StatsSignal(
+                "number of searches",
+                numOfSearchesDiffMax.isGrowing(),
+                numOfSearchesDiffMax.getDifference(),
+                new LinkedList<>(numOfSearchesList)
+            );
         }
         else if (theBest == numOfREsDiffMax) {
-            signal = new StatsSignal("number of RE on website", numOfREsDiffMax.isGrowing(), numOfREsDiffMax.getDifference());
+            signal = new StatsSignal(
+                "number of RE on website",
+                numOfREsDiffMax.isGrowing(),
+                numOfREsDiffMax.getDifference(),
+                new LinkedList<>(numOfREsList)
+            );
         }
         else if (theBest == numOfSoldDiffMax) {
-            signal = new StatsSignal("number of RE sold", numOfSoldDiffMax.isGrowing(), numOfSoldDiffMax.getDifference());
+            signal = new StatsSignal(
+                "number of RE sold",
+                numOfSoldDiffMax.isGrowing(),
+                numOfSoldDiffMax.getDifference(),
+                new LinkedList<>(numOfSoldList)
+            );
         }
         else {
-            signal = new StatsSignal("average cost of RE", avgCostDiffMax.isGrowing(), avgCostDiffMax.getDifference());
+            signal = new StatsSignal(
+                "average cost of RE",
+                avgCostDiffMax.isGrowing(),
+                avgCostDiffMax.getDifference(),
+                new LinkedList<>(avgCostList)
+            );
         }
+
+        numOfSearchesList.clear();
+        numOfREsList.clear();
+        numOfSoldList.clear();
+        avgCostList.clear();
 
         sendBroadcast(Armando.class, signal);
     }
