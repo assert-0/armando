@@ -19,4 +19,5 @@ public class DisplayInterface extends BaseTemplate {
     protected Description description;
     protected Title rateTitle;
     protected List<SubmitButton> rateBtn;
+    protected String dataSrc;
 }

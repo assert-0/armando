@@ -45,6 +45,7 @@ public class ProtoAgent extends AbstractAgent {
     public void handleFirstMessage(String text) {
         if (text.startsWith("/start ")) {
             Agents.createAgent(new Armando("telegram", getConnection("telegram"), text.split(" ")[1]));
+            Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
             Agents.deleteAgent(this);
         }
         else {

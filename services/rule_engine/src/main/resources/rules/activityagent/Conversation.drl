@@ -20,12 +20,11 @@ rule "Update agent"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
         agent: ActivityAgent(
-            lastUpdate before[5s] ts
+            lastUpdate before[10s] ts
         )
     then
         DBAdapterAPI.fetchAllUsers();
         agent.setLastUpdate(new Date());
-        Log.info("pocinje");
 end
 
 rule "Fetch users"
@@ -38,5 +37,4 @@ rule "Fetch users"
             for (Activity activity : user.getActivities()) 
                 agent.getActivitiesMap().get(String.valueOf(activity.getType())).add(user);
         agent.sendActivityUsers();
-        Log.info("Sent activity users");
 end

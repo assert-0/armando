@@ -4,6 +4,7 @@
       <BaseTitleComponent class="armando-title" text="Armando"></BaseTitleComponent>
       <BaseSpacerComponent height="54px"></BaseSpacerComponent>
       <BaseImageComponent v-if="image" v-bind="image"></BaseImageComponent>
+      <BaseImageComponent  v-if="dataSrc" v-bind="dataSrc" :src=dataSrc ></BaseImageComponent>
       <BaseTitleComponent v-if="title" v-bind="title"></BaseTitleComponent>
       <BaseDescriptionComponent
         v-if="description"
@@ -33,6 +34,7 @@ export default {
     description: Object,
     rateTitle: Object,
     rateBtn: Array,
+    dataSrc: String
   },
   components: {
     ActionGroupComponent,
