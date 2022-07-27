@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 
-@JsonSerialize(using=ClassNameSerializer.class, typing=JsonSerialize.Typing.DYNAMIC)
+@JsonSerialize(using=ClassNameSerializer.class)
 @JsonDeserialize(using=ClassNameDeserializer.class)
 @Data
 @NoArgsConstructor

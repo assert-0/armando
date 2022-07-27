@@ -45,10 +45,12 @@ public class ModelAgent extends AbstractAgent {
 
     public ModelAgent() {
         super(ID);
+        for(int i = 0; i < 100; ++i)
+            updateStats();
     }
 
     public void updateStats() {
-        var random = new Random(Instant.now().getEpochSecond());
+        var random = new Random();
         //
         numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 3_000));
         numOfREs = Math.abs(random.nextGaussian(numOfREs, 50));
@@ -62,7 +64,7 @@ public class ModelAgent extends AbstractAgent {
     }
 
     public DifferenceGrowth calculateDiff(LinkedList<Double> list) {
-        var diff = Math.abs(1 - list.getLast() / list.getFirst());
+        var diff = Math.abs(1- list.getLast() / list.getFirst());
         return new DifferenceGrowth(diff, list.getLast() > list.getFirst());
     }
 
@@ -103,7 +105,7 @@ public class ModelAgent extends AbstractAgent {
 
         if (theBest == numOfSearchesDiffMax) {
             signal = new StatsSignal(
-                " broj pretraga ",
+                "number of searches",
                 numOfSearchesDiffMax.isGrowing(),
                 numOfSearchesDiffMax.getDifference(),
                 new LinkedList<>(numOfSearchesList)
@@ -111,7 +113,7 @@ public class ModelAgent extends AbstractAgent {
         }
         else if (theBest == numOfREsDiffMax) {
             signal = new StatsSignal(
-                " broj izlistanih nekretnina ",
+                "number of RE on website",
                 numOfREsDiffMax.isGrowing(),
                 numOfREsDiffMax.getDifference(),
                 new LinkedList<>(numOfREsList)
@@ -119,7 +121,7 @@ public class ModelAgent extends AbstractAgent {
         }
         else if (theBest == numOfSoldDiffMax) {
             signal = new StatsSignal(
-                " broj prodanih nekretnina ",
+                "number of RE sold",
                 numOfSoldDiffMax.isGrowing(),
                 numOfSoldDiffMax.getDifference(),
                 new LinkedList<>(numOfSoldList)
@@ -127,17 +129,18 @@ public class ModelAgent extends AbstractAgent {
         }
         else {
             signal = new StatsSignal(
-                " prosječna cijena nekretnine ",
+                "average cost of RE",
                 avgCostDiffMax.isGrowing(),
                 avgCostDiffMax.getDifference(),
                 new LinkedList<>(avgCostList)
             );
         }
-
-        numOfSearchesList.clear();
-        numOfREsList.clear();
-        numOfSoldList.clear();
-        avgCostList.clear();
+        /* if (index % 50 == 0) {
+            numOfSearchesList.clear();
+            numOfREsList.clear();
+            numOfSoldList.clear();
+            avgCostList.clear();
+        } */
 
         sendBroadcast(Armando.class, signal);
     }

@@ -17,6 +17,7 @@ public class ClassNameSerializer<T> extends JsonSerializer<T> {
     public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         Class<?> cls = value.getClass();
+        gen.writeStringField("@class", value.getClass().getName());
         while (!cls.equals(Object.class)) {
             var fields = cls.getDeclaredFields();
             for (var field : fields) {
@@ -35,7 +36,6 @@ public class ClassNameSerializer<T> extends JsonSerializer<T> {
             }
             cls = cls.getSuperclass();
         }
-        gen.writeStringField("objectClass", value.getClass().getName());
         gen.writeEndObject();
     }
 }

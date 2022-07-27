@@ -12,12 +12,8 @@ import com.mindsmiths.ruleEngine.util.Log;
 public class ClassNameDeserializer<T> extends JsonDeserializer<T> {
     @Override
     public T deserialize(JsonParser jp, DeserializationContext context) throws IOException {
-        var codec = jp.getCodec();
-        JsonNode node = codec.readTree(jp);
-        var iter = node.fieldNames();
-        while (iter.hasNext()) {
-            Log.warn(iter.next());
-        }
+        JsonNode node = jp.readValueAsTree();
+        Log.warn(node.toString());
         var className = node.get("ClassName").asText();
         Class<T> objectClass;
         try {

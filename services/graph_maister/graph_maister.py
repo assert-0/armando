@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 
 from matplotlib import pyplot as plt
+import seaborn as sb
 
 from forge.conf import settings as forge_settings
 from forge.core.api import api
@@ -21,6 +22,7 @@ class Graph_Maister(BaseService):
     @api
     def create_graph(self, requestId: int, points: List[float], title: str, xlabel: str, ylabel: str, imageFormat: str) -> GraphResult:
         f = BytesIO()
+        sb.set_style("darkgrid")
         #
         plt.title(title)
         plt.xlabel(xlabel)
