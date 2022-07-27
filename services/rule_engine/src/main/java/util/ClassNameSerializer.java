@@ -13,16 +13,17 @@ import org.apache.commons.lang.StringUtils;
 
 
 public class ClassNameSerializer<T> extends JsonSerializer<T> {
+    private static final String NAME = "@class";
+
     @Override
     public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
         Class<?> cls = value.getClass();
-        gen.writeStringField("@class", value.getClass().getName());
+        gen.writeStringField(NAME, value.getClass().getName());
         while (!cls.equals(Object.class)) {
             var fields = cls.getDeclaredFields();
             for (var field : fields) {
                 if ((field.getModifiers() & Modifier.STATIC) != 0) continue;
-                Log.warn(field.getName());
                 var methodName = "get" + StringUtils.capitalize(field.getName());
                 try {
                     var method = value.getClass().getMethod(methodName);

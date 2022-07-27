@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.*;
-import util.processors.BasicQuestionProcessor;
+import util.processors.TemplateQuestionProcessor;
 
 
 @Data
@@ -16,7 +16,7 @@ import util.processors.BasicQuestionProcessor;
 @NoArgsConstructor
 public class QuestionHandler {
     private Stack<Question> questions = new Stack<>();
-    private QuestionProcessor processor = new BasicQuestionProcessor();
+    private TemplateQuestionProcessor processor; // TODO: Whence you fix bson polymorphic type handling; replace with QuestionProcessor.
 
     public Question getCurrentQuestion() {
         try {

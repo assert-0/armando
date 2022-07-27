@@ -15,16 +15,26 @@ import util.QuestionProcessor;
 
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class TemplateQuestionProcessor extends QuestionProcessor {
+    public static final String PROCESSOR_NAME = "TemplateProcessor";
+
     public static final String TEMPLATE_START = "${";
     public static final String TEMPLATE_END = "}";
 
     private String className;
 
+    public TemplateQuestionProcessor() {
+        super(PROCESSOR_NAME);
+    }
+
     public TemplateQuestionProcessor(Class<?> cls) {
+        super(PROCESSOR_NAME);
         this.className = cls.getName();
+    }
+
+    public TemplateQuestionProcessor(String className) {
+        super(PROCESSOR_NAME);
+        this.className = className;
     }
 
     private void processTemplate(Class<?> cls, StringBuilder textBuilder, String template, Object value) {
