@@ -120,9 +120,8 @@ rule "Stats received"
     then
         Log.warn(sig);
         String pad = sig.isGrowing() ? "narastao" : "pao";
-        double diff = sig.isGrowing() ? sig.getDifference() - 1 : sig.getDifference();
         agent.getHandler().addQuestion(new Question(String.format(agent.activityMessages.get(sig.getFeature()), 
-                                pad, Math.round(diff * 100)) + "https://8000-ae88b4e0-9d96-4d94-ace8-1e7ee4662a74.dev.mindsmiths.com/5415196560"));
+                                pad, Math.round(sig.getDifference() * 100)) + "https://8000-ae88b4e0-9d96-4d94-ace8-1e7ee4662a74.dev.mindsmiths.com/5415196560"));
         agent.sendQuestion();
         GraphMaisterAPI.createGraphDate(1, "05/2020", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "dani", "", "png");
         agent.setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru");

@@ -18,7 +18,8 @@ import com.mindsmiths.ruleEngine.util.Log;
 public class ModelAgent extends AbstractAgent {
     public static String ID = "ModelAgent";
 
-    private static final int LAST = 30;
+    private static final int LAST_DIFF = 10;
+    private static final int LAST_MAX = 30;
 
     @Data
     @NoArgsConstructor
@@ -54,10 +55,10 @@ public class ModelAgent extends AbstractAgent {
     public void updateStats() {
         var random = new Random();
         //
-        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 200));
-        numOfREs = Math.abs(random.nextGaussian(numOfREs, 30));
+        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 500));
+        numOfREs = Math.abs(random.nextGaussian(numOfREs, 3));
         numOfSold = Math.abs(random.nextGaussian(numOfSold, 2));
-        avgCost = Math.abs(random.nextGaussian(avgCost, 10_000));
+        avgCost = Math.abs(random.nextGaussian(avgCost, 5_000));
         //
         numOfSearchesList.add(numOfSearches);
         numOfREsList.add(numOfREs);
@@ -65,25 +66,30 @@ public class ModelAgent extends AbstractAgent {
         avgCostList.add(avgCost);
     }
 
-    public DifferenceGrowth calculateDiff(LinkedList<Double> list) {
+    private static int clamp(int value) {
+        if (value >= 0) return value;
+        else return 0;
+    }
+
+    public DifferenceGrowth calculateDiff(LinkedList<Double> list, int lastAmount) {
         var last = list.getLast();
-        var first = list.getFirst();
+        var first = list.get(clamp(list.size() - lastAmount));
         double diff;
         boolean growing;
         if (last < first) {
-            diff = (last / first);
-            growing = true;
+            diff = 1 - (last / first);
+            growing = false;
         }
         else {
-            diff = Math.abs(1 -(last / first));
-            growing = false;
+            diff = (last / first) - 1;
+            growing = true;
         }
         return new DifferenceGrowth(diff, growing);
     }
 
     public DifferenceGrowth getMax(LinkedList<DifferenceGrowth> list, int last) {
         var maxValue = list.getFirst();
-        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+        for (int i = clamp(list.size() - last); i < list.size(); ++i) {
             if (list.get(i).getDifference() > maxValue.getDifference()) {
                 maxValue = list.get(i);
             }
@@ -93,7 +99,7 @@ public class ModelAgent extends AbstractAgent {
 
     public DifferenceGrowth getMin(LinkedList<DifferenceGrowth> list, int last) {
         var minValue = list.getFirst();
-        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+        for (int i = clamp(list.size() - last); i < list.size(); ++i) {
             if (list.get(i).getDifference() < minValue.getDifference()) {
                 minValue = list.get(i);
             }
@@ -103,7 +109,7 @@ public class ModelAgent extends AbstractAgent {
 
     public Double getMaxDouble(LinkedList<Double> list, int last) {
         var maxValue = list.getFirst();
-        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+        for (int i = clamp(list.size() - last); i < list.size(); ++i) {
             if (list.get(i) > maxValue) {
                 maxValue = list.get(i);
             }
@@ -113,7 +119,7 @@ public class ModelAgent extends AbstractAgent {
 
     public Double getMinDouble(LinkedList<Double> list, int last) {
         var minValue = list.getFirst();
-        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+        for (int i = clamp(list.size() - last); i < list.size(); ++i) {
             if (list.get(i) < minValue) {
                 minValue = list.get(i);
             }
@@ -122,29 +128,38 @@ public class ModelAgent extends AbstractAgent {
     }
 
     public void checkStats() {
-        var numOfSearchesDiff = calculateDiff(numOfSearchesList);
+        var numOfSearchesDiff = calculateDiff(numOfSearchesList, LAST_DIFF);
         numOfSearchesDiffList.add(numOfSearchesDiff);
 
-        var numOfREsDiff = calculateDiff(numOfREsList);
+        var numOfREsDiff = calculateDiff(numOfREsList, LAST_DIFF);
         numOfREsDiffList.add(numOfREsDiff);
 
-        var numOfSoldDiff = calculateDiff(numOfSoldList);
+        var numOfSoldDiff = calculateDiff(numOfSoldList, LAST_DIFF);
         numOfSoldDiffList.add(numOfSoldDiff);
 
-        var avgCostDiff = calculateDiff(avgCostList);
+        var avgCostDiff = calculateDiff(avgCostList, LAST_DIFF);
         avgCostDiffList.add(avgCostDiff);
 
-        var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST);
+        var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST_MAX);
 
-        var numOfREsDiffMax = getMax(numOfREsDiffList, LAST);
+        var numOfREsDiffMax = getMax(numOfREsDiffList, LAST_MAX);
 
-        var numOfSoldDiffMax = getMax(numOfSoldDiffList, LAST);
+        var numOfSoldDiffMax = getMax(numOfSoldDiffList, LAST_MAX);
 
-        var avgCostDiffMax = getMax(avgCostDiffList, LAST);
+        var avgCostDiffMax = getMax(avgCostDiffList, LAST_MAX);
+
+        Log.info("numOfSearchesDiff " + String.valueOf(numOfSearchesDiff.getDifference()));
+        Log.info("numOfREsDiff " + String.valueOf(numOfREsDiff.getDifference()));
+        Log.info("numOfSoldDiff " + String.valueOf(numOfSoldDiff.getDifference()));
+        Log.info("avgCostDiff " + String.valueOf(avgCostDiff.getDifference()));
+        Log.info("numOfSearchesDiffMax " + String.valueOf(numOfSearchesDiffMax.getDifference()));
+        Log.info("numOfREsDiffMax " + String.valueOf(numOfREsDiffMax.getDifference()));
+        Log.info("numOfSoldDiffMax " + String.valueOf(numOfSoldDiffMax.getDifference()));
+        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference()));
 
         var theBest = getMax(
             new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)),
-            0);
+            LAST_MAX);
         Log.info(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax));
         Log.info(theBest);
 
@@ -156,8 +171,8 @@ public class ModelAgent extends AbstractAgent {
                 numOfSearchesDiffMax.isGrowing(),
                 numOfSearchesDiffMax.getDifference(),
                 numOfSearchesList,
-                getMaxDouble(numOfSearchesList, LAST),
-                getMinDouble(numOfSearchesList, LAST)
+                getMaxDouble(numOfSearchesList, LAST_MAX),
+                getMinDouble(numOfSearchesList, LAST_MAX)
             );
         }
         else if (theBest == numOfREsDiffMax) {
@@ -166,8 +181,8 @@ public class ModelAgent extends AbstractAgent {
                 numOfREsDiffMax.isGrowing(),
                 numOfREsDiffMax.getDifference(),
                 numOfREsList,
-                getMaxDouble(numOfREsList, LAST),
-                getMinDouble(numOfREsList, LAST)
+                getMaxDouble(numOfREsList, LAST_MAX),
+                getMinDouble(numOfREsList, LAST_MAX)
             );
         }
         else if (theBest == numOfSoldDiffMax) {
@@ -176,8 +191,8 @@ public class ModelAgent extends AbstractAgent {
                 numOfSoldDiffMax.isGrowing(),
                 numOfSoldDiffMax.getDifference(),
                 numOfSoldList,
-                getMaxDouble(numOfSoldList, LAST),
-                getMinDouble(numOfSoldList, LAST)
+                getMaxDouble(numOfSoldList, LAST_MAX),
+                getMinDouble(numOfSoldList, LAST_MAX)
             );
         }
         else {
@@ -186,14 +201,10 @@ public class ModelAgent extends AbstractAgent {
                 avgCostDiffMax.isGrowing(),
                 avgCostDiffMax.getDifference(),
                 avgCostList,
-                getMaxDouble(avgCostList, LAST),
-                getMinDouble(avgCostList, LAST)
+                getMaxDouble(avgCostList, LAST_MAX),
+                getMinDouble(avgCostList, LAST_MAX)
             );
         }
-        Log.info("numOfSearchesDiffMax " + String.valueOf(numOfSearchesDiffMax.getDifference()));
-        Log.info("numOfREsDiffMax " + String.valueOf(numOfREsDiffMax.getDifference()));
-        Log.info("numOfSoldDiffMax " + String.valueOf(numOfSoldDiffMax.getDifference()));
-        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference()));
         sendBroadcast(Armando.class, signal);
     }
 }
