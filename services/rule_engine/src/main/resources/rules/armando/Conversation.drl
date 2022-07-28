@@ -118,14 +118,15 @@ rule "Stats received"
         sig: StatsSignal() from entry-point "signals"
         agent: Armando()
     then
+        Log.warn(sig);
         String pad = sig.isGrowing() ? "narastao" : "pao";
         agent.getHandler().addQuestion(new Question(String.format(agent.activityMessages.get(sig.getFeature()), 
-                                    pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax() * 100), Math.round(sig.getMin() * 100))));
+                                pad, Math.round(sig.getDifference() * 100)) + "https://8000-ae88b4e0-9d96-4d94-ace8-1e7ee4662a74.dev.mindsmiths.com/5415196560"));
         agent.sendQuestion();
-        Log.info(sig.getFeature());
         GraphMaisterAPI.createGraphDate(1, "05/2020", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "dani", "", "png");
         agent.setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru");
-        agent.setArticleText("");
+        agent.setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
+                                pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())));
 end
 
 rule "Stats payload received"
@@ -134,4 +135,5 @@ rule "Stats payload received"
         agent: Armando()
     then
         agent.displayUI(sig.getBase64Graph());
+        Log.info("Different graph");
 end

@@ -48,7 +48,7 @@ class Graph_Maister(BaseService):
         f = BytesIO()
         sb.set_style("darkgrid")
         #
-        plt.title(title)
+        #plt.title(title)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         #
