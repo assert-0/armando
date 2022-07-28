@@ -49,9 +49,12 @@ public class Armando extends AbstractAgent {
         new TemplateQuestionProcessor(Armando.class)
     );
     private static List<RealEstate> reImages = new ArrayList<RealEstate>();
-    private static HashMap<String, String> activityMessages = new HashMap<>(); 
+    public static HashMap<String, String> activityMessages = new HashMap<>(); 
     static {
-        //activityMessages.put(key, value);
+        activityMessages.put(" broj pretraga ", "Na Medveščaku je u zadnja 3 mjeseca broj pretraga za nekretninama %s za %s%%. Tokom zadnja 3 mjeseca, tjedan s najviše pretraga je imao čak %s pretraga dok je najmanji iznos bio %s.");
+        activityMessages.put(" broj izlistanih nekretnina ", "U zadnja 3 mjeseca je broj nekretnina u ponudi na Medveščaku %s za čak %s%% Tjedan s najmanje nekretnina je imao %s nekretnina u ponudi dok ih je u najboljem tjednu bilo i do %s.");
+        activityMessages.put(" broj prodanih nekretnina ", "U zadnja 3 mjeseca je na Maksimiru %s za %s%% broj prodanih nekretnina s obzirom na godišnji prosjek za kvart. %s nekretnina se prodalo u tjednu s najviše prodanih nekretnina dok je u tjednu s najmanje bilo prodano samo %s nekretnina.");
+        activityMessages.put(" prosječna cijena nekretnine ", "%s vrijednosti nekretnina na Medveščaku je u zadnja 3 mjeseca bio %s%%. U tjednu s najmanjom vrijednosti nekretnina je prosječna vrijednost bila %s dok je u tjednu s najvećom vrijednosti prosjek bio %s.");
     }
     private String articleTitle;
     private String articleText;

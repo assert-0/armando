@@ -17,4 +17,6 @@ public class StatsSignal extends Signal {
     private boolean growing;
     private double difference;
     private List<Double> statList;
+    private double max;
+    private double min;
 }
