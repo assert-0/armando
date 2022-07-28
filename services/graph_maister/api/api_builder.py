@@ -12,5 +12,5 @@ class Graph_MaisterAPI(BaseAPI):
     service_name = graph_maister.SERVICE_NAME
 
     @staticmethod
-    def create_graph(self, points: List[float], title: str, xlabel: str, ylabel: str, imageFormat: str) -> Future[GraphResult]:
+    def create_graph(self, requestId: int, x: List[float], y: List[float], fmt: str, title: str, xlabel: str, ylabel: str, imageFormat: str) -> Future[GraphResult]:
         """Creates graph image in base64 based on parameters"""
