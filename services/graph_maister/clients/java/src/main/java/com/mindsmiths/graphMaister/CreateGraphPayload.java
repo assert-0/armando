@@ -13,7 +13,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CreateGraphPayload implements Serializable {
     private int requestId;
-    private List<Double> points;
+    private List<Double> x;
+    private List<Double> y;
+    private String fmt;
     private String title;
     private String xlabel;
     private String ylabel;
