@@ -115,7 +115,7 @@ public class Armando extends AbstractAgent {
     public void displayUI() {
         DisplayInterface ui = new DisplayInterface(
             new Title(this.articleTitle), 
-            null, 
+            null,
             new Description(this.articleText),
             Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
                         new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),
@@ -128,7 +128,7 @@ public class Armando extends AbstractAgent {
     public void displayUI(String base64String) {
         DisplayInterface ui = new DisplayInterface(
             new Title(this.articleTitle), 
-            null, 
+            null,
             new Description(this.articleText),
             Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
                         new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),

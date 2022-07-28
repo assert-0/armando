@@ -53,10 +53,10 @@ public class ModelAgent extends AbstractAgent {
     public void updateStats() {
         var random = new Random();
         //
-        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 300));
-        numOfREs = Math.abs(random.nextGaussian(numOfREs, 10));
-        numOfSold = Math.abs(random.nextGaussian(numOfSold, 10));
-        avgCost = Math.abs(random.nextGaussian(avgCost, 5000));
+        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 3));
+        numOfREs = Math.abs(random.nextGaussian(numOfREs, 0.5));
+        numOfSold = Math.abs(random.nextGaussian(numOfSold, 0.5));
+        avgCost = Math.abs(random.nextGaussian(avgCost, 50));
         //
         numOfSearchesList.add(numOfSearches);
         numOfREsList.add(numOfREs);
