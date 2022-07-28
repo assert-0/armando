@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.*;
 
 import signals.StatsSignal;
+import com.mindsmiths.ruleEngine.util.Log;
 
 
 @Getter
@@ -30,7 +31,7 @@ public class ModelAgent extends AbstractAgent {
     private Date lastUpdateTime = new Date();
     private Date lastCheckTime = new Date();
 
-    private double numOfSearches = 20_000;
+    private double numOfSearches = 2_000;
     private double numOfREs = 300;
     private double numOfSold = 20;
     private double avgCost = 100_000;
@@ -53,10 +54,10 @@ public class ModelAgent extends AbstractAgent {
     public void updateStats() {
         var random = new Random();
         //
-        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 3));
-        numOfREs = Math.abs(random.nextGaussian(numOfREs, 0.5));
-        numOfSold = Math.abs(random.nextGaussian(numOfSold, 0.5));
-        avgCost = Math.abs(random.nextGaussian(avgCost, 50));
+        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 200));
+        numOfREs = Math.abs(random.nextGaussian(numOfREs, 30));
+        numOfSold = Math.abs(random.nextGaussian(numOfSold, 2));
+        avgCost = Math.abs(random.nextGaussian(avgCost, 10_000));
         //
         numOfSearchesList.add(numOfSearches);
         numOfREsList.add(numOfREs);
@@ -65,8 +66,19 @@ public class ModelAgent extends AbstractAgent {
     }
 
     public DifferenceGrowth calculateDiff(LinkedList<Double> list) {
-        var diff = Math.abs(1 - list.getLast() / list.getFirst());
-        return new DifferenceGrowth(diff, list.getLast() > list.getFirst());
+        var last = list.getLast();
+        var first = list.getFirst();
+        double diff;
+        boolean growing;
+        if (last < first) {
+            diff = (last / first);
+            growing = true;
+        }
+        else {
+            diff = Math.abs(1 -(last / first));
+            growing = false;
+        }
+        return new DifferenceGrowth(diff, growing);
     }
 
     public DifferenceGrowth getMax(LinkedList<DifferenceGrowth> list, int last) {
@@ -77,6 +89,16 @@ public class ModelAgent extends AbstractAgent {
             }
         }
         return maxValue;
+    }
+
+    public DifferenceGrowth getMin(LinkedList<DifferenceGrowth> list, int last) {
+        var minValue = list.getFirst();
+        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+            if (list.get(i).getDifference() < minValue.getDifference()) {
+                minValue = list.get(i);
+            }
+        }
+        return minValue;
     }
 
     public Double getMaxDouble(LinkedList<Double> list, int last) {
@@ -122,7 +144,9 @@ public class ModelAgent extends AbstractAgent {
 
         var theBest = getMax(
             new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)),
-            LAST);
+            0);
+        Log.info(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax));
+        Log.info(theBest);
 
         StatsSignal signal;
 
@@ -166,7 +190,10 @@ public class ModelAgent extends AbstractAgent {
                 getMinDouble(avgCostList, LAST)
             );
         }
-
+        Log.info("numOfSearchesDiffMax " + String.valueOf(numOfSearchesDiffMax.getDifference()));
+        Log.info("numOfREsDiffMax " + String.valueOf(numOfREsDiffMax.getDifference()));
+        Log.info("numOfSoldDiffMax " + String.valueOf(numOfSoldDiffMax.getDifference()));
+        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference()));
         sendBroadcast(Armando.class, signal);
     }
 }
