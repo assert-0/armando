@@ -7,6 +7,7 @@ import base64
 
 from matplotlib import pyplot as plt
 import seaborn as sb
+import pandas as pd
 
 from forge.conf import settings as forge_settings
 from forge.core.api import api
@@ -23,12 +24,13 @@ class Graph_Maister(BaseService):
     def create_graph(self, requestId: int, points: List[float], title: str, xlabel: str, ylabel: str, imageFormat: str) -> GraphResult:
         f = BytesIO()
         sb.set_style("darkgrid")
+        sb.set(rc = {'figure.figsize':(15,12)})
+        sb.set(font_scale = 3)
         #
-        plt.title(title)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         #
-        plt.plot(points)
+        plt.plot(points, linewidth=4)
         #
         plt.savefig(f, format=imageFormat)
         #

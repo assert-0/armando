@@ -2,19 +2,19 @@
   <div class="interface">
     <div id="interface-content" class="content">
       <BaseTitleComponent class="armando-title" text="Armando"></BaseTitleComponent>
+      <hr class="break">
       <BaseSpacerComponent height="54px"></BaseSpacerComponent>
       <BaseImageComponent v-if="image" v-bind="image"></BaseImageComponent>
-      <BaseImageComponent  v-if="dataSrc" v-bind="dataSrc" :src=dataSrc ></BaseImageComponent>
       <BaseTitleComponent v-if="title" v-bind="title"></BaseTitleComponent>
       <BaseDescriptionComponent
         v-if="description"
         v-bind="description"
       ></BaseDescriptionComponent>
+      <BaseImageComponent  v-if="dataSrc" v-bind="dataSrc" :src=dataSrc ></BaseImageComponent>
     </div>
-      <BaseTitleComponent v-if="rateTitle" v-bind="rateTitle"></BaseTitleComponent>
-        <ActionGroupComponent
-            v-if="rateBtn"
-            :actions="rateBtn"
+    <ActionGroupComponent
+      v-if="activities"
+            :actions="activities"
         ></ActionGroupComponent>
   </div>
 </template>
@@ -32,9 +32,8 @@ export default {
     title: Object,
     image: Object,
     description: Object,
-    rateTitle: Object,
-    rateBtn: Array,
-    dataSrc: String
+    activities: Array,
+    dataSrc: String,
   },
   components: {
     ActionGroupComponent,
@@ -48,18 +47,14 @@ export default {
 
 <style scoped>
 .armando-title {
-    font-size: 2em;
+    font-size: 1.7em;
 }
 .estates {
   display: flex;
   overflow-y: hidden;
 }
-.estate{
-    min-width: 400px;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 10px;
+.break {
+    border: 0.5px solid #c3c3d0;
+    height: 0.5px;
 }
 </style>

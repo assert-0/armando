@@ -48,11 +48,9 @@ rule "Update user bought"
         answer: TelegramKeyboardAnswered()
         agent: AgentAgent()
     then
-        Log.info("[UPDATE FROM RULE] Update user bought: " + answer.getAnswer());
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);
-        Log.info("[UPDATE DONE] AgentAgent Answer: " + answer.getAnswer());
 end
 
 rule "Armory submit"

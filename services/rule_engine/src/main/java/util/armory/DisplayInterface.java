@@ -17,7 +17,6 @@ public class DisplayInterface extends BaseTemplate {
     protected Title title;
     protected Image image;
     protected Description description;
-    protected Title rateTitle;
-    protected List<SubmitButton> rateBtn;
+    protected List<SubmitButton> activities;
     protected String dataSrc;
 }
