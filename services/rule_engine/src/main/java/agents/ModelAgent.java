@@ -79,6 +79,26 @@ public class ModelAgent extends AbstractAgent {
         return maxValue;
     }
 
+    public Double getMaxDouble(LinkedList<Double> list) {
+        var maxValue = list.getFirst();
+        for (var i : list) {
+            if (i > maxValue) {
+                maxValue = i;
+            }
+        }
+        return maxValue;
+    }
+
+    public Double getMinDouble(LinkedList<Double> list) {
+        var minValue = list.getFirst();
+        for (var i : list) {
+            if (i < minValue) {
+                minValue = i;
+            }
+        }
+        return minValue;
+    }
+
     public void checkStats() {
         var numOfSearchesDiff = calculateDiff(numOfSearchesList);
         numOfSearchesDiffList.add(numOfSearchesDiff);
@@ -109,7 +129,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj pretraga ",
                 numOfSearchesDiffMax.isGrowing(),
                 numOfSearchesDiffMax.getDifference(),
-                new LinkedList<>(numOfSearchesList)
+                new LinkedList<>(numOfSearchesList),
+                getMaxDouble(numOfSearchesList),
+                getMinDouble(numOfSearchesList)
             );
         }
         else if (theBest == numOfREsDiffMax) {
@@ -117,7 +139,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj izlistanih nekretnina ",
                 numOfREsDiffMax.isGrowing(),
                 numOfREsDiffMax.getDifference(),
-                new LinkedList<>(numOfREsList)
+                new LinkedList<>(numOfREsList),
+                getMaxDouble(numOfREsList),
+                getMinDouble(numOfREsList)
             );
         }
         else if (theBest == numOfSoldDiffMax) {
@@ -125,7 +149,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj prodanih nekretnina ",
                 numOfSoldDiffMax.isGrowing(),
                 numOfSoldDiffMax.getDifference(),
-                new LinkedList<>(numOfSoldList)
+                new LinkedList<>(numOfSoldList),
+                getMaxDouble(numOfSoldList),
+                getMinDouble(numOfSoldList)
             );
         }
         else {
@@ -133,7 +159,9 @@ public class ModelAgent extends AbstractAgent {
                 " prosječna cijena nekretnine ",
                 avgCostDiffMax.isGrowing(),
                 avgCostDiffMax.getDifference(),
-                new LinkedList<>(avgCostList)
+                new LinkedList<>(avgCostList),
+                getMaxDouble(avgCostList),
+                getMinDouble(avgCostList)
             );
         }
 
