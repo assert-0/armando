@@ -11,9 +11,10 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateGraphPayload implements Serializable {
+public class CreateGraphDatePayload implements Serializable {
     private int requestId;
-    private List<Double> x;
+    private String start_date;
+    private String date_fmt;
     private List<Double> y;
     private String graph_fmt;
     private String title;
