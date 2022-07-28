@@ -69,6 +69,7 @@ rule "Activity users"
         event: ActivityUsersSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        agent.sendMessage(event.getSignalName() + ": " + event.getUsers());
+        if (event.getUsers().size() > 0) agent.sendMessage(event.getSignalName() + ": " + event.getUsers());
+        else agent.sendMessage(event.getSignalName() + ": Nitko nije zainteresiran");
         delete(event);
 end
