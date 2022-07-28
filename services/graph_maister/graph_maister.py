@@ -32,7 +32,7 @@ class Graph_Maister(BaseService):
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         #
-        plt.plot(x, y, graphFmt, linewidth=4)
+        plt.plot(x, y, graphFmt, linewidth=2)
         #
         plt.savefig(f, format=imageFormat)
         #
@@ -57,7 +57,7 @@ class Graph_Maister(BaseService):
         #
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(dateFmt))
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.plot(x, y, graphFmt, linewidth=4))
+        plt.plot(x, y, graphFmt, linewidth=2)
         plt.gcf().autofmt_xdate()
         #
         plt.savefig(f, format=imageFormat)
