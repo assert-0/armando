@@ -9,6 +9,7 @@ import base64
 from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sb
+import pandas as pd
 
 from forge.conf import settings as forge_settings
 from forge.core.api import api
@@ -25,12 +26,13 @@ class Graph_Maister(BaseService):
     def create_graph(self, requestId: int, x: List[float], y: List[float], graph_fmt: str, title: str, xlabel: str, ylabel: str, image_format: str) -> GraphResult:
         f = BytesIO()
         sb.set_style("darkgrid")
+        sb.set(rc = {'figure.figsize':(15,12)})
+        sb.set(font_scale = 3)
         #
-        plt.title(title)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         #
-        plt.plot(x, y, graph_fmt)
+        plt.plot(x, y, graph_fmt, linewidth=4))
         #
         plt.savefig(f, format=image_format)
         #

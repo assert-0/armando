@@ -43,19 +43,20 @@ public class ModelAgent extends AbstractAgent {
     private LinkedList<DifferenceGrowth> numOfSoldDiffList = new LinkedList<>();
     private LinkedList<DifferenceGrowth> avgCostDiffList = new LinkedList<>();
 
+    private int index = 0;
+
     public ModelAgent() {
         super(ID);
-        for(int i = 0; i < 100; ++i)
-            updateStats();
+        for (int i = 0; i < 100; ++i) updateStats(); // prefill
     }
 
     public void updateStats() {
         var random = new Random();
         //
-        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 3_000));
-        numOfREs = Math.abs(random.nextGaussian(numOfREs, 50));
+        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 300));
+        numOfREs = Math.abs(random.nextGaussian(numOfREs, 10));
         numOfSold = Math.abs(random.nextGaussian(numOfSold, 10));
-        avgCost = Math.abs(random.nextGaussian(avgCost, 50_000));
+        avgCost = Math.abs(random.nextGaussian(avgCost, 5000));
         //
         numOfSearchesList.add(numOfSearches);
         numOfREsList.add(numOfREs);
@@ -64,7 +65,7 @@ public class ModelAgent extends AbstractAgent {
     }
 
     public DifferenceGrowth calculateDiff(LinkedList<Double> list) {
-        var diff = Math.abs(1- list.getLast() / list.getFirst());
+        var diff = Math.abs(1 - list.getLast() / list.getFirst());
         return new DifferenceGrowth(diff, list.getLast() > list.getFirst());
     }
 
@@ -105,7 +106,7 @@ public class ModelAgent extends AbstractAgent {
 
         if (theBest == numOfSearchesDiffMax) {
             signal = new StatsSignal(
-                "number of searches",
+                " broj pretraga ",
                 numOfSearchesDiffMax.isGrowing(),
                 numOfSearchesDiffMax.getDifference(),
                 new LinkedList<>(numOfSearchesList)
@@ -113,7 +114,7 @@ public class ModelAgent extends AbstractAgent {
         }
         else if (theBest == numOfREsDiffMax) {
             signal = new StatsSignal(
-                "number of RE on website",
+                " broj izlistanih nekretnina ",
                 numOfREsDiffMax.isGrowing(),
                 numOfREsDiffMax.getDifference(),
                 new LinkedList<>(numOfREsList)
@@ -121,7 +122,7 @@ public class ModelAgent extends AbstractAgent {
         }
         else if (theBest == numOfSoldDiffMax) {
             signal = new StatsSignal(
-                "number of RE sold",
+                " broj prodanih nekretnina ",
                 numOfSoldDiffMax.isGrowing(),
                 numOfSoldDiffMax.getDifference(),
                 new LinkedList<>(numOfSoldList)
@@ -129,18 +130,20 @@ public class ModelAgent extends AbstractAgent {
         }
         else {
             signal = new StatsSignal(
-                "average cost of RE",
+                " prosječna cijena nekretnine ",
                 avgCostDiffMax.isGrowing(),
                 avgCostDiffMax.getDifference(),
                 new LinkedList<>(avgCostList)
             );
         }
-        /* if (index % 50 == 0) {
-            numOfSearchesList.clear();
+
+        if (++index % 50 == 0) {
+            /* numOfSearchesList.clear();
             numOfREsList.clear();
             numOfSoldList.clear();
-            avgCostList.clear();
-        } */
+            avgCostList.clear(); */
+            index = 0;
+        }
 
         sendBroadcast(Armando.class, signal);
     }
