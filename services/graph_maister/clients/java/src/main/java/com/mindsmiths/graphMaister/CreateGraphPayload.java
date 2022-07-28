@@ -15,9 +15,9 @@ public class CreateGraphPayload implements Serializable {
     private int requestId;
     private List<Double> x;
     private List<Double> y;
-    private String graph_fmt;
+    private String graphFmt;
     private String title;
     private String xlabel;
     private String ylabel;
-    private String image_format;
+    private String imageFormat;
 }

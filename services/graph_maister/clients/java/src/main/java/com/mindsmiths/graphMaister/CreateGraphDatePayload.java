@@ -13,12 +13,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CreateGraphDatePayload implements Serializable {
     private int requestId;
-    private String start_date;
-    private String date_fmt;
+    private String startDate;
+    private String dateFmt;
     private List<Double> y;
-    private String graph_fmt;
+    private String graphFmt;
     private String title;
     private String xlabel;
     private String ylabel;
-    private String image_format;
+    private String imageFormat;
 }
