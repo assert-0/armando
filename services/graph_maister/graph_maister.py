@@ -33,6 +33,7 @@ class Graph_Maister(BaseService):
         plt.ylabel(ylabel)
         #
         plt.plot(x, y, graphFmt, linewidth=2)
+        plt.margins(0)
         #
         plt.savefig(f, format=imageFormat)
         #
@@ -47,8 +48,10 @@ class Graph_Maister(BaseService):
     def create_graph_date(self, requestId: int, startDate: str, dateFmt: str, y: List[float], graphFmt: str, title: str, xlabel: str, ylabel: str, imageFormat: str) -> GraphResult:
         f = BytesIO()
         sb.set_style("darkgrid")
+        sb.set(rc = {'figure.figsize':(15,12)})
+        sb.set(font_scale = 3)
         #
-        #plt.title(title)
+        plt.title(title.capitalize())
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         #

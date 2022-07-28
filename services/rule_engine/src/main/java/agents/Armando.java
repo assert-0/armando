@@ -53,9 +53,9 @@ public class Armando extends AbstractAgent {
     public static HashMap<String, String> activityMessages = new HashMap<>(); 
     static {
         armoryArticles.put(" broj pretraga ", "Na Maksimiru je u zadnja 3 mjeseca broj pretraga za nekretninama %s za %s%%. Tokom zadnja 3 mjeseca, tjedan s najviše pretraga je imao čak %s pretraga dok je najmanji iznos bio %s.");
-        armoryArticles.put(" broj izlistanih nekretnina ", "U zadnja 3 mjeseca je broj nekretnina u ponudi na Maksimiru %s za čak %s%% Tjedan s najmanje nekretnina je imao %s nekretnina u ponudi dok ih je u najboljem tjednu bilo i do %s.");
+        armoryArticles.put(" broj izlistanih nekretnina ", "U zadnja 3 mjeseca je broj nekretnina u ponudi na Maksimiru %s za čak %s%%. Najbolji tjedan je imao %s nekretnina u ponudi dok ih je u najgorem tjednu bilo i do %s.");
         armoryArticles.put(" broj prodanih nekretnina ", "U zadnja 3 mjeseca je na Maksimiru broj prodanih nekretnina %s za %s%% s obzirom na godišnji prosjek za kvart. %s nekretnina se prodalo u tjednu s najviše prodanih nekretnina dok je u tjednu s najmanje bilo prodano samo %s nekretnina.");
-        armoryArticles.put(" prosječna cijena nekretnine ", "%s vrijednosti nekretnina na Maksimiru je u zadnja 3 mjeseca bio %s%%. U tjednu s najmanjom vrijednosti nekretnina je prosječna vrijednost bila %s dok je u tjednu s najvećom vrijednosti prosjek bio %s.");
+        armoryArticles.put(" prosječna cijena nekretnine ", "Prosječna cijena je %s vrijednosti nekretnina na Maksimiru je u zadnja 3 mjeseca bio %s%%. U tjednu s najmanjom vrijednosti nekretnina je prosječna vrijednost bila %s dok je u tjednu s najvećom vrijednosti prosjek bio %s.");
         activityMessages.put(" broj pretraga ", "Znaš li da je broj nekretnina u ponudi %s za %s%% u zadnja 3 mjeseca! Klikni na idući link ako želiš znati vidjeti kako se broj nekretnina u ponudi kretao zadnje 2 godine: ");
         activityMessages.put(" broj izlistanih nekretnina ", "Bok! Broj pretraga nekretnina na Maksimiru %s za %s%% u zadnja 3 mjeseca! Želiš li vidjeti kako se broj pretraga mijenjao kroz mjesece klikni ovdje:");
         activityMessages.put(" broj prodanih nekretnina ", "Broj prodanih nekretnina na Maksimiru %s je za %s%% u zadnjih 3 tjedna! Ako te zanima kako se su nekretnine prodavale kroz mjesece klikni ovdje: ");

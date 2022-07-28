@@ -49,16 +49,16 @@ public class ModelAgent extends AbstractAgent {
 
     public ModelAgent() {
         super(ID);
-        for (int i = 0; i < 100; ++i) updateStats(); // prefill
+        for (int i = 0; i < 200; ++i) updateStats(); // prefill
     }
 
     public void updateStats() {
         var random = new Random();
         //
-        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, 500));
-        numOfREs = Math.abs(random.nextGaussian(numOfREs, 3));
-        numOfSold = Math.abs(random.nextGaussian(numOfSold, 2));
-        avgCost = Math.abs(random.nextGaussian(avgCost, 5_000));
+        numOfSearches = Math.abs(random.nextGaussian(numOfSearches, numOfSearches * 0.07));
+        numOfREs = Math.abs(random.nextGaussian(numOfREs, numOfREs * 0.07));
+        numOfSold = Math.abs(random.nextGaussian(numOfSold, numOfSold * 0.07));
+        avgCost = Math.abs(random.nextGaussian(avgCost, avgCost * 0.07));
         //
         numOfSearchesList.add(numOfSearches);
         numOfREsList.add(numOfREs);
@@ -67,14 +67,13 @@ public class ModelAgent extends AbstractAgent {
     }
 
     private static int clamp(int value) {
-        if (value >= 0) return value;
-        else return 0;
+        return value >= 0 ? value : 0;
     }
 
     public DifferenceGrowth calculateDiff(LinkedList<Double> list, int lastAmount) {
         var last = list.getLast();
         var first = list.get(clamp(list.size() - lastAmount));
-        double diff;
+        double diff; 
         boolean growing;
         if (last < first) {
             diff = 1 - (last / first);
@@ -130,15 +129,16 @@ public class ModelAgent extends AbstractAgent {
     public void checkStats() {
         var numOfSearchesDiff = calculateDiff(numOfSearchesList, LAST_DIFF);
         numOfSearchesDiffList.add(numOfSearchesDiff);
-
+        if (numOfSearchesDiffList.size() > 300) numOfSearchesDiffList.removeFirst();
         var numOfREsDiff = calculateDiff(numOfREsList, LAST_DIFF);
         numOfREsDiffList.add(numOfREsDiff);
-
+        if (numOfREsDiffList.size() > 300) numOfREsDiffList.removeFirst();
         var numOfSoldDiff = calculateDiff(numOfSoldList, LAST_DIFF);
         numOfSoldDiffList.add(numOfSoldDiff);
-
+        if (numOfSoldDiffList.size() > 300) numOfSoldDiffList.removeFirst();
         var avgCostDiff = calculateDiff(avgCostList, LAST_DIFF);
         avgCostDiffList.add(avgCostDiff);
+        if (avgCostDiffList.size() > 300) avgCostDiffList.removeFirst();
 
         var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST_MAX);
 
