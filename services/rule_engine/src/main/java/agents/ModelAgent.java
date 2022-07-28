@@ -17,6 +17,8 @@ import signals.StatsSignal;
 public class ModelAgent extends AbstractAgent {
     public static String ID = "ModelAgent";
 
+    private static final int LAST = 30;
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -43,8 +45,6 @@ public class ModelAgent extends AbstractAgent {
     private LinkedList<DifferenceGrowth> numOfSoldDiffList = new LinkedList<>();
     private LinkedList<DifferenceGrowth> avgCostDiffList = new LinkedList<>();
 
-    private int index = 0;
-
     public ModelAgent() {
         super(ID);
         for (int i = 0; i < 100; ++i) updateStats(); // prefill
@@ -69,31 +69,31 @@ public class ModelAgent extends AbstractAgent {
         return new DifferenceGrowth(diff, list.getLast() > list.getFirst());
     }
 
-    public DifferenceGrowth getMax(LinkedList<DifferenceGrowth> list) {
+    public DifferenceGrowth getMax(LinkedList<DifferenceGrowth> list, int last) {
         var maxValue = list.getFirst();
-        for (var i : list) {
-            if (i.getDifference() > maxValue.getDifference()) {
-                maxValue = i;
+        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+            if (list.get(i).getDifference() > maxValue.getDifference()) {
+                maxValue = list.get(i);
             }
         }
         return maxValue;
     }
 
-    public Double getMaxDouble(LinkedList<Double> list) {
+    public Double getMaxDouble(LinkedList<Double> list, int last) {
         var maxValue = list.getFirst();
-        for (var i : list) {
-            if (i > maxValue) {
-                maxValue = i;
+        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+            if (list.get(i) > maxValue) {
+                maxValue = list.get(i);
             }
         }
         return maxValue;
     }
 
-    public Double getMinDouble(LinkedList<Double> list) {
+    public Double getMinDouble(LinkedList<Double> list, int last) {
         var minValue = list.getFirst();
-        for (var i : list) {
-            if (i < minValue) {
-                minValue = i;
+        for (int i = Math.abs(list.size() - last); i < list.size(); ++i) {
+            if (list.get(i) < minValue) {
+                minValue = list.get(i);
             }
         }
         return minValue;
@@ -112,15 +112,17 @@ public class ModelAgent extends AbstractAgent {
         var avgCostDiff = calculateDiff(avgCostList);
         avgCostDiffList.add(avgCostDiff);
 
-        var numOfSearchesDiffMax = getMax(numOfSearchesDiffList);
+        var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST);
 
-        var numOfREsDiffMax = getMax(numOfREsDiffList);
+        var numOfREsDiffMax = getMax(numOfREsDiffList, LAST);
 
-        var numOfSoldDiffMax = getMax(numOfSoldDiffList);
+        var numOfSoldDiffMax = getMax(numOfSoldDiffList, LAST);
 
-        var avgCostDiffMax = getMax(avgCostDiffList);
+        var avgCostDiffMax = getMax(avgCostDiffList, LAST);
 
-        var theBest = getMax(new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)));
+        var theBest = getMax(
+            new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)),
+            LAST);
 
         StatsSignal signal;
 
@@ -129,9 +131,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj pretraga ",
                 numOfSearchesDiffMax.isGrowing(),
                 numOfSearchesDiffMax.getDifference(),
-                new LinkedList<>(numOfSearchesList),
-                getMaxDouble(numOfSearchesList),
-                getMinDouble(numOfSearchesList)
+                numOfSearchesList,
+                getMaxDouble(numOfSearchesList, LAST),
+                getMinDouble(numOfSearchesList, LAST)
             );
         }
         else if (theBest == numOfREsDiffMax) {
@@ -139,9 +141,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj izlistanih nekretnina ",
                 numOfREsDiffMax.isGrowing(),
                 numOfREsDiffMax.getDifference(),
-                new LinkedList<>(numOfREsList),
-                getMaxDouble(numOfREsList),
-                getMinDouble(numOfREsList)
+                numOfREsList,
+                getMaxDouble(numOfREsList, LAST),
+                getMinDouble(numOfREsList, LAST)
             );
         }
         else if (theBest == numOfSoldDiffMax) {
@@ -149,9 +151,9 @@ public class ModelAgent extends AbstractAgent {
                 " broj prodanih nekretnina ",
                 numOfSoldDiffMax.isGrowing(),
                 numOfSoldDiffMax.getDifference(),
-                new LinkedList<>(numOfSoldList),
-                getMaxDouble(numOfSoldList),
-                getMinDouble(numOfSoldList)
+                numOfSoldList,
+                getMaxDouble(numOfSoldList, LAST),
+                getMinDouble(numOfSoldList, LAST)
             );
         }
         else {
@@ -159,18 +161,10 @@ public class ModelAgent extends AbstractAgent {
                 " prosječna cijena nekretnine ",
                 avgCostDiffMax.isGrowing(),
                 avgCostDiffMax.getDifference(),
-                new LinkedList<>(avgCostList),
-                getMaxDouble(avgCostList),
-                getMinDouble(avgCostList)
+                avgCostList,
+                getMaxDouble(avgCostList, LAST),
+                getMinDouble(avgCostList, LAST)
             );
-        }
-
-        if (++index % 50 == 0) {
-            /* numOfSearchesList.clear();
-            numOfREsList.clear();
-            numOfSoldList.clear();
-            avgCostList.clear(); */
-            index = 0;
         }
 
         sendBroadcast(Armando.class, signal);

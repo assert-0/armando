@@ -1,5 +1,7 @@
 #! /bin/bash
 
+forge reset
+
 for d in services/*/ ; do
     target="$d/target"
     if [[ -e $target && -d $target ]]; then
@@ -14,6 +16,6 @@ for d in services/*/ ; do
     fi
 done
 
-forge reset && forge init && forge run
+forge init && forge run
 
 pkill forge && pkill java
