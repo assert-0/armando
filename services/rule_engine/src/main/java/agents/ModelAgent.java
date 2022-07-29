@@ -49,7 +49,7 @@ public class ModelAgent extends AbstractAgent {
 
     public ModelAgent() {
         super(ID);
-        for (int i = 0; i < 200; ++i) updateStats(); // prefill
+        for (int i = 0; i < 26; ++i) updateStats(); // prefill
     }
 
     public void updateStats() {
@@ -129,16 +129,16 @@ public class ModelAgent extends AbstractAgent {
     public void checkStats() {
         var numOfSearchesDiff = calculateDiff(numOfSearchesList, LAST_DIFF);
         numOfSearchesDiffList.add(numOfSearchesDiff);
-        if (numOfSearchesDiffList.size() > 250) numOfSearchesDiffList.removeFirst();
+        if (numOfSearchesDiffList.size() > 52) numOfSearchesDiffList.removeFirst();
         var numOfREsDiff = calculateDiff(numOfREsList, LAST_DIFF);
         numOfREsDiffList.add(numOfREsDiff);
-        if (numOfREsDiffList.size() > 250) numOfREsDiffList.removeFirst();
+        if (numOfREsDiffList.size() > 52) numOfREsDiffList.removeFirst();
         var numOfSoldDiff = calculateDiff(numOfSoldList, LAST_DIFF);
         numOfSoldDiffList.add(numOfSoldDiff);
-        if (numOfSoldDiffList.size() > 250) numOfSoldDiffList.removeFirst();
+        if (numOfSoldDiffList.size() > 52) numOfSoldDiffList.removeFirst();
         var avgCostDiff = calculateDiff(avgCostList, LAST_DIFF);
         avgCostDiffList.add(avgCostDiff);
-        if (avgCostDiffList.size() > 250) avgCostDiffList.removeFirst();
+        if (avgCostDiffList.size() > 52) avgCostDiffList.removeFirst();
 
         var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST_MAX);
 

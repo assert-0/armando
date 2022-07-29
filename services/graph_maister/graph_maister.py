@@ -60,7 +60,7 @@ class Graph_Maister(BaseService):
         x = [base + dt.timedelta(weeks=x) for x in range(len(y))]
         #
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(dateFmt))
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
         plt.plot(x, y, graphFmt, linewidth=2)
         plt.gcf().autofmt_xdate()
         #
