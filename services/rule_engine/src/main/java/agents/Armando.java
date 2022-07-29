@@ -54,7 +54,7 @@ public class Armando extends AbstractAgent {
     static {
         armoryArticles.put(" broj pretraga ", "Na Medveščaku je u zadnja 3 mjeseca broj pretraga za nekretninama %S za %s%%. Najveći tjedni broj pretraga: %s. Najmanji tjedni broj pretraga: %s");
         armoryArticles.put(" broj izlistanih nekretnina ", "U zadnja 3 mjeseca je broj dostupnih nekretnina na Maksimiru %s za %s%%. Najveći broj dostupnih nekretnina na Medveščaku u zadnja tri mjeseca: %s. Najmanji broj dostupnih nekretnina na Medveščaku u zadnja tri mjeseca: %s");
-        armoryArticles.put(" broj prodanih nekretnina ", "U zadnja 3 mjeseca je broj prodanih nekretnina na Maksimiru %s za %s%% s obzirom na isto razdoblje prošle godine. Najveći broj prodanih nekretnina u tjedan dana : 5s. Najmanji broj prodanih nekretnina u tjedan dana: 5s.");
+        armoryArticles.put(" broj prodanih nekretnina ", "U zadnja 3 mjeseca je broj prodanih nekretnina na Maksimiru %s za %s%% s obzirom na isto razdoblje prošle godine. Najveći broj prodanih nekretnina u tjedan dana : %s. Najmanji broj prodanih nekretnina u tjedan dana: %s.");
         armoryArticles.put(" prosječna cijena nekretnine ", "%s vrijednosti nekretnina na Medveščaku je u zadnja 3 mjeseca bio %s%%. Najveća prosječna vrijednost nekretnine: %s €. Najmanja prosječna vrijednost nekretnine: %s €.");
         activityMessages.put(" broj pretraga ", "Znaš li da je broj nekretnina u ponudi %s za %s%% u zadnja 3 mjeseca! Klikni na idući link ako želiš znati vidjeti kako se broj nekretnina u ponudi kretao zadnje 2 godine: ");
         activityMessages.put(" broj izlistanih nekretnina ", "Bok! Broj pretraga nekretnina na Maksimiru %s za %s%% u zadnja 3 mjeseca! Želiš li vidjeti kako se broj pretraga mijenjao kroz mjesece klikni ovdje:");
