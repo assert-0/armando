@@ -57,7 +57,7 @@ class Graph_Maister(BaseService):
         plt.ylabel(ylabel, fontname = 'Helvetica')
         #
         base = dt.datetime.strptime(startDate, dateFmt).date()
-        x = [base - dt.timedelta(days=x) for x in range(len(y))]
+        x = [base + dt.timedelta(weeks=x) for x in range(len(y))]
         #
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(dateFmt))
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
