@@ -114,8 +114,8 @@ services:
       - gunicorn==20.1.0
       - websockets==10.1
     env:
-      SITE_URL: '{{ env.ARMORY_URL }}'
-      INTERNAL_SITE_URL: "armory"
+      SITE_URL: '{{ "armory." + env.get("HOST_DOMAIN", "") }}'
+      INTERNAL_SITE_URL: "http://armory"
     resources:
       cpu: 50m
       memory: 75Mi
