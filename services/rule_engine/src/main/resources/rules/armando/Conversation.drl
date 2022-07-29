@@ -3,6 +3,8 @@ package rules.armando;
 import java.util.Date;
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.mindsmiths.dbAdapter.DBAdapterAPI;
 import com.mindsmiths.dbAdapter.FetchResult;
 import com.mindsmiths.ruleEngine.util.Log;
@@ -19,10 +21,16 @@ import com.mindsmiths.armory.events.SubmitEvent;
 import com.mindsmiths.armory.events.UserConnectedEvent; 
 import com.mindsmiths.armory.events.UserDisconnectedEvent;
 
+import com.mindsmiths.graphMaister.GraphMaisterAPI;
+import com.mindsmiths.graphMaister.GraphResult;
+
 import agents.Armando;
 import agents.AgentAgent;
 
 import signals.RatingSignal;
+import signals.StatsSignal;
+
+import util.Question;
 
 
 rule "First contact"
@@ -34,9 +42,8 @@ rule "First contact"
         agent.sendMessage("Hej, moje ime je Armando i ja sam pametni agent za nekretnine!");
         DBAdapterAPI.fetchUser(agent.getUserId());
         modify(agent) {
-            addConnection("armory", agent.getConnections().get("telegram"))
+            addConnection("armory", agent.getConnection("telegram"))
         };
-        System.out.println(agent.toString());
         delete(initialize);
 end
 
@@ -45,18 +52,15 @@ rule "Receive user data"
         res: FetchResult(success == true) from entry-point "signals"
         agent: Armando()
     then
-        Log.warn("Fetched user!");
         modify(agent) {
             setUser(res.getUsers().get(0)),
             setLastInteractionTime(new Date())
         };
-        agent.displayUI(true);
-        agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
-        //agent.sendFirstQuestion();
+        agent.displayUI();
         delete(res);
 end
 
-rule "Re-engage costumer"
+/* rule "Re-engage costumer"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
         agent: Armando(
@@ -68,7 +72,7 @@ rule "Re-engage costumer"
         };
         Log.warn("Sending question again");
         agent.sendQuestion();
-end
+end */
 
 rule "Receive single answer"
     when
@@ -93,7 +97,7 @@ rule "User connected event"
         event: UserConnectedEvent() from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI(true);
+        agent.displayUI(agent.getBase64String());
         delete(event);
 end
 
@@ -102,17 +106,34 @@ rule "Armory submit"
         event: SubmitEvent() from entry-point "signals"
         agent: Armando()
     then
-        Log.info(event.getData().get("submit").asText());
-        if (event.getData().get("submit").asText().equals("getrating")) {
-            Log.info(agent.getUser().getName() + " " + agent.getUser().getSurname());
-            agent.displayUI(false);
-        }
-        if (event.getData().get("submit").asText().equals("submitrating")) {
-            agent.displayUI("date");
-        }
-        if (event.getData().get("submit").asText().equals("date")) {
-            agent.send(AgentAgent.ID, new RatingSignal(agent.getUser(), event.getData().get("date").get("text").asText()));
-            agent.displayUI(false);
-        }
+        agent.displayUI(agent.getBase64String());
+        agent.handleSignalResponse(event.getData().get("submit").asText());
         delete(event);
+end
+
+rule "Stats received"
+    when
+        sig: StatsSignal() from entry-point "signals"
+        agent: Armando()
+    then
+        String pad = sig.isGrowing() ? "narastao" : "pao";
+        String ylabel = sig.getFeature().equals(" prosječna cijena nekretnine ") ? "EUR" : "";
+        agent.getHandler().addQuestion(new Question(String.format(agent.activityMessages.get(sig.getFeature()), 
+                                pad, Math.round(sig.getDifference() * 100)) + "${armoryUrl}"));
+        agent.sendQuestion();
+        GraphMaisterAPI.createGraphDate(1, "07/2022", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "mjesec", ylabel, "png");
+        modify(agent) {
+            setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru je " + pad + "!"),
+            setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
+                                pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())))
+        };
+end
+
+rule "Stats payload received"
+    when
+        sig: GraphResult(success == true) from entry-point "signals"
+        agent: Armando()
+    then
+        agent.setBase64String(sig.getBase64Graph());
+        agent.displayUI(agent.getBase64String());
 end

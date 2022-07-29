@@ -23,7 +23,7 @@ public class ActionDeserializer extends JsonDeserializer<Action> {
             case SendMessageAction.ACTION_NAME:
                 return new SendMessageAction(node.get("message").asText());
             default:
-                return null;
+                throw new RuntimeException("Unable to deserialize Action instance");
         }
     }
 }

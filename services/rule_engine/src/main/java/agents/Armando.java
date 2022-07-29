@@ -35,69 +35,47 @@ import util.processors.TemplateQuestionProcessor;
 import util.RealEstate;
 import util.armory.DisplayInterface;
 import util.armory.RateInterface;
-import util.armory.DateInterface;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Armando extends Agent {
+public class Armando extends AbstractAgent {
     private String userId;
     private User user;
     private Date lastInteractionTime = new Date();
     private QuestionHandler handler = new QuestionHandler(
-        QuestionFactory.createShuffledConversation(
-            "Hej ${name}, znaš li da je vrijednost nekretnina na Medveščaku "
-            + "narasla za 10% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: "
-            + "[www.armando.com/korisne-statistike/cijena](www.armando.com/korisne-statistike/cijena)",
-            "Na Ilici će se renovirati prometne trake u smjeru istoka idući "
-            + "tjedan! Više informacija o tome: "
-            + "[www.armando.com/zagreb/radovi/ilica](www.armando.com/zagreb/radovi/ilica)",
-            "Vjerojatno znaš, ali u slučaju da ne, u tvom stambenom kompleksu je stan "
-            + "nedavno stavljen na prodaju? Više informacija možeš saznati na: "
-            + "[www.armando.com/zagreb/medvescak/prodaja](www.armando.com/zagreb/medvescak/prodaja)",
-            "Hej, imam super vijesti za Medveščak, do proljeća ćeš imati novi park, "
-            + "a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako "
-            + "će izgledati možeš saznati ovdje: "
-            + "[www.armando.com/zagreb/novi-projekti](www.armando.com/zagreb/novi-projekti)",
-            "Čisto informativno, na području Medveščaka se mijenja toplovod! "
-            + "Tvoj kvart neće imati vode preksutra od 16-20. Više o tome na linku: "
-            + "[www.armando.com/zagreb/novi-projekti/infrastruktura](www.armando.com/zagreb/novi-projekti/infrastruktura)"
-        ),
-        new TemplateQuestionProcessor(User.class)
+        QuestionFactory.createConversation(),
+        new TemplateQuestionProcessor(Armando.class)
     );
     private static List<RealEstate> reImages = new ArrayList<RealEstate>();
+    public static HashMap<String, String> armoryArticles = new HashMap<>(); 
+    public static HashMap<String, String> activityMessages = new HashMap<>(); 
     static {
-        reImages.add(new RealEstate("https://images.adsttc.com/media/images/629f/3517/c372/5201/650f/1c7f/large_jpg/hyde-park-house-robeson-architects_1.jpg?1654601149", "Poseidon Villa", "1 000 000 EUR"));
-        reImages.add(new RealEstate("https://q4g9y5a8.rocketcdn.me/wp-content/uploads/2020/02/home-banner-2020-02-min.jpg", "Family Palmatin House", "300 000 EUR"));
-        reImages.add(new RealEstate("https://www.croatialuxuryrent.com/storage/upload/60a/bf3/6be/IMG_5654_tn.jpg", "Modern Villa", "2 200 000 EUR"));
-        reImages.add(new RealEstate("https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8&w=1000&q=80", "Modern Pool Family House", "500 000 EUR"));
-        reImages.add(new RealEstate("https://www.forbes.com/advisor/wp-content/uploads/2022/03/houses_expensive.jpg", "Secluded House", "450 000 EUR"));
-        reImages.add(new RealEstate("https://www.mcdonaldjoneshomes.com.au/sites/default/files/styles/image_gallery/public/daytona-new-house-designs.jpg?itok=Bb9xYGdE", "Cosy Family House", "200 000 EUR"));
+        armoryArticles.put(" broj pretraga ", "Na Maksimiru je u zadnja 3 mjeseca broj pretraga za nekretninama %s za %s%%. Tokom zadnja 3 mjeseca, tjedan s najviše pretraga je imao čak %s pretraga dok je najmanji iznos bio %s.");
+        armoryArticles.put(" broj izlistanih nekretnina ", "U zadnja 3 mjeseca je broj nekretnina u ponudi na Maksimiru %s za čak %s%%. Najbolji tjedan je imao %s nekretnina u ponudi dok ih je u najgorem tjednu bilo i do %s.");
+        armoryArticles.put(" broj prodanih nekretnina ", "U zadnja 3 mjeseca je na Maksimiru broj prodanih nekretnina %s za %s%% s obzirom na godišnji prosjek za kvart. %s nekretnina se prodalo u tjednu s najviše prodanih nekretnina dok je u tjednu s najmanje bilo prodano samo %s nekretnina.");
+        armoryArticles.put(" prosječna cijena nekretnine ", "Prosječna cijena je %s vrijednosti nekretnina na Maksimiru je u zadnja 3 mjeseca bio %s%%. U tjednu s najmanjom vrijednosti nekretnina je prosječna vrijednost bila %s dok je u tjednu s najvećom vrijednosti prosjek bio %s.");
+        activityMessages.put(" broj pretraga ", "Znaš li da je broj nekretnina u ponudi %s za %s%% u zadnja 3 mjeseca! Klikni na idući link ako želiš znati vidjeti kako se broj nekretnina u ponudi kretao zadnje 2 godine: ");
+        activityMessages.put(" broj izlistanih nekretnina ", "Bok! Broj pretraga nekretnina na Maksimiru %s za %s%% u zadnja 3 mjeseca! Želiš li vidjeti kako se broj pretraga mijenjao kroz mjesece klikni ovdje:");
+        activityMessages.put(" broj prodanih nekretnina ", "Broj prodanih nekretnina na Maksimiru %s je za %s%% u zadnjih 3 tjedna! Ako te zanima kako se su nekretnine prodavale kroz mjesece klikni ovdje: ");
+        activityMessages.put(" prosječna cijena nekretnine ", "Hej, znaš li da je vrijednost nekretnina na Maksimiru %s za %s%% u zadnja 3 mjeseca? Trendove možeš proučiti ovdje: ");
     }
-    private int reIndex = 1;
-    /* private static HashMap<Image, List<SubmitButton>> spRealEstates;
-    private static HashMap<Image, List<SubmitButton>> slRealEstates;
-    static {
-        for (int i = 0; i < 2; ++i)
-            spRealEstates.put(new Image(reImages.get(i).getSrc()), Arrays.asList(new SubmitButton(String.valueOf(i), "More info", new HashMap())));
-        for (int i = 3; i < 6; ++i)
-            slRealEstates.put(new Image(reImages.get(i - 3).getSrc()), Arrays.asList(new SubmitButton(String.valueOf(i - 3), "More info", new HashMap())));
-    } */
-
+    private String articleTitle;
+    private String articleText;
+    private String base64String = "";
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);
         this.userId = userId;
     }
 
-    public void sendMessage(String text) {
-        String chatId = getConnections().get("telegram");
-        TelegramAdapterAPI.sendMessage(chatId, text);
+    public String getArmoryUrl() {
+        return "https://" + System.getenv("ARMORY_SITE_URL") + "/" + getConnection("telegram");
     }
 
     public void sendQuestion() {
-        var question = handler.getCurrentProcessedQuestion(user);
+        var question = handler.getCurrentProcessedQuestion(this);
         if (question == null) return;
         if (question.getAnswers().size() == 0) {
             TelegramAdapterAPI.sendMessage(
@@ -123,10 +101,10 @@ public class Armando extends Agent {
         }
     }
 
-    public void contactAgent(String agentId) {
+    public <T extends Agent> void contactAgent(Class<T> agentClass) {
         UserIdSignal signal = new UserIdSignal();
         signal.setUserId(getUserId());
-        send(agentId, signal);
+        sendFirst(agentClass, signal);
     }
 
     public void sendFirstQuestion() {
@@ -142,43 +120,47 @@ public class Armando extends Agent {
         handler.submitAnswersAndAct(answers, this);
         sendQuestion();
     }
-    public static void info(String message) {
-        Log.LOGGER.info(message);
-    }
 
-    public void displayUI(boolean rate) {
-        DisplayInterface ui = rate ? new DisplayInterface(
-            new Title("'Feng Shui' park dolazi na Maksimir!"), 
-            new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
-            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
-            new Title("Besplatna procjena tvoje nekretnine!"), 
-            Arrays.asList(new SubmitButton("submitrating", "Zatraži procjenu agenta!", new HashMap()))
-        ) : new DisplayInterface(
-            new Title("'Feng Shui' park dolazi na Maksimir!"), 
-            new Image("https://park-maksimir.hr/wp-content/uploads/2019/08/Mallinov-park-14.jpg"),
-            new Description(String.format("%s, izuzev Pelješkog mosta, istočni stil gradnje dolazi i na zelene površine. Kod Ulice Izmišljene 13., na 5 minuta od tvog stana, Huawei je odlučio izgraditi tehnološki Feng Shui park za mlade koji uključuje solarne klupe, automatske LED lampe i novi model sigurnih tobogana. Ovaj park će značajno povećati vrijednost obližnjih nekretnina za barem ...", user.getName())),
-            null, 
+    public void displayUI() {
+        DisplayInterface ui = new DisplayInterface(
+            new Title(this.articleTitle), 
+            null,
+            new Description(this.articleText),
+            Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
+                        new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),
+                        new SubmitButton("prodaja", "Želim prodati nekretninu", new HashMap())),
             null
         );
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
     }
 
-    public void displayUI(String template) {
-        BaseTemplate ui;
-        if (template.equals("rate")) {
-            ui = new RateInterface(
-                new Title("Upiši adresu!"),
-                Arrays.asList(new SubmitButton("getrating", "Nazad", new HashMap()))
-            );
-        } else {
-            var date = LocalDateTime.now();
-            ui = new DateInterface(
-                Arrays.asList(new SubmitButton("date", date.format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()), 
-                    new SubmitButton("date", date.plusDays(1L).format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()), 
-                    new SubmitButton("date", date.plusDays(2L).format(DateTimeFormatter.ISO_LOCAL_DATE), new HashMap()))
-            );
-        }
+    public void displayUI(String base64String) {
+        DisplayInterface ui = new DisplayInterface(
+            new Title(this.articleTitle), 
+            null,
+            new Description(this.articleText),
+            Arrays.asList(new SubmitButton("procjena", "Zatraži procjenu agenta!", new HashMap()),
+                        new SubmitButton("kupnja", "Želim kupiti nekretninu", new HashMap()),
+                        new SubmitButton("prodaja", "Želim prodati nekretninu", new HashMap())),
+            "data:image/png;base64," + base64String
+        );
         ArmoryAPI.updateTemplate(this.connections.get("armory"), "ref", ui);
-        Log.info("Updated rating ui");
+        Log.warn("Updated new ui");
+    }
+
+    public void handleSignalResponse(String signalName) {
+        switch (signalName) {
+            case "procjena": 
+                this.user.getActivities().add(new Activity(Activity.Type.APPRAISAL_SIGNAL, new Date()));
+                break;
+            case "kupnja": 
+                this.user.getActivities().add(new Activity(Activity.Type.PURCHASE_SIGNAL, new Date()));
+                break;
+            case "prodaja": 
+                this.user.getActivities().add(new Activity(Activity.Type.SELLING_SIGNAL, new Date()));
+                break;
+        }
+        DBAdapterAPI.updateUser(user);
+        Log.info("UPDATED USER: " + user);
     }
 }

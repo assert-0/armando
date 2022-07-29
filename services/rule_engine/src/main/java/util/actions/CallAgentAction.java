@@ -4,6 +4,8 @@ import lombok.*;
 
 import util.Action;
 
+import com.mindsmiths.ruleEngine.model.Agent;
+
 import agents.Armando;
 
 
@@ -12,15 +14,24 @@ import agents.Armando;
 public class CallAgentAction extends Action {
     public static final String ACTION_NAME = "CallAgent";
 
-    private String agentId;
+    private String agentClasString;
 
-    public CallAgentAction(String agentId) {
+    public CallAgentAction(Class<? extends Agent> agentClass) {
         super(ACTION_NAME);
-        this.agentId = agentId;
+        this.agentClasString = agentClass.getName();
+    }
+
+    public CallAgentAction(String agentClasString) {
+        super(ACTION_NAME);
+        this.agentClasString = agentClasString;
     }
 
     public void act(Object value) {
         var agent = (Armando)value;
-        agent.contactAgent(agentId);
+		try {
+			var agentClass = Class.forName(agentClasString);
+            agent.contactAgent((Class<Agent>)agentClass);
+		} catch (ClassNotFoundException | ClassCastException ignored) {
+		}
     }
 }

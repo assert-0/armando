@@ -14,25 +14,16 @@ import com.mindsmiths.telegramAdapter.KeyboardOption;
 import agents.Armando;
 import agents.AgentHitl;
 import agents.AgentAgent;
+import agents.ActivityAgent;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProtoAgent extends Agent {
+public class ProtoAgent extends AbstractAgent {
 
     public ProtoAgent(String connectionName, String connectionId) {
         super(connectionName, connectionId);
-    }
-
-    @Override
-    public String getConnection(String connectionName) {
-        return super.getConnection(connectionName);
-    }
-
-    public void sendMessage(String text) {
-        String chatId = getConnections().get("telegram");
-        TelegramAdapterAPI.sendMessage(chatId, text);
     }
 
     public void sendRoleAssignment() {
@@ -47,13 +38,21 @@ public class ProtoAgent extends Agent {
                     new KeyboardOption("HITL", "Hitl")
                 )
             )
-        ); 
-        //Agents.createAgent(new Armando("telegram", getConnection("telegram"), String.valueOf((int) (Math.random() * 15))));
+        );
+    }
+
+    public void armandoCreator(String userId) {
+        Agents.createAgent(new Armando("telegram", getConnection("telegram"), userId));
+        if (!Agents.exists(ActivityAgent.ID)) {
+            Agents.createAgent(new ActivityAgent("telegram", getConnection("telegram")));
+        }
+        if (!Agents.exists(ModelAgent.ID))
+            Agents.createAgent(new ModelAgent());
     }
 
     public void handleFirstMessage(String text) {
         if (text.startsWith("/start ")) {
-            Agents.createAgent(new Armando("telegram", getConnection("telegram"), text.split(" ")[1]));
+            armandoCreator(text.split(" ")[1]);
             Agents.deleteAgent(this);
         }
         else {
@@ -64,7 +63,7 @@ public class ProtoAgent extends Agent {
     public void handleAgentAssignment(String answer) {
         switch(answer) {
             case "USER":
-                Agents.createAgent(new Armando("telegram", getConnection("telegram"), "2")); // TODO:
+                armandoCreator("2");
                 break;
             case "AGENT":
                 Agents.createAgent(new AgentAgent("telegram", getConnection("telegram")));

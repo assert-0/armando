@@ -2,20 +2,18 @@ package util;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.mindsmiths.ruleEngine.util.Log;
 
 import util.processors.*;
 
 
 public class QuestionProcessorDeserializer extends JsonDeserializer<QuestionProcessor> {
     @Override
-    public QuestionProcessor deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JacksonException {
+    public QuestionProcessor deserialize(JsonParser jp, DeserializationContext context) throws IOException {
         ObjectCodec oc = jp.getCodec();
         JsonNode node = oc.readTree(jp);
 
@@ -25,7 +23,7 @@ public class QuestionProcessorDeserializer extends JsonDeserializer<QuestionProc
             case TemplateQuestionProcessor.PROCESSOR_NAME:
                 return new TemplateQuestionProcessor(node.get("className").asText());
             default:
-                return null;
+                throw new RuntimeException("Unable to deserialize QuestionProcessor instance");
         } 
     }
 }

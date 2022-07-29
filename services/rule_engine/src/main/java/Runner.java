@@ -1,11 +1,12 @@
-import agents.Armando;
-import agents.Smith;
+
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
 import com.mindsmiths.ruleEngine.util.Signals;
 import com.mindsmiths.armory.events.SubmitEvent; 
 import com.mindsmiths.armory.events.UserConnectedEvent;
 import com.mindsmiths.armory.events.UserDisconnectedEvent;
+
+import agents.Smith;
 
 
 public class Runner extends RuleEngineService {

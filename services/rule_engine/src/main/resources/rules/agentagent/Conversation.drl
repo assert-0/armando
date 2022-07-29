@@ -10,6 +10,7 @@ import com.mindsmiths.dbAdapter.User;
 
 import agents.AgentAgent;
 import signals.UserIdSignal;
+import signals.ActivityUsersSignal;
 import signals.RatingSignal;
 
 
@@ -18,8 +19,6 @@ rule "Set AgentAgent user id"
         sig: UserIdSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        Log.warn("Received signal");
-        Log.info(sig.getUserId());
         DBAdapterAPI.fetchUser(0, sig.getUserId());
 end
 
@@ -49,11 +48,9 @@ rule "Update user bought"
         answer: TelegramKeyboardAnswered()
         agent: AgentAgent()
     then
-        Log.info("[UPDATE FROM RULE] Update user bought: " + answer.getAnswer());
         agent.handleFetchResult(res.getUsers().get(0), answer.getAnswer());
         delete(answer);
         delete(res);
-        Log.info("[UPDATE DONE] AgentAgent Answer: " + answer.getAnswer());
 end
 
 rule "Armory submit"
@@ -61,9 +58,18 @@ rule "Armory submit"
         event: RatingSignal() from entry-point "signals"
         agent: AgentAgent()
     then
-        Log.info("GOT SIGNAL IN AGENT");
         agent.sendMessage(event.getUser().getName() + " " + event.getUser().getSurname() 
             + " je pokazao interes. Broj mobitela: " + event.getUser().getPhoneNumber()
             + ". Zovi ga " + event.getDate());
+        delete(event);
+end
+
+rule "Activity users" 
+    when 
+        event: ActivityUsersSignal() from entry-point "signals"
+        agent: AgentAgent()
+    then
+        if (event.getUsers().size() > 0) agent.sendMessage(event.getSignalName() + ": " + event.getUsers());
+        else agent.sendMessage(event.getSignalName() + ": Nitko nije zainteresiran");
         delete(event);
 end

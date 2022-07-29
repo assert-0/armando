@@ -2,19 +2,21 @@ package util;
 
 import java.util.List;
 import java.util.Stack;
+
 import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.Set;
 
 import lombok.*;
+import util.processors.TemplateQuestionProcessor;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionHandler {
-    private Stack<Question> questions;
-    private QuestionProcessor processor;
+    private Stack<Question> questions = new Stack<>();
+    private TemplateQuestionProcessor processor; // TODO: Whence you fix bson polymorphic type handling; replace with QuestionProcessor.
 
     public Question getCurrentQuestion() {
         try {
@@ -31,8 +33,17 @@ public class QuestionHandler {
         return processor.process(question, processValue);
     }
 
-    public void nextQuestion() {
-        questions.pop();
+    public boolean nextQuestion() {
+        try {
+            questions.pop();
+            return true;
+        } catch (EmptyStackException ignored) {
+            return false;
+        }
+    }
+
+    public void addQuestion(Question question) {
+        questions.push(question);
     }
 
     public void submitAnswersAndAct(List<String> answers, Object actionValue) {

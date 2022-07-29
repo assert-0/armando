@@ -1,18 +1,20 @@
 package util;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
 import util.actions.CallAgentAction;
+import agents.AgentAgent;
+import agents.AgentHitl;
 
 
 public abstract class QuestionFactory {
     public static Stack<Question> getQuestionTree() {
-        Action callAgentAction = new CallAgentAction("AGENT");
-        Action callHITLAction = new CallAgentAction("HITL");
+        Action callAgentAction = new CallAgentAction(AgentAgent.class);
+        Action callHITLAction = new CallAgentAction(AgentHitl.class);
         Question interestedQuestion = new Question(
             "4",
             "Yikes, maybe I can help with that! Are you perhaps interested in buying a new real estate?",
@@ -100,7 +102,7 @@ public abstract class QuestionFactory {
 
     public static Stack<Question> createShuffledConversation(String ...messages) {
         // Fisher - Yates shuffle
-        var rand = new Random(LocalDateTime.now().getNano());
+        var rand = new Random(Instant.now().getEpochSecond());
         for (int i = messages.length - 1; i >= 0; i--) {
             var index = rand.nextInt(i + 1);
             //
@@ -112,7 +114,7 @@ public abstract class QuestionFactory {
     }
 
     public static Stack<Question> createRandomConversation(List<List<String>> conversations) {
-        var rand = new Random(LocalDateTime.now().getNano());
+        var rand = new Random(Instant.now().getEpochSecond());
         var index = rand.nextInt(conversations.size());
         return createConversation(conversations.get(index).toArray(new String[0]));
     }

@@ -1,11 +1,11 @@
 package util;
 
-import lombok.*;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import lombok.*;
 
-@JsonDeserialize(using = ActionDeserializer.class)
+
+@JsonDeserialize(using=ActionDeserializer.class)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
