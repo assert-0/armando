@@ -44,6 +44,9 @@ global:
 services:
   rule-engine:
     type: java
+    dependencies:
+      - db-adapter
+      - graph-maister
     resources:
       cpu: 500m
       memory: 650Mi
