@@ -23,6 +23,8 @@ global:
     POSTGRES_CLIENT_PORT: '5432'
     POSTGRES_CLIENT_USERNAME: postgres
 
+    REDIS_CLIENT_HOST: redis-master
+    REDIS_CLIENT_PORT: '6379'
     REDIS_URL: redis-master:6379
 
     # Misc
@@ -118,6 +120,9 @@ services:
     type: python
     db:
       mongo: true
+    dependencies:
+      - matplotlib==3.5.2
+      - seaborn==0.11.2
     resources:
       cpu: 100m
       memory: 100Mi
