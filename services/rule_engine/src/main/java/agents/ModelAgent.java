@@ -148,21 +148,10 @@ public class ModelAgent extends AbstractAgent {
 
         var avgCostDiffMax = getMax(avgCostDiffList, LAST_MAX);
 
-        /* Log.info("numOfSearchesDiff " + String.valueOf(numOfSearchesDiff.getDifference()));
-        Log.info("numOfREsDiff " + String.valueOf(numOfREsDiff.getDifference()));
-        Log.info("numOfSoldDiff " + String.valueOf(numOfSoldDiff.getDifference()));
-        Log.info("avgCostDiff " + String.valueOf(avgCostDiff.getDifference()));
-        Log.info("numOfSearchesDiffMax " + String.valueOf(numOfSearchesDiffMax.getDifference()));
-        Log.info("numOfREsDiffMax " + String.valueOf(numOfREsDiffMax.getDifference()));
-        Log.info("numOfSoldDiffMax " + String.valueOf(numOfSoldDiffMax.getDifference()));
-        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference())); */
-
         var theBest = getMax(
             new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)),
             LAST_MAX);
-        /* Log.info(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax));
-        Log.info(theBest); */
-
+            
         StatsSignal signal;
 
         if (theBest == numOfSearchesDiffMax) {

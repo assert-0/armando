@@ -38,8 +38,7 @@ public class ProtoAgent extends AbstractAgent {
                     new KeyboardOption("HITL", "Hitl")
                 )
             )
-        ); 
-        //Agents.createAgent(new Armando("telegram", getConnection("telegram"), String.valueOf((int) (Math.random() * 15))));
+        );
     }
 
     public void armandoCreator(String userId) {
@@ -65,7 +64,6 @@ public class ProtoAgent extends AbstractAgent {
         switch(answer) {
             case "USER":
                 armandoCreator("2");
-                Log.info("Created Armando and AA");
                 break;
             case "AGENT":
                 Agents.createAgent(new AgentAgent("telegram", getConnection("telegram")));

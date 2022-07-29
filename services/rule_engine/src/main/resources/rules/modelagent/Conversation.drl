@@ -32,7 +32,6 @@ rule "Re-do stats"
         modify(agent) {
             setLastUpdateTime(new Date())
         };
-        Log.warn("MODEL: Updating stats");
         agent.updateStats();
 end
 

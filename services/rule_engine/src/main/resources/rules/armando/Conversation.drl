@@ -57,8 +57,6 @@ rule "Receive user data"
             setLastInteractionTime(new Date())
         };
         agent.displayUI();
-        //agent.sendMessage(String.format("Imam super vijesti za Medveščak, do proljeća ćeš imati novi park, a samim time i vrijedniju nekretninu :) Gdje se park nalazi i kako će izgledati možeš saznati ovdje: https://8000-12c56ca9-fab4-4e91-bfc8-d9bae1ed581e.dev.mindsmiths.com/%s", agent.getConnections().get("telegram")));
-        //agent.sendFirstQuestion();
         delete(res);
 end
 
@@ -124,9 +122,11 @@ rule "Stats received"
                                 pad, Math.round(sig.getDifference() * 100)) + "${armoryUrl}"));
         agent.sendQuestion();
         GraphMaisterAPI.createGraphDate(1, "07/2022", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "mjesec", ylabel, "png");
-        agent.setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru je " + pad + "!");
-        agent.setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
-                                pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())));
+        modify(agent) {
+            setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru je " + pad + "!"),
+            setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
+                                pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())))
+        };
 end
 
 rule "Stats payload received"
@@ -136,5 +136,4 @@ rule "Stats payload received"
     then
         agent.setBase64String(sig.getBase64Graph());
         agent.displayUI(agent.getBase64String());
-        Log.info("Different graph");
 end

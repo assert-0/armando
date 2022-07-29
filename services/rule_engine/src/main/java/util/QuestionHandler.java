@@ -33,10 +33,12 @@ public class QuestionHandler {
         return processor.process(question, processValue);
     }
 
-    public void nextQuestion() {
+    public boolean nextQuestion() {
         try {
             questions.pop();
+            return true;
         } catch (EmptyStackException ignored) {
+            return false;
         }
     }
 
