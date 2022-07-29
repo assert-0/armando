@@ -63,6 +63,7 @@ public class Armando extends AbstractAgent {
     }
     private String articleTitle;
     private String articleText;
+    private String base64String = "";
 
     public Armando(String connectionName, String connectionId, String userId) {
         super(connectionName, connectionId);

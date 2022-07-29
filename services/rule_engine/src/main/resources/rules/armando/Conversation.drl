@@ -99,7 +99,7 @@ rule "User connected event"
         event: UserConnectedEvent() from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI();
+        agent.displayUI(agent.getBase64String());
         delete(event);
 end
 
@@ -108,7 +108,7 @@ rule "Armory submit"
         event: SubmitEvent() from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI();
+        agent.displayUI(agent.getBase64String());
         agent.handleSignalResponse(event.getData().get("submit").asText());
         delete(event);
 end
@@ -134,6 +134,6 @@ rule "Stats payload received"
         sig: GraphResult(success == true) from entry-point "signals"
         agent: Armando()
     then
-        agent.displayUI(sig.getBase64Graph());
+        agent.setBase64String(sig.getBase64Graph());
         Log.info("Different graph");
 end

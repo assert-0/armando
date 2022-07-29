@@ -129,16 +129,16 @@ public class ModelAgent extends AbstractAgent {
     public void checkStats() {
         var numOfSearchesDiff = calculateDiff(numOfSearchesList, LAST_DIFF);
         numOfSearchesDiffList.add(numOfSearchesDiff);
-        if (numOfSearchesDiffList.size() > 300) numOfSearchesDiffList.removeFirst();
+        if (numOfSearchesDiffList.size() > 250) numOfSearchesDiffList.removeFirst();
         var numOfREsDiff = calculateDiff(numOfREsList, LAST_DIFF);
         numOfREsDiffList.add(numOfREsDiff);
-        if (numOfREsDiffList.size() > 300) numOfREsDiffList.removeFirst();
+        if (numOfREsDiffList.size() > 250) numOfREsDiffList.removeFirst();
         var numOfSoldDiff = calculateDiff(numOfSoldList, LAST_DIFF);
         numOfSoldDiffList.add(numOfSoldDiff);
-        if (numOfSoldDiffList.size() > 300) numOfSoldDiffList.removeFirst();
+        if (numOfSoldDiffList.size() > 250) numOfSoldDiffList.removeFirst();
         var avgCostDiff = calculateDiff(avgCostList, LAST_DIFF);
         avgCostDiffList.add(avgCostDiff);
-        if (avgCostDiffList.size() > 300) avgCostDiffList.removeFirst();
+        if (avgCostDiffList.size() > 250) avgCostDiffList.removeFirst();
 
         var numOfSearchesDiffMax = getMax(numOfSearchesDiffList, LAST_MAX);
 
@@ -148,20 +148,20 @@ public class ModelAgent extends AbstractAgent {
 
         var avgCostDiffMax = getMax(avgCostDiffList, LAST_MAX);
 
-        Log.info("numOfSearchesDiff " + String.valueOf(numOfSearchesDiff.getDifference()));
+        /* Log.info("numOfSearchesDiff " + String.valueOf(numOfSearchesDiff.getDifference()));
         Log.info("numOfREsDiff " + String.valueOf(numOfREsDiff.getDifference()));
         Log.info("numOfSoldDiff " + String.valueOf(numOfSoldDiff.getDifference()));
         Log.info("avgCostDiff " + String.valueOf(avgCostDiff.getDifference()));
         Log.info("numOfSearchesDiffMax " + String.valueOf(numOfSearchesDiffMax.getDifference()));
         Log.info("numOfREsDiffMax " + String.valueOf(numOfREsDiffMax.getDifference()));
         Log.info("numOfSoldDiffMax " + String.valueOf(numOfSoldDiffMax.getDifference()));
-        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference()));
+        Log.info("avgCostDiffMax " + String.valueOf(avgCostDiffMax.getDifference())); */
 
         var theBest = getMax(
             new LinkedList<>(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax)),
             LAST_MAX);
-        Log.info(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax));
-        Log.info(theBest);
+        /* Log.info(List.of(numOfSearchesDiffMax, numOfREsDiffMax, numOfSoldDiffMax, avgCostDiffMax));
+        Log.info(theBest); */
 
         StatsSignal signal;
 
