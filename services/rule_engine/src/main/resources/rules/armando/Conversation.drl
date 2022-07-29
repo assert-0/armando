@@ -121,7 +121,7 @@ rule "Stats received"
         String pad = sig.isGrowing() ? "narastao" : "pao";
         String ylabel = sig.getFeature().equals(" prosječna cijena nekretnine ") ? "EUR" : "";
         agent.getHandler().addQuestion(new Question(String.format(agent.activityMessages.get(sig.getFeature()), 
-                                pad, Math.round(sig.getDifference() * 100)) + "https://8000-ae88b4e0-9d96-4d94-ace8-1e7ee4662a74.dev.mindsmiths.com/5415196560"));
+                                pad, Math.round(sig.getDifference() * 100)) + "${armoryUrl}"));
         agent.sendQuestion();
         GraphMaisterAPI.createGraphDate(1, "07/2022", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "mjesec", ylabel, "png");
         agent.setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru je " + pad + "!");
@@ -135,5 +135,6 @@ rule "Stats payload received"
         agent: Armando()
     then
         agent.setBase64String(sig.getBase64Graph());
+        agent.displayUI(agent.getBase64String());
         Log.info("Different graph");
 end

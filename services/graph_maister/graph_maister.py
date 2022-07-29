@@ -7,6 +7,7 @@ import datetime as dt
 import base64
 
 from matplotlib import pyplot as plt
+from matplotlib import rc
 import matplotlib.dates as mdates
 import seaborn as sb
 import pandas as pd
@@ -51,9 +52,9 @@ class Graph_Maister(BaseService):
         sb.set(rc = {'figure.figsize':(15,12)})
         sb.set(font_scale = 3)
         #
-        plt.title(title.capitalize())
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
+        plt.title(title.capitalize(), fontname = 'Helvetica')
+        plt.xlabel(xlabel, fontname = 'Helvetica')
+        plt.ylabel(ylabel, fontname = 'Helvetica')
         #
         base = dt.datetime.strptime(startDate, dateFmt).date()
         x = [base - dt.timedelta(days=x) for x in range(len(y))]
