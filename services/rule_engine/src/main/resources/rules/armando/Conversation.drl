@@ -121,12 +121,13 @@ rule "Stats received"
         agent.getHandler().addQuestion(new Question(String.format(agent.activityMessages.get(sig.getFeature()), 
                                 pad, Math.round(sig.getDifference() * 100)) + "${armoryUrl}"));
         agent.sendQuestion();
-        GraphMaisterAPI.createGraphDate(1, "07/2022", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "mjesec", ylabel, "png");
+        GraphMaisterAPI.createGraphDate(1, "12/2021", "%m/%Y", sig.getStatList(), "-", sig.getFeature(), "mjesec", ylabel, "png");
         modify(agent) {
             setArticleTitle(StringUtils.capitalize(sig.getFeature().substring(1)) + "na Maksimiru je " + pad + "!"),
             setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
                                 pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())))
         };
+        delete(sig);
 end
 
 rule "Stats payload received"
@@ -136,4 +137,5 @@ rule "Stats payload received"
     then
         agent.setBase64String(sig.getBase64Graph());
         agent.displayUI(agent.getBase64String());
+        delete(sig);
 end

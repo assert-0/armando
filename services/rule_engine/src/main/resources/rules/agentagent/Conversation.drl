@@ -20,6 +20,7 @@ rule "Set AgentAgent user id"
         agent: AgentAgent()
     then
         DBAdapterAPI.fetchUser(0, sig.getUserId());
+        delete(sig);
 end
 
 rule "Send AgentAgent contact info"

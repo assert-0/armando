@@ -39,4 +39,5 @@ rule "Fetch users"
             for (Activity activity : user.getActivities()) 
                 agent.getActivitiesMap().get(String.valueOf(activity.getType())).add(user);
         agent.sendActivityUsers();
+        delete(res);
 end
