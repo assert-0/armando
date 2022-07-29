@@ -127,6 +127,7 @@ rule "Stats received"
             setArticleText(String.format(agent.armoryArticles.get(sig.getFeature()), 
                                 pad, Math.round(sig.getDifference() * 100), Math.round(sig.getMax()), Math.round(sig.getMin())))
         };
+        delete(sig);
 end
 
 rule "Stats payload received"
@@ -136,4 +137,5 @@ rule "Stats payload received"
     then
         agent.setBase64String(sig.getBase64Graph());
         agent.displayUI(agent.getBase64String());
+        delete(sig);
 end
