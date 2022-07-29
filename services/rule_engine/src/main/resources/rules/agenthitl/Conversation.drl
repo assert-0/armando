@@ -18,6 +18,7 @@ rule "Set AgentHitl user id"
         agent: AgentHitl()
     then
         DBAdapterAPI.fetchUser(0, sig.getUserId());
+        delete(sig);
 end
 
 rule "Send AgentHitl contact info"
